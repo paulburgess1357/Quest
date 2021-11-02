@@ -352,4 +352,6 @@ MigrationBackup/
 # PB Ignore
 Debug/
 Release/
+x64/
 Assets/
+x64/
