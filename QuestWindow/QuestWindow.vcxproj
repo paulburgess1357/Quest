@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{d016bf00-ea87-456e-bce8-806a8bc2607c}</ProjectGuid>
-    <RootNamespace>QuestGraphicsCore</RootNamespace>
+    <ProjectGuid>{26357f8d-9a4a-4d68-a07d-3ce57959d748}</ProjectGuid>
+    <RootNamespace>QuestWindow</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -152,9 +152,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="framework.h" />
+    <ClInclude Include="Interface\Window.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="Template\Bind.h" />
-    <ClInclude Include="Template\Handle.h" />
+    <ClInclude Include="Template\Window.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -163,7 +163,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="QuestGraphicsCore.cpp" />
+    <ClCompile Include="QuestWindow.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -9,7 +9,7 @@
 
 // add headers that you want to pre-compile here
 #include "framework.h"
-#include "Template/Bind.h"
-#include "Template/Handle.h"
+#include "Interface/Window.h"
+#include "Template/Window.h"
 
 #endif //PCH_H

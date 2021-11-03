@@ -21,15 +21,15 @@
     <ClInclude Include="pch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Template\Handle.h">
+    <ClInclude Include="Interface\Window.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Template\Bind.h">
+    <ClInclude Include="Template\Window.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="QuestGraphicsCore.cpp">
+    <ClCompile Include="QuestWindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="pch.cpp">

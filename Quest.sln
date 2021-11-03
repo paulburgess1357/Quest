@@ -17,6 +17,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "QuestGLCore", "QuestGLCore\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "QuestGraphicsCore", "QuestGraphicsCore\QuestGraphicsCore.vcxproj", "{D016BF00-EA87-456E-BCE8-806A8BC2607C}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "QuestWindow", "QuestWindow\QuestWindow.vcxproj", "{26357F8D-9A4A-4D68-A07D-3CE57959D748}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -81,6 +83,14 @@ Global
 		{D016BF00-EA87-456E-BCE8-806A8BC2607C}.Release|x64.Build.0 = Release|x64
 		{D016BF00-EA87-456E-BCE8-806A8BC2607C}.Release|x86.ActiveCfg = Release|Win32
 		{D016BF00-EA87-456E-BCE8-806A8BC2607C}.Release|x86.Build.0 = Release|Win32
+		{26357F8D-9A4A-4D68-A07D-3CE57959D748}.Debug|x64.ActiveCfg = Debug|x64
+		{26357F8D-9A4A-4D68-A07D-3CE57959D748}.Debug|x64.Build.0 = Debug|x64
+		{26357F8D-9A4A-4D68-A07D-3CE57959D748}.Debug|x86.ActiveCfg = Debug|Win32
+		{26357F8D-9A4A-4D68-A07D-3CE57959D748}.Debug|x86.Build.0 = Debug|Win32
+		{26357F8D-9A4A-4D68-A07D-3CE57959D748}.Release|x64.ActiveCfg = Release|x64
+		{26357F8D-9A4A-4D68-A07D-3CE57959D748}.Release|x64.Build.0 = Release|x64
+		{26357F8D-9A4A-4D68-A07D-3CE57959D748}.Release|x86.ActiveCfg = Release|Win32
+		{26357F8D-9A4A-4D68-A07D-3CE57959D748}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
