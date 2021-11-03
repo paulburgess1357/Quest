@@ -1,15 +1,15 @@
-#include <iostream>
-#include "TemplateTest/WindowScratch.h"
+#include "QuestWindow/Include/Window.h"
 
 int main(){
 
-    TemplateTest::Window<TemplateTest::OGLWindow> ogl_window;
-    ogl_window.swap_buffer();
+    int x = 500;
+    const QuestWindow::Window window{ 1920, 1080, 3, 3};
 
+    while (!window.close_window()){
+        
+        glfwPollEvents();
+        window.clear_buffer();
+        window.swap_buffer();
+    }
 
-    TemplateTest::Window<TemplateTest::VulkanWindow> vulkan_window;
-    vulkan_window.swap_buffer();
-
-
-    std::cout << "Hello World!\n";
 }

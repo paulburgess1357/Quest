@@ -8,13 +8,13 @@ namespace TemplateTest {
 	class IWindow {
 	public:
 		virtual ~IWindow() = default;
-		virtual void swap_buffer() = 0;
+		virtual void swap_buffffer() = 0;
 	};
 
 	// Implementation
 	class OGLWindow : public IWindow {
 	public:
-		void swap_buffer() override {
+		void swap_buffffer() override {
 			std::cout << "OGL Swapping Buffer" << std::endl;
 		}
 		// protected:
@@ -25,7 +25,7 @@ namespace TemplateTest {
 
 	class VulkanWindow : public IWindow {
 	public:
-		void swap_buffer() override {
+		void swap_buffffer() override {
 			std::cout << "Vulkan Swapping Buffer" << std::endl;
 		}
 		void test() {
@@ -35,7 +35,7 @@ namespace TemplateTest {
 
 	// Template implementation
 	template<typename T>
-	class Window {
+	class Window : public IWindow {
 	public:
 		Window() = default;
 		void swap_buffer() {

@@ -9,7 +9,10 @@
 
 // add headers that you want to pre-compile here
 #include "framework.h"
-#include "Interface/Window.h"
-#include "Template/Window.h"
+#include "QuestWindow/Template/TWindow.h"
+#include "QuestWindow/Interface/IWindow.h"
+#include "QuestWindow/Interface/IWindowException.h"
+#include "QuestWindow/OpenGL/OGLWindow.h"
+#include "QuestWindow/Include/Window.h"
 
 #endif //PCH_H
