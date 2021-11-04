@@ -6,13 +6,19 @@
 namespace QuestWindow {
 	namespace Interface {
 
+		bool IWindow::m_window_exists = false;
+
 		IWindow::IWindow(const int width, const int height)
 			:m_window{ nullptr } {
+
+			check_window_exists();
 			initialize();
+			m_window_exists = true;
 		}
 
 		IWindow::~IWindow() {
 			if(m_window != nullptr) {
+				std::cout << "Destroying Window" << std::endl;
 				glfwDestroyWindow(m_window);
 			}
 		}
@@ -70,6 +76,12 @@ namespace QuestWindow {
 
 		bool IWindow::close_window() const {
 			return glfwWindowShouldClose(m_window);
+		}
+
+		void IWindow::check_window_exists() {
+			if(m_window_exists) {
+				throw IWindowExistsException();
+			}
 		}
 
 	}

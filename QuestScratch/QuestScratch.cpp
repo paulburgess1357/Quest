@@ -3,7 +3,8 @@
 int main(){
 
     int x = 500;
-    const QuestWindow::Window window{ 1920, 1080, 3, 3};
+
+    QuestWindow::Window window{ 1920, 1080, 3, 3};
 
     while (!window.close_window()){
         

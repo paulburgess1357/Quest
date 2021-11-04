@@ -13,6 +13,20 @@ namespace QuestWindow {
 				:m_window{ std::forward<Args>(args)... } {
 			}
 
+			~TWindow() = default;
+
+			TWindow(TWindow&& source) noexcept
+				:m_window{ std::move(source.m_window) } {
+			}
+
+			TWindow& operator=(TWindow&& rhs) noexcept {
+				m_window = std::move(rhs.m_window);
+				return *this;
+			}
+
+			TWindow(const TWindow& source) = delete;
+			TWindow& operator=(const TWindow& rhs) = delete;
+
 			void clear_buffer() const {
 				m_window.clear_buffer();
 			}
