@@ -10,4 +10,5 @@ ECS Engine
 .\vcpkg install stb:x64-windows
 .\vcpkg install imgui:x64-windows
 .\vcpkg install glad:x64-windows
+.\vcpkg install gtest:x64-windows
 ```
