@@ -17,8 +17,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "QuestWindow", "QuestWindow\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "QuestSandbox", "QuestSandbox\QuestSandbox.vcxproj", "{FE8839D1-BBA0-45FB-9A84-C19653C49493}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "QuestTest", "QuestTest\QuestTest.vcxproj", "{0F83FBD7-B90B-4387-B0A6-7DBEFCBCD036}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -83,14 +81,6 @@ Global
 		{FE8839D1-BBA0-45FB-9A84-C19653C49493}.Release|x64.Build.0 = Release|x64
 		{FE8839D1-BBA0-45FB-9A84-C19653C49493}.Release|x86.ActiveCfg = Release|Win32
 		{FE8839D1-BBA0-45FB-9A84-C19653C49493}.Release|x86.Build.0 = Release|Win32
-		{0F83FBD7-B90B-4387-B0A6-7DBEFCBCD036}.Debug|x64.ActiveCfg = Debug|x64
-		{0F83FBD7-B90B-4387-B0A6-7DBEFCBCD036}.Debug|x64.Build.0 = Debug|x64
-		{0F83FBD7-B90B-4387-B0A6-7DBEFCBCD036}.Debug|x86.ActiveCfg = Debug|Win32
-		{0F83FBD7-B90B-4387-B0A6-7DBEFCBCD036}.Debug|x86.Build.0 = Debug|Win32
-		{0F83FBD7-B90B-4387-B0A6-7DBEFCBCD036}.Release|x64.ActiveCfg = Release|x64
-		{0F83FBD7-B90B-4387-B0A6-7DBEFCBCD036}.Release|x64.Build.0 = Release|x64
-		{0F83FBD7-B90B-4387-B0A6-7DBEFCBCD036}.Release|x86.ActiveCfg = Release|Win32
-		{0F83FBD7-B90B-4387-B0A6-7DBEFCBCD036}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

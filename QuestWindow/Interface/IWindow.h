@@ -27,6 +27,12 @@ namespace QuestWindow {
 			void set_callbacks() const;
 			GLFWwindow* m_window;
 
+		private:
+			// No singleton; Just forcing a single window:
+			static bool m_window_exists;
+			static void check_window_exists();
+
+
 		};
 
 	} // namespace Interface
