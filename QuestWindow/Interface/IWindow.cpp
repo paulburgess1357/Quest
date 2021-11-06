@@ -3,6 +3,9 @@
 #include "IWindowException.h"
 #include <iostream>
 
+#include "Input/InputManager.h"
+#include "Input/Keyboard.h"
+
 namespace QuestWindow {
 	namespace Interface {
 
@@ -10,7 +13,6 @@ namespace QuestWindow {
 
 		IWindow::IWindow(const int width, const int height)
 			:m_window{ nullptr } {
-
 			check_window_exists();
 			initialize();
 			m_window_exists = true;
@@ -20,6 +22,7 @@ namespace QuestWindow {
 			if(m_window != nullptr) {
 				std::cout << "Destroying Window" << std::endl;
 				glfwDestroyWindow(m_window);
+				m_window_exists = false;
 			}
 		}
 
@@ -60,7 +63,7 @@ namespace QuestWindow {
 			glfwSwapInterval(true);
 
 			// Base Callbacks
-			//glfwSetKeyCallback(m_window, InputManager<Keyboard>::window_callback);
+			glfwSetKeyCallback(m_window, Input::InputManager<Input::Keyboard>::window_callback);
 			//glfwSetMouseButtonCallback(m_window, MouseManager::mouse_button_callback);
 			//glfwSetCursorPosCallback(m_window, MouseManager::mouse_position_callback);
 			//glfwSetCursorEnterCallback(m_window, MouseManager::mouse_within_window_callback);

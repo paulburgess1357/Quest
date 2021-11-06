@@ -161,6 +161,8 @@
   <ItemGroup>
     <ClInclude Include="framework.h" />
     <ClInclude Include="Include\Window.h" />
+    <ClInclude Include="Input\InputManager.h" />
+    <ClInclude Include="Input\Keyboard.h" />
     <ClInclude Include="Interface\IWindow.h" />
     <ClInclude Include="Interface\IWindowException.h" />
     <ClInclude Include="OpenGL\OGLWindowException.h" />

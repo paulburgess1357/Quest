@@ -28,10 +28,9 @@ namespace QuestWindow {
 			GLFWwindow* m_window;
 
 		private:
-			// No singleton; Just forcing a single window:
+			// Forced single window
 			static bool m_window_exists;
 			static void check_window_exists();
-
 
 		};
 

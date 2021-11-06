@@ -39,6 +39,12 @@
     <ClInclude Include="OpenGL\OGLWindowException.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Input\InputManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Input\Keyboard.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
