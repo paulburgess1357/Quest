@@ -1,5 +1,10 @@
 # Quest
-ECS Engine
+Quest is a collection of static libraries used for building the ECS Extra Life Game Engine v2 (to be known as Quest Engine). The following collection of projects/libraries focus on: Template programming, Strong exception guarantees, and RAII classes for various graphics API's. **This is a very early-stage repo**. The end goal is to have a collection of libraries across multiple graphics API's that offer compile time polymorphism. For samples see:
+ - https://github.com/paulburgess1357/Quest/blob/master/QuestGraphicsCore/Template/Handle.h
+ - https://github.com/paulburgess1357/Quest/blob/master/QuestWindow/Template/TWindow.h
+ - https://github.com/paulburgess1357/Quest/blob/master/QuestTest/WindowTests/WindowCreation.cpp
+
+As development of this repo continues, the above examples will be replaced by working classes/libraries to be used in other projects.  Eventually, each static library will be moved into its own repo.
 
 ### Dependencies
 ```
