@@ -9,6 +9,9 @@ int main(){
         glfwPollEvents();
         window.clear_buffer();
         window.swap_buffer();
+        auto test = Qw::Input::MouseManager::get_coords();
+
+        std::cout << test.m_pos_x << std::endl;
     }
 
 }

@@ -1,9 +1,16 @@
 #pragma once
 #include "Mouse.h"
-#include <glm/glm.hpp>
 
 namespace QuestWindow {
 	namespace Input {
+
+		struct MouseCoords {
+			MouseCoords(const double x, const double y)
+				:m_pos_x{ x }, m_pos_y{ y } {
+			}
+			double m_pos_x = 0.0;
+			double m_pos_y = 0.0;
+		};
 
 		class MouseManager {
 
@@ -11,7 +18,7 @@ namespace QuestWindow {
 			MouseManager() = delete;
 			static bool is_pressed(const Mouse mouse_button_id);
 			static bool is_within_window();
-			static glm::vec2 get_coords();
+			static MouseCoords get_coords();
 
 		private:
 			static void set_press(const unsigned int mouse_button_id);
@@ -22,7 +29,7 @@ namespace QuestWindow {
 			static void mouse_within_window_callback(GLFWwindow* window, int entered);
 
 			static bool m_within_window;
-			static glm::vec2 m_coords;
+			static MouseCoords m_coords;
 			static bool m_left_button_pressed;
 			static bool m_right_button_pressed;
 

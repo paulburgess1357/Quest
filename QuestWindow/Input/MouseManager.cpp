@@ -4,7 +4,7 @@
 namespace QuestWindow {
 	namespace Input {
 
-		glm::vec2 MouseManager::m_coords{ 0.0f, 0.0f };
+		MouseCoords MouseManager::m_coords{ 0.0, 0.0 };
 		bool MouseManager::m_within_window = false;
 		bool MouseManager::m_left_button_pressed = false;
 		bool MouseManager::m_right_button_pressed = false;
@@ -16,7 +16,7 @@ namespace QuestWindow {
 				return m_right_button_pressed;
 		}
 
-		glm::vec2 MouseManager::get_coords() {
+		MouseCoords MouseManager::get_coords() {
 			return  m_coords;
 		}
 
@@ -58,8 +58,8 @@ namespace QuestWindow {
 		}
 
 		void MouseManager::mouse_position_callback(GLFWwindow* window, const double x_pos, const double y_pos) {
-			m_coords.x = static_cast<float>(x_pos);
-			m_coords.y = static_cast<float>(y_pos);
+			m_coords.m_pos_x = x_pos;
+			m_coords.m_pos_y = y_pos;
 		}
 
 		void MouseManager::mouse_within_window_callback(GLFWwindow* window, int entered) {
