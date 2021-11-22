@@ -7,7 +7,7 @@ namespace QuestWindow {
 	namespace OpenGL {
 
 		OGLWindow::OGLWindow(const int width, const int height, const int major_version, const int minor_version)
-			:IWindow{ width, height } {
+			:IWindow{ } {
 			initialize(width, height, major_version, minor_version);
 		}
 

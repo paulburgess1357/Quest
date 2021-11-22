@@ -8,7 +8,7 @@ namespace QuestWindow {
 		class IWindow {
 
 		public:
-			IWindow(const int width, const int height);
+			IWindow();
 			~IWindow();
 
 			IWindow(const IWindow& source) = delete;

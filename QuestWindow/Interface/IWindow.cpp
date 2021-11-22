@@ -4,6 +4,7 @@
 #include <iostream>
 
 #include "Input/InputManager.h"
+#include "Input/MouseManager.h"
 #include "Input/Keyboard.h"
 
 namespace QuestWindow {
@@ -11,7 +12,7 @@ namespace QuestWindow {
 
 		bool IWindow::m_window_exists = false;
 
-		IWindow::IWindow(const int width, const int height)
+		IWindow::IWindow()
 			:m_window{ nullptr } {
 			check_window_exists();
 			initialize();
@@ -64,9 +65,9 @@ namespace QuestWindow {
 
 			// Base Callbacks
 			glfwSetKeyCallback(m_window, Input::InputManager<Input::Keyboard>::window_callback);
-			//glfwSetMouseButtonCallback(m_window, MouseManager::mouse_button_callback);
-			//glfwSetCursorPosCallback(m_window, MouseManager::mouse_position_callback);
-			//glfwSetCursorEnterCallback(m_window, MouseManager::mouse_within_window_callback);
+			glfwSetMouseButtonCallback(m_window, Input::MouseManager::mouse_button_callback);
+			glfwSetCursorPosCallback(m_window, Input::MouseManager::mouse_position_callback);
+			glfwSetCursorEnterCallback(m_window, Input::MouseManager::mouse_within_window_callback);
 		}
 
 		void IWindow::swap_buffer() const {

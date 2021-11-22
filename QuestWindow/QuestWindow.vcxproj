@@ -163,6 +163,8 @@
     <ClInclude Include="Include\Window.h" />
     <ClInclude Include="Input\InputManager.h" />
     <ClInclude Include="Input\Keyboard.h" />
+    <ClInclude Include="Input\Mouse.h" />
+    <ClInclude Include="Input\MouseManager.h" />
     <ClInclude Include="Interface\IWindow.h" />
     <ClInclude Include="Interface\IWindowException.h" />
     <ClInclude Include="OpenGL\OGLWindowException.h" />
@@ -171,6 +173,7 @@
     <ClInclude Include="OpenGL\OGLWindow.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Input\MouseManager.cpp" />
     <ClCompile Include="Interface\IWindow.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
