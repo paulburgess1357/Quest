@@ -74,6 +74,10 @@ namespace QuestWindow {
 			glfwSwapBuffers(m_window);
 		}
 
+		void IWindow::poll_events() {
+			glfwPollEvents();
+		}
+
 		GLFWwindow* IWindow::get_window() const {
 			return m_window;
 		}

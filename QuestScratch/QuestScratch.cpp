@@ -1,17 +1,18 @@
 #include <iostream>
-#include "QuestWindow/Include/Window.h"
+#include "QuestEngine/Engine/Engine.h"
 
 int main(){
 
-    const Qw::Window window{ 1920, 1080, 3, 3};
+    //const Qw::Window window{ 1920, 1080, 3, 3};
 
-    while (!window.close_window() && !Qw::KeyboardInput::is_pressed(Qw::Keyboard::ESCAPE)){
-        glfwPollEvents();
-        window.clear_buffer();
-        window.swap_buffer();
-        auto test = Qw::Input::MouseManager::get_coords();
+    //while (!window.close_window() && !Qw::KeyboardInput::is_pressed(Qw::Keyboard::ESCAPE)){
+    //    glfwPollEvents();
+    //    window.clear_buffer();
+    //    window.swap_buffer();
+    //}
 
-        std::cout << test.m_pos_x << std::endl;
-    }
+    QuestEngine::Engine::Engine game_engine;
+    game_engine.run();
+
 
 }

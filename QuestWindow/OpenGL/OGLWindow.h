@@ -7,6 +7,7 @@ namespace QuestWindow {
 		class OGLWindow final : public QuestWindow::Interface::IWindow {
 
 		public:
+			OGLWindow(const int width, const int height);
 			OGLWindow(const int width, const int height, const int major_version, const int minor_version);
 			static void clear_buffer();
 			static void set_viewport(const int width, const int height);
