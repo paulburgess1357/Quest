@@ -47,6 +47,10 @@ namespace QuestWindow {
 				return m_window.get_window();
 			}
 
+			static void poll_events() {
+				T::poll_events();
+			}
+
 		private:
 			T m_window;
 		};

@@ -20,6 +20,7 @@ namespace QuestWindow {
 			void swap_buffer() const;
 			[[nodiscard]] GLFWwindow* get_window() const;
 			[[nodiscard]] bool close_window() const;
+			static void poll_events();
 
 		protected:
 			static void initialize();
