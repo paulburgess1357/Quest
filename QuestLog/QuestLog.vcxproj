@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{0d650df4-d2b6-41e5-8360-63d59687410a}</ProjectGuid>
-    <RootNamespace>QuestEngine</RootNamespace>
+    <ProjectGuid>{8530343e-f89e-4502-bcab-47ca68049087}</ProjectGuid>
+    <RootNamespace>QuestLog</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -90,7 +90,6 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <LanguageStandard>stdcpp17</LanguageStandard>
       <AdditionalIncludeDirectories>$(SolutionDir)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
@@ -109,7 +108,6 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <LanguageStandard>stdcpp17</LanguageStandard>
       <AdditionalIncludeDirectories>$(SolutionDir)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
@@ -128,7 +126,6 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <LanguageStandard>stdcpp17</LanguageStandard>
       <AdditionalIncludeDirectories>$(SolutionDir)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
@@ -147,7 +144,6 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <LanguageStandard>stdcpp17</LanguageStandard>
       <AdditionalIncludeDirectories>$(SolutionDir)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
@@ -159,36 +155,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Engine\Engine.h" />
     <ClInclude Include="framework.h" />
-    <ClInclude Include="Logging\Log.h" />
+    <ClInclude Include="Include\Log.h" />
+    <ClInclude Include="Log\LogManager.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Engine\Engine.cpp" />
+    <ClCompile Include="Log\LogManager.cpp" />
     <ClCompile Include="pch.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\QuestGLCore\QuestGLCore.vcxproj">
-      <Project>{66c11a4f-4221-47a9-9fda-69e4d68ee098}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\QuestGraphicsCore\QuestGraphicsCore.vcxproj">
-      <Project>{d016bf00-ea87-456e-bce8-806a8bc2607c}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\QuestLog\QuestLog.vcxproj">
-      <Project>{8530343e-f89e-4502-bcab-47ca68049087}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\QuestUI\QuestUI.vcxproj">
-      <Project>{8fd0d28d-87d6-4fb7-b6e8-cbc65ce0093e}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\QuestWindow\QuestWindow.vcxproj">
-      <Project>{26357f8d-9a4a-4d68-a07d-3ce57959d748}</Project>
-    </ProjectReference>
+    <ClCompile Include="QuestLog.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

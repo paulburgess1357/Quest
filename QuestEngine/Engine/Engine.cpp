@@ -14,7 +14,7 @@ namespace QuestEngine {
 
 		void Engine::gameloop() const {
 
-			while (!shutdown_engine()){
+			while (!shutdown()){
 				m_window.poll_events();
 				m_window.clear_buffer();
 				m_window.swap_buffer();
@@ -22,7 +22,7 @@ namespace QuestEngine {
 
 		}
 
-		bool Engine::shutdown_engine() const {
+		bool Engine::shutdown() const {
 			return m_window.close_window() || Qw::KeyboardInput::is_pressed(Qw::Keyboard::ESCAPE);
 		}
 
