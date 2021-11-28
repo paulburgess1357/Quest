@@ -4,9 +4,6 @@
 #include "spdlog/sinks/stdout_color_sinks.h"
 #include <memory>
 
-// Based on: https://www.youtube.com/watch?v=DQCkMnMNFBI
-//           https://github.com/gabime/spdlog/wiki/1.-QuickStart
-
 namespace QuestEngine {
 	namespace Logging {
 		

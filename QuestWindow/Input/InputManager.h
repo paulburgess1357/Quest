@@ -1,3 +1,4 @@
+// ReSharper disable CppParameterNeverUsed
 #pragma once
 #include <GLFW/glfw3.h>
 #include <unordered_map>
@@ -28,6 +29,7 @@ namespace QuestWindow {
 				m_key_pressed_map[key_id] = false;
 			}
 
+			// ReSharper disable once CppParameterMayBeConst
 			static void window_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
 				switch (action) {
 					case GLFW_PRESS:

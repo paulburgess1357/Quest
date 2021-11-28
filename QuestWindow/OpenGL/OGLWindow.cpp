@@ -58,6 +58,7 @@ namespace QuestWindow {
 			glfwSetFramebufferSizeCallback(m_window, framebuffer_callback);
 		}
 
+		// ReSharper disable once CppParameterNeverUsed
 		void OGLWindow::framebuffer_callback(GLFWwindow* window, const int width, const int height) {
 			set_viewport(width, height);
 		}

@@ -1,3 +1,4 @@
+// ReSharper disable CppParameterNeverUsed
 #include "pch.h"
 #include "MouseManager.h"
 
@@ -62,6 +63,7 @@ namespace QuestWindow {
 			m_coords.m_pos_y = y_pos;
 		}
 
+		// ReSharper disable once CppParameterMayBeConst
 		void MouseManager::mouse_within_window_callback(GLFWwindow* window, int entered) {
 			m_within_window = entered;
 		}
