@@ -1,11 +1,14 @@
 #include "pch.h"
 #include "Engine.h"
+#include "QuestEngine/Logging/LogMacros.h"
 
 namespace QuestEngine {
 	namespace Engine {
 
 		Engine::Engine(const int width, const int height)
-			:m_window{ width, height } {
+			:m_logger{ Logging::DEFAULT_LOGGER },
+			m_window{ width, height } {
+			QUEST_INFO("Quest Engine v{}.{} Initialized\n", 0, 1);
 		}
 
 		void Engine::run() const {
@@ -13,17 +16,15 @@ namespace QuestEngine {
 		}
 
 		void Engine::gameloop() const {
-
 			while (!shutdown()){
 				m_window.poll_events();
 				m_window.clear_buffer();
 				m_window.swap_buffer();
 			}
-
 		}
 
 		bool Engine::shutdown() const {
-			return m_window.close_window() || Qw::KeyboardInput::is_pressed(Qw::Keyboard::ESCAPE);
+			return m_window.close_window() || QuestWindow::KeyboardInput::is_pressed(QuestWindow::Keyboard::ESCAPE);
 		}
 
 	} // namespace Engine
