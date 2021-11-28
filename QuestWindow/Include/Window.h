@@ -14,5 +14,3 @@ namespace QuestWindow {
 	using MouseInput = Input::MouseManager;
 
 } // namespace QuestWindow
-
-namespace Qw = QuestWindow;

@@ -1,4 +1,5 @@
 #pragma once
+#include "QuestEngine/Logging/LogHandler.h"
 #include "QuestWindow/Include/Window.h"
 
 namespace QuestEngine {
@@ -12,9 +13,10 @@ namespace QuestEngine {
 
 		private:
 			void gameloop() const;
-			[[nodiscard]] bool shutdown_engine() const;
+			[[nodiscard]] bool shutdown() const;
 
-			const Qw::Window m_window;
+			const Logging::LogHandler m_logger;
+			const QuestWindow::Window m_window;
 
 		};
 

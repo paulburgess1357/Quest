@@ -150,9 +150,6 @@
     <ClCompile Include="QuestScratch.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="TemplateTest\WindowScratch.h" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\QuestEngine\QuestEngine.vcxproj">
       <Project>{0d650df4-d2b6-41e5-8360-63d59687410a}</Project>
     </ProjectReference>
