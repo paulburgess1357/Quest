@@ -3,13 +3,13 @@
 #include <string>
 #include "spdlog/spdlog.h"
 
-namespace QuestEngine {
+namespace QuestUtility {
 	namespace Logging {
 
 		class LogHandler {
 
 		public:
-			LogHandler(const std::string& logger_name);
+			explicit LogHandler(const std::string& logger_name);
 			LogHandler(const LogHandler& source) = delete;
 			LogHandler(LogHandler&& source) = delete;
 
@@ -19,14 +19,15 @@ namespace QuestEngine {
 			~LogHandler();
 
 		private:
-			void check_if_exists() const;
 			void create_stdout_color_sink();
 			void add_logger(const std::string& logger_name);
 			static void shutdown();
 
 			std::vector<spdlog::sink_ptr> m_sink_ptrs{};
-			bool m_log_handler_exists;
+			std::string m_logger_name;
+			static int m_log_handler_count;
+
 		};
 
 	} // namespace Logging
-} // namespace QuestEngine
+} // namespace QuestUtility

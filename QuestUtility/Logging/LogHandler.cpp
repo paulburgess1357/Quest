@@ -1,33 +1,32 @@
 #include "pch.h"
 #include "LogHandler.h"
-#include "LogHandlerException.h"
 #include "spdlog/sinks/stdout_color_sinks.h"
 #include <memory>
+#include <iostream>
 
-namespace QuestEngine {
+namespace QuestUtility {
 	namespace Logging {
-		
+
+		int LogHandler::m_log_handler_count{ 0 };
+
 		LogHandler::LogHandler(const std::string& logger_name)
-			:m_log_handler_exists{ false } {
-			check_if_exists();
+			:m_logger_name{ logger_name } {
+			std::cout << "Initializing Logger: " << m_logger_name << std::endl;
 			create_stdout_color_sink();
 			add_logger(logger_name);
-			m_log_handler_exists = true;
+			m_log_handler_count++;
 		}
 
 		LogHandler::~LogHandler() {
-			shutdown();
-		}
-
-		void LogHandler::check_if_exists() const {
-			if(m_log_handler_exists) {
-				throw LogHandlerExistsException();
+			m_log_handler_count--;
+			if(m_log_handler_count == 0) {
+				shutdown();
 			}
 		}
 
 		void LogHandler::create_stdout_color_sink() {
 			const auto stdout_logger = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
-			stdout_logger->set_pattern("%^[%Y-%m-%d %H:%M:%S] %v%$");
+			stdout_logger->set_pattern("%^[%H:%M:%S.%e] %v%$");
 			m_sink_ptrs.push_back(stdout_logger);
 		}
 
@@ -50,4 +49,4 @@ namespace QuestEngine {
 		}
 
 	} // namespace Logging
-} // namespace QuestEngine
+} // namespace QuestUtility

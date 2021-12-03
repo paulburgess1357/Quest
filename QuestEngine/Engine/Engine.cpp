@@ -1,13 +1,12 @@
 #include "pch.h"
 #include "Engine.h"
-#include "QuestEngine/Logging/LogMacros.h"
+#include "QuestUtility/Include/Logger.h"
 
 namespace QuestEngine {
 	namespace Engine {
 
 		Engine::Engine(const int width, const int height)
-			:m_logger{ Logging::DEFAULT_LOGGER },
-			m_window{ width, height } {
+			:m_window{ width, height } {
 			QUEST_INFO("Quest Engine v{}.{} Initialized\n", 0, 1);
 		}
 

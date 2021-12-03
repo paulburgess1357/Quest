@@ -8,8 +8,6 @@
 #define PCH_H
 
 // add headers that you want to pre-compile here
+#include <Windows.h>
 #include "framework.h"
-#include "QuestEngine/Logging/LogHandler.h"
-#include "QuestEngine/Logging/LogHandlerException.h"
-
 #endif //PCH_H

@@ -1,11 +1,12 @@
 #include "pch.h"
 #include "IWindow.h"
 #include "IWindowException.h"
-#include <iostream>
 
 #include "Input/InputManager.h"
 #include "Input/MouseManager.h"
 #include "Input/Keyboard.h"
+
+#include "QuestUtility/Include/Logger.h"
 
 namespace QuestWindow::Interface {
 
@@ -20,7 +21,7 @@ namespace QuestWindow::Interface {
 
 	IWindow::~IWindow() {
 		if(m_window != nullptr) {
-			std::cout << "Destroying Window" << std::endl;
+			QUEST_TRACE("Destroying Window")
 			glfwDestroyWindow(m_window);
 			m_window_exists = false;
 		}
@@ -40,14 +41,14 @@ namespace QuestWindow::Interface {
 	}
 
 	void IWindow::initialize() {
-		std::cout << "Initializing GLFW" << std::endl;
+		QUEST_TRACE("Initializing GLFW")
 		if (!glfwInit()) {
 			throw IWindowInitException();
 		}
 	}
 
 	void IWindow::create_window(const int width, const int height) {
-		std::cout << "Creating Window" << std::endl;
+		QUEST_TRACE("Creating Window")
 		m_window = glfwCreateWindow(width, height, "Quest Engine", nullptr, nullptr);
 		if (m_window == nullptr) {
 			glfwTerminate();

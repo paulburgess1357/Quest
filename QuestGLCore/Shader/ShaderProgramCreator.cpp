@@ -2,7 +2,7 @@
 #include "ShaderProgramCreator.h"
 #include "ShaderExceptions.h"
 #include <glad/glad.h>
-#include <iostream>
+#include "QuestUtility/Include/Logger.h"
 
 namespace QuestGLCore::Shader {
 
@@ -74,7 +74,7 @@ namespace QuestGLCore::Shader {
 			glGetShaderiv(handle, GL_INFO_LOG_LENGTH, &error_length);
 			std::string error_string(error_length, ' ');
 			glGetShaderInfoLog(handle, error_length, &error_length, &error_string[0]);
-			std::cerr << error_string << std::endl;
+			QUEST_FATAL("Individual Shader (e.g. Vertex/Fragment (Not Both) Error: {}", error_string)
 			throw ShaderCompileException();
 		}
 	}
@@ -87,6 +87,7 @@ namespace QuestGLCore::Shader {
 			glGetProgramiv(handle, GL_INFO_LOG_LENGTH, &error_length);
 			std::string error_string(error_length, ' ');
 			glGetProgramInfoLog(handle, error_length, &error_length, &error_string[0]);
+			QUEST_FATAL("Shader Program Error: {}", error_string)
 			throw ShaderLinkException();
 		}
 	}
