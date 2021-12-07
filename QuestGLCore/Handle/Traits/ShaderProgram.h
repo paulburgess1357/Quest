@@ -14,6 +14,6 @@ namespace QuestGLCore::Traits {
 			glDeleteProgram(shader_handle);
 		}
 
-	};
+	};	
 
 } // QuestGLCore::Traits

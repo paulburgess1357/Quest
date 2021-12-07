@@ -2,26 +2,42 @@
 #include "LogHandler.h"
 #include "spdlog/sinks/stdout_color_sinks.h"
 #include <memory>
+// ReSharper disable once CppUnusedIncludeDirective
 #include <iostream>
 
 namespace QuestUtility {
 	namespace Logging {
 
-		int LogHandler::m_log_handler_count{ 0 };
+		std::atomic_int LogHandler::m_log_handler_count{ 0 };
 
 		LogHandler::LogHandler(const std::string& logger_name)
 			:m_logger_name{ logger_name } {
-			std::cout << "Initializing Logger: " << m_logger_name << std::endl;
+			startup_message();
 			create_stdout_color_sink();
 			add_logger(logger_name);
-			m_log_handler_count++;
+			m_log_handler_count += 1;
 		}
 
 		LogHandler::~LogHandler() {
-			m_log_handler_count--;
+			shutdown_message();
+			m_log_handler_count -= 1;
 			if(m_log_handler_count == 0) {
 				shutdown();
 			}
+		}
+
+		// ReSharper disable once CppMemberFunctionMayBeStatic
+		void LogHandler::startup_message() const {
+			#ifdef QUESTUTILITY_DEBUG
+				std::cout << "Initializing Logger: " << m_logger_name << "\n" << std::endl;
+			#endif
+		}
+
+		// ReSharper disable once CppMemberFunctionMayBeStatic
+		void LogHandler::shutdown_message() const {
+			#ifdef QUESTUTILITY_DEBUG
+				std::cout << "\nDestroying Logger: " << m_logger_name << std::endl;
+			#endif
 		}
 
 		void LogHandler::create_stdout_color_sink() {
@@ -45,6 +61,9 @@ namespace QuestUtility {
 		}
 
 		void LogHandler::shutdown() {
+			#ifdef QUESTUTILITY_DEBUG
+				std::cout << "Shutting down SPDLOG " << std::endl;
+			#endif
 			spdlog::shutdown();
 		}
 

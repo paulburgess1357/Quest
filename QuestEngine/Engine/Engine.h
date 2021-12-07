@@ -1,5 +1,5 @@
 #pragma
-#include "QuestWindow/Include/Window.h"
+#include "QuestEngine/Using/Window.h"
 
 namespace QuestEngine {
 	namespace Engine {
@@ -13,7 +13,7 @@ namespace QuestEngine {
 		private:
 			void gameloop() const;
 			[[nodiscard]] bool shutdown() const;
-			const QuestWindow::Window m_window;
+			const Window m_window;
 		};
 
 	} // Engine

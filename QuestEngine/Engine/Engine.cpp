@@ -23,7 +23,7 @@ namespace QuestEngine {
 		}
 
 		bool Engine::shutdown() const {
-			return m_window.close_window() || QuestWindow::KeyboardInput::is_pressed(QuestWindow::Keyboard::ESCAPE);
+			return m_window.close_window() || KeyboardInput::is_pressed(Keyboard::ESCAPE);
 		}
 
 	} // namespace Engine

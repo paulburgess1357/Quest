@@ -1,4 +1,5 @@
 #pragma once
+#include "QuestUtility/Include/Logger.h"
 
 namespace QuestGLCore::Handle {
 
@@ -43,11 +44,13 @@ namespace QuestGLCore::Handle {
 		void create() {
 			m_handle = TraitType::create();
 			m_handle_is_initialized = true;
+			QUEST_TRACE("Creating Handle: {}", m_handle);
 		}
 
 		void destroy() {
 			if (m_handle_is_initialized) {
 				TraitType::destroy(m_handle);
+				QUEST_TRACE("Destroying Handle: {}", m_handle);
 				reset(*this);
 			}
 		}
