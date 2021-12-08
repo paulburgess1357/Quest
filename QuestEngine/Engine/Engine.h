@@ -1,6 +1,6 @@
 #pragma once
-#include "QuestEngine/Logging/LogHandler.h"
-#include "QuestWindow/Include/Window.h"
+#include "QuestEngine/Using/Window.h"
+#include "QuestEngine/Using/Resource.h"
 
 namespace QuestEngine {
 	namespace Engine {
@@ -8,16 +8,15 @@ namespace QuestEngine {
 		class Engine{
 
 		public:
-			Engine(const int width = 1920, const int height = 1080);
+			explicit Engine(const int width = 1920, const int height = 1080);
 			void run() const;
 
 		private:
 			void gameloop() const;
 			[[nodiscard]] bool shutdown() const;
+			const Window m_window;
 
-			const Logging::LogHandler m_logger;
-			const QuestWindow::Window m_window;
-
+			Resource::ShaderResource m_shader_resource;
 		};
 
 	} // Engine

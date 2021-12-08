@@ -24,13 +24,13 @@
     <ClInclude Include="Engine\Engine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Logging\LogMacros.h">
+    <ClInclude Include="Using\Window.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Logging\LogHandler.h">
+    <ClInclude Include="Resource\TResource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Logging\LogHandlerException.h">
+    <ClInclude Include="Using\Resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -39,9 +39,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Engine.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Logging\LogHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

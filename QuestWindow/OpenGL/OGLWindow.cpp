@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "OGLWindow.h"
 #include "OGLWindowException.h"
-#include <iostream>
+#include "QuestUtility/Include/Logger.h"
 
 namespace QuestWindow {
 	namespace OpenGL {
@@ -31,11 +31,11 @@ namespace QuestWindow {
 			glfwMakeContextCurrent(m_window);
 
 			// Load GLAD
-			std::cout << "Initializing GLAD" << std::endl;
+			QUEST_TRACE("Initializing GLAD")
 			if (!gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress))) {
 				throw OGLGladException();
 			}
-			std::cout << "OpenGL Version: " << glGetString(GL_VERSION) << std::endl;
+			QUEST_TRACE("OpenGL Version: {}", glGetString(GL_VERSION))
 
 			// Set OGL Settings
 			glViewport(0, 0, width, height);

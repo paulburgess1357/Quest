@@ -55,9 +55,6 @@
     <ProjectReference Include="..\QuestGLCore\QuestGLCore.vcxproj">
       <Project>{66c11a4f-4221-47a9-9fda-69e4d68ee098}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\QuestGraphicsCore\QuestGraphicsCore.vcxproj">
-      <Project>{d016bf00-ea87-456e-bce8-806a8bc2607c}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\QuestSandbox\QuestSandbox.vcxproj">
       <Project>{fe8839d1-bba0-45fb-9a84-c19653c49493}</Project>
     </ProjectReference>

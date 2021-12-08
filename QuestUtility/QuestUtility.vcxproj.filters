@@ -21,18 +21,21 @@
     <ClInclude Include="pch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Template\Handle.h">
+    <ClInclude Include="Logging\LogHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Template\Bind.h">
+    <ClInclude Include="Logging\LogMacros.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Logger.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="QuestGraphicsCore.cpp">
+    <ClCompile Include="pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="pch.cpp">
+    <ClCompile Include="Logging\LogHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

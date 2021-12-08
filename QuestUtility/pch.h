@@ -8,8 +8,14 @@
 #define PCH_H
 
 // add headers that you want to pre-compile here
+#include <Windows.h>
 #include "framework.h"
-#include "Template/Bind.h"
-#include "Template/Handle.h"
+
+// Logger
+#include "QuestUtility/Logging/LogMacros.h"
+#include "QuestUtility/Logging/LogHandler.h"
+
+// Include
+#include "QuestUtility/Include/Logger.h"
 
 #endif //PCH_H

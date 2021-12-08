@@ -1,33 +1,48 @@
 #include "pch.h"
 #include "LogHandler.h"
-#include "LogHandlerException.h"
 #include "spdlog/sinks/stdout_color_sinks.h"
 #include <memory>
+// ReSharper disable once CppUnusedIncludeDirective
+#include <iostream>
 
-namespace QuestEngine {
+namespace QuestUtility {
 	namespace Logging {
-		
+
+		std::atomic_int LogHandler::m_log_handler_count{ 0 };
+
 		LogHandler::LogHandler(const std::string& logger_name)
-			:m_log_handler_exists{ false } {
-			check_if_exists();
+			:m_logger_name{ logger_name } {
+			startup_message();
 			create_stdout_color_sink();
 			add_logger(logger_name);
-			m_log_handler_exists = true;
+			m_log_handler_count += 1;
 		}
 
 		LogHandler::~LogHandler() {
-			shutdown();
+			shutdown_message();
+			m_log_handler_count -= 1;
+			if(m_log_handler_count == 0) {
+				shutdown();
+			}
 		}
 
-		void LogHandler::check_if_exists() const {
-			if(m_log_handler_exists) {
-				throw LogHandlerExistsException();
-			}
+		// ReSharper disable once CppMemberFunctionMayBeStatic
+		void LogHandler::startup_message() const {
+			#ifdef QUESTUTILITY_DEBUG
+				std::cout << "Initializing Logger: " << m_logger_name << "\n" << std::endl;
+			#endif
+		}
+
+		// ReSharper disable once CppMemberFunctionMayBeStatic
+		void LogHandler::shutdown_message() const {
+			#ifdef QUESTUTILITY_DEBUG
+				std::cout << "\nDestroying Logger: " << m_logger_name << std::endl;
+			#endif
 		}
 
 		void LogHandler::create_stdout_color_sink() {
 			const auto stdout_logger = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
-			stdout_logger->set_pattern("%^[%Y-%m-%d %H:%M:%S] %v%$");
+			stdout_logger->set_pattern("%^[%H:%M:%S.%e] %v%$");
 			m_sink_ptrs.push_back(stdout_logger);
 		}
 
@@ -46,8 +61,11 @@ namespace QuestEngine {
 		}
 
 		void LogHandler::shutdown() {
+			#ifdef QUESTUTILITY_DEBUG
+				std::cout << "Shutting down SPDLOG " << std::endl;
+			#endif
 			spdlog::shutdown();
 		}
 
 	} // namespace Logging
-} // namespace QuestEngine
+} // namespace QuestUtility
