@@ -2,7 +2,7 @@
 
 namespace QuestGLCore::Shader {
 
-	enum class ShaderType {
+	enum class ShaderEnum {
 		VERTEX,
 		FRAGMENT,
 		GEOMETRY

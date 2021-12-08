@@ -169,7 +169,7 @@
     <ClInclude Include="Interface\IWindowException.h" />
     <ClInclude Include="OpenGL\OGLWindowException.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="Template\TWindow.h" />
+    <ClInclude Include="Interface\TWindow.h" />
     <ClInclude Include="OpenGL\OGLWindow.h" />
   </ItemGroup>
   <ItemGroup>

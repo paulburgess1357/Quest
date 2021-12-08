@@ -164,6 +164,7 @@
     <ClInclude Include="Engine\Engine.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="Using\Resource.h" />
     <ClInclude Include="Resource\TResource.h" />
     <ClInclude Include="Using\Window.h" />
   </ItemGroup>

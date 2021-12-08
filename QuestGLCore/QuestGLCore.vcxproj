@@ -167,13 +167,14 @@
     <ClInclude Include="Handle\Traits\Buffer.h" />
     <ClInclude Include="Handle\Traits\ShaderProgram.h" />
     <ClInclude Include="Handle\Traits\Vao.h" />
+    <ClInclude Include="Include\Shader.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Shader\ShaderProgramCreator.h" />
     <ClInclude Include="Shader\ShaderProgram.h" />
     <ClInclude Include="Shader\ShaderExceptions.h" />
-    <ClInclude Include="Shader\ShaderTypedefs.h" />
-    <ClInclude Include="Shader\ShaderType.h" />
-    <ClInclude Include="Typedefs\Typedefs.h" />
+    <ClInclude Include="Shader\Typedefs.h" />
+    <ClInclude Include="Shader\ShaderEnum.h" />
+    <ClInclude Include="Handle\Typedefs.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">

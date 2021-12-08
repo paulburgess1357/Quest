@@ -1,5 +1,5 @@
 #pragma once
-#include "QuestWindow/Template/TWindow.h"
+#include "QuestWindow/Interface/TWindow.h"
 #include "QuestWindow/OpenGL/OGLWindow.h"
 
 #include "QuestWindow/Input/Keyboard.h"

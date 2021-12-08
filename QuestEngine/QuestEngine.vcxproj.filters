@@ -30,6 +30,9 @@
     <ClInclude Include="Resource\TResource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Using\Resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">

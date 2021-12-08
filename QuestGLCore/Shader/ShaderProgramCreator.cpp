@@ -1,19 +1,19 @@
 #include "pch.h"
 #include "ShaderProgramCreator.h"
 #include "ShaderExceptions.h"
-#include <glad/glad.h>
 #include "QuestUtility/Include/Logger.h"
+#include <glad/glad.h>
 
 namespace QuestGLCore::Shader {
 
-	ShaderProgramCreator::ShaderProgramCreator(const std::unordered_map<ShaderType, std::string>& shader_string_map)
+	ShaderProgramCreator::ShaderProgramCreator(const std::unordered_map<ShaderEnum, std::string>& shader_string_map)
 		:m_shader_string_map{ shader_string_map } {
 	}
 
-	ShaderProgramHandle ShaderProgramCreator::create() const {
+	Typedefs::ShaderProgramHandle ShaderProgramCreator::create() const {
 
 		// Create shader program handle
-		ShaderProgramHandle program_handle;
+		Typedefs::ShaderProgramHandle program_handle;
 		const Typedefs::HandleTypedef shader_program_handle = program_handle.get_handle();
 
 		// Load GLSL shaders and attach
@@ -37,20 +37,20 @@ namespace QuestGLCore::Shader {
 		return program_handle;
 	}
 
-	Typedefs::HandleTypedef ShaderProgramCreator::load_glsl_shader(const ShaderType shader_type, const std::string& shader_string) {
+	Typedefs::HandleTypedef ShaderProgramCreator::load_glsl_shader(const ShaderEnum shader_type, const std::string& shader_string) {
 
 		// ReSharper disable once CppInitializedValueIsAlwaysRewritten
 		Typedefs::HandleTypedef shader_handle{ };
 		switch (shader_type) {
-			case ShaderType::VERTEX: {
+			case ShaderEnum::VERTEX: {
 				shader_handle = glCreateShader(GL_VERTEX_SHADER);
 				break;
 			}
-			case ShaderType::FRAGMENT: {
+			case ShaderEnum::FRAGMENT: {
 				shader_handle = glCreateShader(GL_FRAGMENT_SHADER);
 				break;
 			}
-			case ShaderType::GEOMETRY: {
+			case ShaderEnum::GEOMETRY: {
 				shader_handle = glCreateShader(GL_GEOMETRY_SHADER);
 				break;
 			}

@@ -24,7 +24,7 @@
     <ClInclude Include="Interface\IWindow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Template\TWindow.h">
+    <ClInclude Include="Interface\TWindow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="OpenGL\OGLWindow.h">

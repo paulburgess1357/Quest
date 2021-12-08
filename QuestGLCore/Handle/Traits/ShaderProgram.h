@@ -1,5 +1,5 @@
 #pragma once
-#include "QuestGLCore/Typedefs/Typedefs.h"
+#include "QuestGLCore/Handle/Typedefs.h"
 
 namespace QuestGLCore::Traits {
 

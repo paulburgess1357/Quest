@@ -9,11 +9,4 @@ namespace QuestGLCore::Shader {
 		QUEST_TRACE("Shader Program Created: <{}> | Handle: <{}>", m_program_name, m_handle.get_handle());
 	}
 
-	//ShaderProgram::ShaderProgram(ShaderProgram&& source) noexcept {
-	//	m_program_name = source.m_program_name;
-	//	m_handle = std::move(source.m_handle);
-	//}
-
-
-
 } // namespace QuestGLCore::ShaderProgram

@@ -36,7 +36,7 @@
     <ClInclude Include="Handle\Traits\Vao.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Typedefs\Typedefs.h">
+    <ClInclude Include="Handle\Typedefs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Handle\Traits\ShaderProgram.h">
@@ -45,13 +45,16 @@
     <ClInclude Include="Shader\ShaderProgramCreator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Shader\ShaderType.h">
+    <ClInclude Include="Shader\ShaderEnum.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Shader\ShaderExceptions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Shader\ShaderTypedefs.h">
+    <ClInclude Include="Shader\Typedefs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Shader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
