@@ -2,5 +2,5 @@
 
 int main(){
     const QuestEngine::Engine::Engine game_engine;
-    game_engine.run();
+    // game_engine.run();
 }

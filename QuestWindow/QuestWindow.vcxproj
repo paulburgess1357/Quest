@@ -183,6 +183,11 @@
     </ClCompile>
     <ClCompile Include="OpenGL\OGLWindow.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\QuestUtility\QuestUtility.vcxproj">
+      <Project>{8463a674-7d65-4937-9c1c-c6253eb0352c}</Project>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
