@@ -169,6 +169,7 @@
     <ClInclude Include="Engine\Engine.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="Resource\ResourceManager.h" />
     <ClInclude Include="Using\Resource.h" />
     <ClInclude Include="Resource\TResource.h" />
     <ClInclude Include="Using\Window.h" />
@@ -182,6 +183,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Resource\ResourceManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\QuestGLCore\QuestGLCore.vcxproj">

@@ -15,6 +15,14 @@ namespace QuestGLCore::Traits {
 			glDeleteVertexArrays(1, &ogl_handle);
 		}
 
+		static void bind(const Typedefs::HandleTypedef& ogl_handle) {
+			glBindVertexArray(ogl_handle);
+		}
+
+		static void unbind() {
+			glBindVertexArray(0);
+		}
+
 	};
 
 } // QuestGLCore::Traits

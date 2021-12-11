@@ -3,6 +3,7 @@
 
 namespace QuestGLCore::Traits {
 
+	template<GLenum Target>
 	struct BufferTraits {
 
 		static Typedefs::HandleTypedef create() {
@@ -13,6 +14,14 @@ namespace QuestGLCore::Traits {
 
 		static void destroy(const Typedefs::HandleTypedef& ogl_handle) {
 			glDeleteBuffers(1, &ogl_handle);
+		}
+
+		static void bind(const Typedefs::HandleTypedef& ogl_handle) {
+			glBindBuffer(Target, ogl_handle);
+		}
+
+		static void unbind() {
+			glBindBuffer(Target, 0);
 		}
 
 	};

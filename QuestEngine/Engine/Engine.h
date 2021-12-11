@@ -1,6 +1,6 @@
 #pragma once
 #include "QuestEngine/Using/Window.h"
-#include "QuestEngine/Using/Resource.h"
+#include "QuestEngine/Resource/ResourceManager.h"
 
 namespace QuestEngine::API {
 	class QuestEngineAPI; 
@@ -19,7 +19,8 @@ namespace QuestEngine::Engine {
 		[[nodiscard]] bool shutdown() const;
 		const Window m_window;
 
-		Resource::ShaderResource m_shader_resource;
+		Resource::ResourceManager m_resource_manager;
+
 
 		friend class API::QuestEngineAPI;
 	};

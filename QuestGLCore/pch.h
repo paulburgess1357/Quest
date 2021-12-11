@@ -22,6 +22,9 @@
 #include "QuestGLCore/Shader/ShaderEnum.h"
 #include "QuestGLCore/Shader/Typedefs.h"
 
+// Vertex Data
+#include "QuestGLCore/VertexData/VertexDataStruct.h"
+
 // Include
 #include "QuestGLCore/Include/Shader.h"
 

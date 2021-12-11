@@ -14,6 +14,14 @@ namespace QuestGLCore::Traits {
 			glDeleteProgram(shader_handle);
 		}
 
+		static void bind(const Typedefs::HandleTypedef& shader_handle) {
+			glUseProgram(shader_handle);
+		}
+
+		static void unbind() {
+			glUseProgram(0);
+		}
+
 	};	
 
 } // QuestGLCore::Traits

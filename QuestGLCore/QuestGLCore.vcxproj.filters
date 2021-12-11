@@ -57,6 +57,12 @@
     <ClInclude Include="Include\Shader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="VertexData\VertexDataStruct.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexData\VertexDataLoader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="QuestGLCore.cpp">

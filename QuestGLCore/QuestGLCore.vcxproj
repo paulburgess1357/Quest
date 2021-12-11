@@ -179,6 +179,8 @@
     <ClInclude Include="Shader\Typedefs.h" />
     <ClInclude Include="Shader\ShaderEnum.h" />
     <ClInclude Include="Handle\Typedefs.h" />
+    <ClInclude Include="VertexData\VertexDataLoader.h" />
+    <ClInclude Include="VertexData\VertexDataStruct.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">

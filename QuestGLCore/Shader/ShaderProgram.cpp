@@ -9,4 +9,13 @@ namespace QuestGLCore::Shader {
 		QUEST_TRACE("Shader Program Created: <{}> | Handle: <{}>", m_program_name, m_handle.get_handle());
 	}
 
+	void ShaderProgram::bind() const {
+		m_handle.bind();
+	}
+
+	void ShaderProgram::unbind() const {
+		m_handle.unbind();
+	}
+
+
 } // namespace QuestGLCore::ShaderProgram
