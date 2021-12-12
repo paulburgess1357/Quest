@@ -12,6 +12,11 @@ namespace QuestEngine::API {
 		m_engine->run();
 	}
 
+	// ======= Shader =======
+	QuestGLCore::Shader::ShaderProgram& QuestEngineAPI::get_shader(const std::string& shader_id) const {
+		return m_engine->m_resource_manager.get_shader(shader_id);
+	}
+
 	void QuestEngineAPI::load_shader(const std::string& shader_id, const std::initializer_list<std::pair<QuestGLCore::Shader::ShaderEnum, std::string>> shaders) const {
 		m_engine->m_resource_manager.load_shader(shader_id, shaders);
 	}

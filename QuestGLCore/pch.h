@@ -24,6 +24,7 @@
 
 // Vertex Data
 #include "QuestGLCore/VertexData/VertexDataStruct.h"
+#include "QuestGLCore/VertexData/VertexDataLoader.h"
 
 // Include
 #include "QuestGLCore/Include/Shader.h"

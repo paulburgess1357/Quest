@@ -11,6 +11,7 @@ namespace QuestEngine::API {
 		QuestEngineAPI(const int width = 1920, const int height = 1080);
 		void run() const;
 
+		[[nodiscard]] QuestGLCore::Shader::ShaderProgram& get_shader(const std::string& shader_id) const;
 		void load_shader(const std::string& shader_id, const std::initializer_list<std::pair<QuestGLCore::Shader::ShaderEnum, std::string>> shaders) const;
 
 	private:

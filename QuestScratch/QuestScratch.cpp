@@ -2,22 +2,23 @@
 #include <Windows.h>
 #include "QuestEngine/API/EngineAPI.h"
 #include "QuestGLCore/VertexData/VertexDataLoader.h"
-
-const char* vertexShaderSource = "#version 330 core\n"
-"layout (location = 0) in vec3 aPos;\n"
-"void main()\n"
-"{\n"
-"   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
-"}\0";
+#include "QuestUtility/String/FileToString.h"
 
 int main(){
 
     const QuestEngine::API::QuestEngineAPI engine_api;
 
-    // Testing loading of data to gpi:
+    std::string vertex_string =   QuestUtility::String::FileToString::load("../Resources/Shaders/Triangle/TriangleVertex.glsl");
+    std::string fragment_string = QuestUtility::String::FileToString::load("../Resources/Shaders/Triangle/TriangleFragment.glsl");
 
+    engine_api.load_shader("TriangleShader", {
+    	std::pair{QuestGLCore::Shader::ShaderEnum::VERTEX, vertex_string },
+    	std::pair{QuestGLCore::Shader::ShaderEnum::FRAGMENT, fragment_string }
+    });
+
+
+    // Testing loading of data to gpu:
     std::vector<float> vertices = {
-
         // first triangle
          0.5f,  0.5f, 0.0f,  // top right
          0.5f, -0.5f, 0.0f,  // bottom right
@@ -28,18 +29,7 @@ int main(){
         -0.5f,  0.5f, 0.0f   // top left
     };
 
-    auto result = QuestGLCore::VertexData::VertexDataLoader::load_float_data(vertices, { 3 });
-
-
-
-
-
-
-	std::string vertex_string { vertexShaderSource };
-    std::pair test1{ QuestGLCore::Shader::ShaderEnum::VERTEX, vertex_string };
-    std::pair test2{ QuestGLCore::Shader::ShaderEnum::VERTEX, vertex_string };
-    std::pair test3{ QuestGLCore::Shader::ShaderEnum::VERTEX, vertex_string };
-    engine_api.load_shader("shader_test", { test1 });
-    engine_api.run();
+    auto vertex_data_handles = QuestGLCore::VertexData::VertexDataLoader::load_float_data(vertices, { 3 });
+    auto& shader_program = engine_api.get_shader("TriangleShader");
 
 }

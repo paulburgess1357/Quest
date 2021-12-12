@@ -13,10 +13,10 @@ namespace QuestGLCore::Shader {
 		[[nodiscard]] Typedefs::ShaderProgramHandle create() const;
 
 	private:
-		[[nodiscard]] static Typedefs::HandleTypedef load_glsl_shader(const ShaderEnum, const std::string& shader_string);
+		[[nodiscard]] static Typedefs::GLHandle load_glsl_shader(const ShaderEnum, const std::string& shader_string);
 		
-		static void check_shader(const Typedefs::HandleTypedef handle);
-		static void check_shader_program(const Typedefs::HandleTypedef handle);
+		static void check_shader(const Typedefs::GLHandle handle);
+		static void check_shader_program(const Typedefs::GLHandle handle);
 
 		std::unordered_map<ShaderEnum, std::string> m_shader_string_map{};
 

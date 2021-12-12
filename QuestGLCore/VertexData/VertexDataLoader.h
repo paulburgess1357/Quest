@@ -1,13 +1,15 @@
 #pragma once
 #include "VertexDataStruct.h"
+#include <glad/glad.h>
 #include <numeric>
+// ReSharper disable CppCStyleCast
+// ReSharper disable CppClangTidyPerformanceNoIntToPtr
 
 namespace QuestGLCore::VertexData {
 
 	class VertexDataLoader {
 
 	public:
-
 		// Specialized Functions: 
 		static [[nodiscard]] VertexDataStruct<GL_ARRAY_BUFFER> load_float_data(const std::vector<float>& input_data, const std::vector<int>& vertex_description) {
 			return load_data<float, GL_FLOAT, GL_ARRAY_BUFFER, GL_STATIC_DRAW>(input_data, vertex_description);
@@ -26,14 +28,14 @@ namespace QuestGLCore::VertexData {
 			vertex_handles.bind_data();
 
 			// Store data
-			glBufferData(VBOTarget, sizeof(T) * input_data.size(), input_data.data(), DrawType);
+			glBufferData(VBOTarget, static_cast<Typedefs::GLSizePtr>(sizeof(T) * input_data.size()), input_data.data(), DrawType);
 
 			// Describe attributes (for shader)
-			const auto stride = static_cast<GLsizei>(std::accumulate(vertex_description.begin(), vertex_description.end(), 0) * sizeof(T));
+			const auto stride = static_cast<Typedefs::GLSize>(std::accumulate(vertex_description.begin(), vertex_description.end(), 0) * sizeof(T));
 			unsigned int offset = 0;
 
-			for (int i = 0; i < vertex_description.size(); i++) {
-				glVertexAttribPointer(i, vertex_description.at(i), GLType, GL_FALSE, stride,    (void*) (offset * sizeof(T))            );
+			for (int i = 0; i < static_cast<int>(vertex_description.size()); i++) {
+				glVertexAttribPointer(i, vertex_description.at(i), GLType, GL_FALSE, stride, (void*)(offset * sizeof(T)));
 				glEnableVertexAttribArray(i);
 				offset += vertex_description.at(i);
 			}
@@ -50,22 +52,23 @@ namespace QuestGLCore::VertexData {
 			vertex_handles.bind_data();
 
 			// Store data
-			glBufferData(VBOTarget, sizeof(T) * input_data.size(), input_data.data(), DrawType);
+			glBufferData(VBOTarget, static_cast<Typedefs::GLSizePtr>(sizeof(T) * input_data.size()), input_data.data(), DrawType);
 
 			// Store indices
-			glBufferData(EBOTarget, sizeof(unsigned int) * indices.size(), indices.data(), DrawType);  // NOLINT(bugprone-narrowing-conversions)
+			glBufferData(EBOTarget, static_cast<Typedefs::GLSizePtr>(sizeof(unsigned int) * indices.size()), indices.data(), DrawType);
 
 			// Describe attributes (for shader)
-			const auto stride = static_cast<GLsizei>(std::accumulate(vertex_description.begin(), vertex_description.end(), 0) * sizeof(T));
+			const auto stride = static_cast<Typedefs::GLSize>(std::accumulate(vertex_description.begin(), vertex_description.end(), 0) * sizeof(T));
 			unsigned int offset = 0;
 
-			for (int i = 0; i < vertex_description.size(); i++) {
-				glVertexAttribPointer(i, vertex_description.at(i), GLType, GL_FALSE, stride,   (void*) (offset * sizeof(T))      );
+			for (int i = 0; i < static_cast<int>(vertex_description.size()); i++) {
+				glVertexAttribPointer(i, vertex_description.at(i), GLType, GL_FALSE, stride, (void*)(offset * sizeof(T)));
 				glEnableVertexAttribArray(i);
 				offset += vertex_description.at(i);
 			}
 
 			vertex_handles.unbind_data();
+			vertex_handles.m_index_count = static_cast<Typedefs::GLSize>(indices.size());
 			return vertex_handles;
 		}
 
