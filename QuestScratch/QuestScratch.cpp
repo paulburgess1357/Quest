@@ -1,33 +1,34 @@
-#include "QuestUtility/Include/Logger.h"
-#include "QuestEngine/Engine/Engine.h"
-#include "QuestGLCore/Shader/ShaderProgram.h"
-#include "QuestGLCore/Shader/ShaderProgramCreator.h"
-#include "QuestGLCore/Shader/ShaderEnum.h"
-#include "QuestEngine/Resource/TResource.h"
-
-
-const char* vertexShaderSource = "#version 330 core\n"
-"layout (location = 0) in vec3 aPos;\n"
-"void main()\n"
-"{\n"
-"   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
-"}\0";
+// ReSharper disable once CppUnusedIncludeDirective
+#include <Windows.h>
+#include "QuestEngine/API/EngineAPI.h"
+#include "QuestGLCore/VertexData/VertexDataLoader.h"
+#include "QuestUtility/String/FileToString.h"
 
 int main(){
-    const QuestEngine::Engine::Engine game_engine;
-    game_engine.run();
 
-    std::unordered_map<QuestGLCore::Shader::ShaderEnum, std::string> shader_string_map;
-    shader_string_map[QuestGLCore::Shader::ShaderEnum::VERTEX] = vertexShaderSource;
+    const QuestEngine::API::QuestEngineAPI engine_api;
 
-    QuestGLCore::Shader::ShaderProgramCreator shader_creator{ shader_string_map  };
-    QuestGLCore::Shader::ShaderProgram shader_program{ "Test program", shader_creator};
+    std::string vertex_string =   QuestUtility::String::FileToString::load("../Resources/Shaders/Triangle/TriangleVertex.glsl");
+    std::string fragment_string = QuestUtility::String::FileToString::load("../Resources/Shaders/Triangle/TriangleFragment.glsl");
 
-    QuestEngine::Resource::TResource<std::string, QuestGLCore::Shader::ShaderProgram> shader_resource;
-    shader_resource.load("shader_test_is_the_key", "waffle_shader_is_my_name",  shader_creator);
-    shader_resource.load("shader_test_is_the_key", "waffle_shader_is_my_name", shader_creator);
-    shader_resource.load("shader_test_is_the_key", "waffle_shader_is_my_name", shader_creator);
+    engine_api.load_shader("TriangleShader", {
+    	std::pair{QuestGLCore::Shader::ShaderEnum::VERTEX, vertex_string },
+    	std::pair{QuestGLCore::Shader::ShaderEnum::FRAGMENT, fragment_string }
+    });
 
-    QuestEngine::Resource::TResource<std::string, QuestGLCore::Shader::ShaderProgram> shader_resource2 { std::move(shader_resource) };
+    // Testing loading of data to gpu:
+    std::vector<float> vertices = {
+        // first triangle
+         0.5f,  0.5f, 0.0f,  // top right
+         0.5f, -0.5f, 0.0f,  // bottom right
+        -0.5f,  0.5f, 0.0f,  // top left 
+        // second triangle
+         0.5f, -0.5f, 0.0f,  // bottom right
+        -0.5f, -0.5f, 0.0f,  // bottom left
+        -0.5f,  0.5f, 0.0f   // top left
+    };
+
+    auto vertex_data_handles = QuestGLCore::VertexData::VertexDataLoader::load_float_data(vertices, { 3 });
+    auto& shader_program = engine_api.get_shader("TriangleShader");
 
 }

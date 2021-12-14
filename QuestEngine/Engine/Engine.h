@@ -1,23 +1,28 @@
 #pragma once
 #include "QuestEngine/Using/Window.h"
-#include "QuestEngine/Using/Resource.h"
+#include "QuestEngine/Resource/ResourceManager.h"
 
-namespace QuestEngine {
-	namespace Engine {
+namespace QuestEngine::API {
+	class QuestEngineAPI; 
+} // namespace QuestEngine::API
 
-		class Engine{
+namespace QuestEngine::Engine {
 
-		public:
-			explicit Engine(const int width = 1920, const int height = 1080);
-			void run() const;
+	class Engine{
 
-		private:
-			void gameloop() const;
-			[[nodiscard]] bool shutdown() const;
-			const Window m_window;
+	public:
+		explicit Engine(const int width = 1920, const int height = 1080);
 
-			Resource::ShaderResource m_shader_resource;
-		};
+	private:
+		void run() const;
+		void gameloop() const;
+		[[nodiscard]] bool shutdown() const;
+		const Window::Window m_window;
 
-	} // Engine
-} // namespace QuestEngine
+		Resource::ResourceManager m_resource_manager;
+
+
+		friend class API::QuestEngineAPI;
+	};
+
+} // namespace QuestEngine::Engine

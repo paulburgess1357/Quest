@@ -7,10 +7,12 @@ namespace QuestGLCore::Handle {
 	class HandleTemplate {
 
 	public:
-		explicit HandleTemplate()
+		explicit HandleTemplate(const bool init = true)
 			:m_handle_is_initialized{ false },
 			m_handle{ HandleTypedef{} }{
-			create();
+			if(init) {
+				create();
+			}
 		}
 
 		~HandleTemplate() {
@@ -40,6 +42,14 @@ namespace QuestGLCore::Handle {
 			return m_handle;
 		}
 
+		void bind() const {
+			TraitType::bind(m_handle);
+		}
+
+		void unbind() const {
+			TraitType::unbind();
+		}
+
 	private:
 		void create() {
 			m_handle = TraitType::create();
@@ -64,5 +74,8 @@ namespace QuestGLCore::Handle {
 		HandleTypedef m_handle;
 
 	};
+
+
+
 
 } // namespace QuestGLCore::Handle

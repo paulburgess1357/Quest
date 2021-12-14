@@ -8,6 +8,8 @@ namespace QuestGLCore::Shader {
 
 	public:
 		ShaderProgram(const std::string program_name, const ShaderProgramCreator shader_creator);
+		void bind() const;
+		void unbind() const;
 
 	private:
 		std::string m_program_name;

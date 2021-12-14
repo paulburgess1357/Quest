@@ -21,7 +21,7 @@ namespace QuestEngine::Resource {
 		}
 
 		Value& operator[](const Key& key) {
-			return m_resource_map[key];
+			return m_resource_map.find(key)->second;
 		}
 
 	private:

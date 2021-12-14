@@ -1,8 +1,8 @@
 #pragma once
 #include "QuestEngine/Resource/TResource.h"
-#include "QuestGLCore/Include/Shader.h"
+#include "QuestEngine/Using/Shader.h"
 #include <string>
 
 namespace QuestEngine::Resource {
-	using ShaderResource = TResource<std::string, QuestGLCore::Shader::ShaderProgram>;
+	using ShaderResource = TResource<std::string, Shader::ShaderProgram>;
 } // namespace QuestEngine::Resource
