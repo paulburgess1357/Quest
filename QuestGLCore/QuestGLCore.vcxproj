@@ -172,6 +172,7 @@
     <ClInclude Include="Handle\Traits\ShaderProgram.h" />
     <ClInclude Include="Handle\Traits\Vao.h" />
     <ClInclude Include="Include\Shader.h" />
+    <ClInclude Include="Model\Mesh.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Shader\ShaderProgramCreator.h" />
     <ClInclude Include="Shader\ShaderProgram.h" />
@@ -183,6 +184,7 @@
     <ClInclude Include="VertexData\VertexDataStruct.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Model\Mesh.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

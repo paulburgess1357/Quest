@@ -16,7 +16,6 @@ int main(){
     	std::pair{QuestGLCore::Shader::ShaderEnum::FRAGMENT, fragment_string }
     });
 
-
     // Testing loading of data to gpu:
     std::vector<float> vertices = {
         // first triangle

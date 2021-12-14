@@ -17,7 +17,7 @@ namespace QuestEngine::Engine {
 		void run() const;
 		void gameloop() const;
 		[[nodiscard]] bool shutdown() const;
-		const Window m_window;
+		const Window::Window m_window;
 
 		Resource::ResourceManager m_resource_manager;
 

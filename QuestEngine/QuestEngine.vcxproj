@@ -168,15 +168,18 @@
     <ClInclude Include="API\EngineAPI.h" />
     <ClInclude Include="Engine\Engine.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="Model\Mesh.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Resource\ResourceManager.h" />
     <ClInclude Include="Using\Resource.h" />
     <ClInclude Include="Resource\TResource.h" />
+    <ClInclude Include="Using\Shader.h" />
     <ClInclude Include="Using\Window.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="API\EngineAPI.cpp" />
     <ClCompile Include="Engine\Engine.cpp" />
+    <ClCompile Include="Model\Mesh.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
