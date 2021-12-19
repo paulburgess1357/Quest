@@ -5,9 +5,6 @@
 #include <Windows.h>
 #include "framework.h"
 
-// Bind
-#include "QuestGLCore/Bind/Template/Bind.h"
-
 // Handle
 #include "QuestGLCore/Handle/Template/HandleTemplate.h"
 #include "QuestGLCore/Handle/Traits/Vao.h"

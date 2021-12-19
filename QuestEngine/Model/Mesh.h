@@ -13,7 +13,7 @@ public:
 
 private:
 
-	//TODO importanct: the model class, NOT the mesh class, should have the matrices!!!!!
+	//TODO important: the model class, NOT the mesh class, should have the matrices!!!!!
 
 	T m_mesh;
 	//glm::mat4 m_model_matrix{};

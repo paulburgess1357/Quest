@@ -2,7 +2,6 @@
 #include <Windows.h>
 #include "QuestEngine/API/EngineAPI.h"
 #include "QuestGLCore/VertexData/VertexData.h"
-#include "QuestGLCore/VertexData/VertexDataElement.h"
 #include "QuestUtility/String/FileToString.h"
 
 int main(){
@@ -18,7 +17,7 @@ int main(){
     });
 
     // Testing loading of data to gpu:
-    std::vector<float> vertices = {
+    const std::vector<float> vertices = {
         // first triangle
          0.5f,  0.5f, 0.0f,  // top right
          0.5f, -0.5f, 0.0f,  // bottom right
@@ -32,7 +31,6 @@ int main(){
     QuestGLCore::VertexData::VertexData vertex_data{ GL_ARRAY_BUFFER };
     vertex_data.load_data<float, GL_FLOAT>(vertices, { 3 });
 
-	// vertex_data.load_data<float, GL_FLOAT>(vertices, { 3 });
     auto& shader_program = engine_api.get_shader("TriangleShader");
 
 }

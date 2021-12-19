@@ -1,3 +1,4 @@
+// ReSharper disable CppCStyleCast
 #pragma once
 #include "QuestGLCore/Handle/Template/HandleTemplate.h"
 #include "QuestGLCore/Handle/Traits/Vao.h"

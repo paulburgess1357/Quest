@@ -30,9 +30,6 @@
     <ClInclude Include="Handle\Traits\Buffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Bind\Template\Bind.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Handle\Traits\Vao.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -78,9 +75,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Shader\ShaderProgramCreator.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Model\Mesh.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

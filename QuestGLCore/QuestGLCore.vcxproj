@@ -165,7 +165,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Bind\Template\Bind.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Handle\Template\HandleTemplate.h" />
     <ClInclude Include="Handle\Traits\Buffer.h" />
@@ -184,7 +183,6 @@
     <ClInclude Include="VertexData\VertexDataElement.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Model\Mesh.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
