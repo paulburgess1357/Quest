@@ -1,7 +1,8 @@
 // ReSharper disable once CppUnusedIncludeDirective
 #include <Windows.h>
 #include "QuestEngine/API/EngineAPI.h"
-#include "QuestGLCore/VertexData/VertexDataLoader.h"
+#include "QuestGLCore/VertexData/VertexData.h"
+#include "QuestGLCore/VertexData/VertexDataElement.h"
 #include "QuestUtility/String/FileToString.h"
 
 int main(){
@@ -28,7 +29,10 @@ int main(){
         -0.5f,  0.5f, 0.0f   // top left
     };
 
-    auto vertex_data_handles = QuestGLCore::VertexData::VertexDataLoader::load_data(vertices, { 3 });
+    QuestGLCore::VertexData::VertexData vertex_data{ GL_ARRAY_BUFFER };
+    vertex_data.load_data<float, GL_FLOAT>(vertices, { 3 });
+
+	// vertex_data.load_data<float, GL_FLOAT>(vertices, { 3 });
     auto& shader_program = engine_api.get_shader("TriangleShader");
 
 }

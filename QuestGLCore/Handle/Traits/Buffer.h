@@ -20,11 +20,11 @@ namespace QuestGLCore::Traits {
 			glDeleteBuffers(1, &ogl_handle);
 		}
 
-		void bind(const Typedefs::GLHandle& ogl_handle) {
+		void bind(const Typedefs::GLHandle& ogl_handle) const {
 			glBindBuffer(m_target, ogl_handle);
 		}
 
-		void unbind() {
+		void unbind() const {
 			glBindBuffer(m_target, 0);
 		}
 

@@ -60,9 +60,6 @@
     <ClInclude Include="Model\Mesh.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="VertexData\Typedefs.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="VertexData\VertexData.h">
       <Filter>Header Files</Filter>
     </ClInclude>

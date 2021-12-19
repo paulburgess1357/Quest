@@ -180,7 +180,6 @@
     <ClInclude Include="Shader\Typedefs.h" />
     <ClInclude Include="Shader\ShaderEnum.h" />
     <ClInclude Include="Handle\Typedefs.h" />
-    <ClInclude Include="VertexData\Typedefs.h" />
     <ClInclude Include="VertexData\VertexData.h" />
     <ClInclude Include="VertexData\VertexDataElement.h" />
   </ItemGroup>

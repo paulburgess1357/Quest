@@ -7,12 +7,12 @@ namespace QuestGLCore::Handle {
 	class HandleTemplate {
 
 	public:
-		explicit HandleTemplate(const bool init = true)
+		template<typename... Args>
+		explicit HandleTemplate(Args&&... args)
 			:m_handle_is_initialized{ false },
-			m_handle{ HandleTypedef{} }{
-			if(init) {
-				create();
-			}
+			m_handle{ },
+			m_trait{ std::forward<Args>(args)... }{
+			create();
 		}
 
 		~HandleTemplate() {
@@ -43,23 +43,23 @@ namespace QuestGLCore::Handle {
 		}
 
 		void bind() const {
-			TraitType::bind(m_handle); // TODO for this handle change, traittype now needs to be a member variable call (not static).  I probably need to forward args...
+			m_trait.bind(m_handle); // TODO for this handle change, traittype now needs to be a member variable call (not static).  I probably need to forward args...
 		}
 
 		void unbind() const {
-			TraitType::unbind();
+			m_trait.unbind();
 		}
 
 	private:
 		void create() {
-			m_handle = TraitType::create();
+			m_handle = m_trait.create();
 			m_handle_is_initialized = true;
 			QUEST_TRACE("Creating Handle: {}", m_handle);
 		}
 
 		void destroy() {
 			if (m_handle_is_initialized) {
-				TraitType::destroy(m_handle);
+				m_trait.destroy(m_handle);
 				QUEST_TRACE("Destroying Handle: {}", m_handle);
 				reset(*this);
 			}
@@ -72,6 +72,7 @@ namespace QuestGLCore::Handle {
 
 		bool m_handle_is_initialized;
 		HandleTypedef m_handle;
+		TraitType m_trait;
 
 	};
 
