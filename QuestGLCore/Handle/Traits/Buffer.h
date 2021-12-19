@@ -3,8 +3,12 @@
 
 namespace QuestGLCore::Traits {
 
-	template<GLenum Target>
-	struct BufferTraits {
+	class BufferTraits{
+
+	public:
+		BufferTraits(const GLenum target)
+			:m_target{ target } {
+		}
 
 		static Typedefs::GLHandle create() {
 			Typedefs::GLHandle vbo{ };
@@ -16,13 +20,16 @@ namespace QuestGLCore::Traits {
 			glDeleteBuffers(1, &ogl_handle);
 		}
 
-		static void bind(const Typedefs::GLHandle& ogl_handle) {
-			glBindBuffer(Target, ogl_handle);
+		void bind(const Typedefs::GLHandle& ogl_handle) {
+			glBindBuffer(m_target, ogl_handle);
 		}
 
-		static void unbind() {
-			glBindBuffer(Target, 0);
+		void unbind() {
+			glBindBuffer(m_target, 0);
 		}
+
+	private:
+		const GLenum m_target;
 
 	};
 

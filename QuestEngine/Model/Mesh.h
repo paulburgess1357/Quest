@@ -7,8 +7,8 @@ class Mesh{
 public:
 	void draw() {
 		m_mesh.bind();
-		m_mesh.draw();
 		m_mesh.unbind();
+		m_mesh.draw();
 	}
 
 private:

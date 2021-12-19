@@ -43,7 +43,7 @@ namespace QuestGLCore::Handle {
 		}
 
 		void bind() const {
-			TraitType::bind(m_handle);
+			TraitType::bind(m_handle); // TODO for this handle change, traittype now needs to be a member variable call (not static).  I probably need to forward args...
 		}
 
 		void unbind() const {

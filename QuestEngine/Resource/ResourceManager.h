@@ -7,6 +7,7 @@ namespace QuestEngine::Resource {
 
 	public:
 		Shader::ShaderProgram& get_shader(const std::string& shader_id);
+		Shader::ShaderProgram* get_shader_pointer(const std::string& shader_id);
 		void load_shader(const std::string& shader_id, const std::initializer_list<std::pair<Shader::ShaderEnum, std::string>> shaders);
 
 	private:

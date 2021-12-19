@@ -10,6 +10,10 @@ namespace QuestEngine::Resource {
 		return m_shader_resource[shader_id];
 	}
 
+	Shader::ShaderProgram* ResourceManager::get_shader_pointer(const std::string& shader_id) {
+		return m_shader_resource.get_pointer(shader_id);
+	}
+
 	void ResourceManager::load_shader(const std::string& shader_id, const std::initializer_list<std::pair<Shader::ShaderEnum, std::string>> shaders) {
 		std::unordered_map<Shader::ShaderEnum, std::string> shader_string_map;
 		for (const auto& [shader_type, shader_string] : shaders) {

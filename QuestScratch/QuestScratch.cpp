@@ -28,7 +28,7 @@ int main(){
         -0.5f,  0.5f, 0.0f   // top left
     };
 
-    auto vertex_data_handles = QuestGLCore::VertexData::VertexDataLoader::load_float_data(vertices, { 3 });
+    auto vertex_data_handles = QuestGLCore::VertexData::VertexDataLoader::load_data(vertices, { 3 });
     auto& shader_program = engine_api.get_shader("TriangleShader");
 
 }

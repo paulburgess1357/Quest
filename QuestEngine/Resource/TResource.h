@@ -24,6 +24,10 @@ namespace QuestEngine::Resource {
 			return m_resource_map.find(key)->second;
 		}
 
+		Value* get_pointer(const Key& key) {
+			return &m_resource_map.find(key)->second;
+		}
+
 	private:
 		std::unordered_map<Key, Value> m_resource_map{};
 	};
