@@ -172,6 +172,7 @@
     <ClInclude Include="Handle\Traits\Vao.h" />
     <ClInclude Include="Include\Shader.h" />
     <ClInclude Include="Model\Mesh.h" />
+    <ClInclude Include="OpenGLTypes\OglTypeResolution.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Shader\ShaderProgramCreator.h" />
     <ClInclude Include="Shader\ShaderProgram.h" />
