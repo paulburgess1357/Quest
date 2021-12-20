@@ -3,6 +3,7 @@
 #include "QuestEngine/API/EngineAPI.h"
 #include "QuestGLCore/VertexData/VertexData.h"
 #include "QuestUtility/String/FileToString.h"
+#include "QuestGLCore/Model/Mesh.h"
 
 int main(){
 
@@ -29,8 +30,9 @@ int main(){
     };
 
     QuestGLCore::VertexData::VertexData vertex_data{ GL_ARRAY_BUFFER };
-    vertex_data.load_data<float, GL_FLOAT>(vertices, { 3 });
+    vertex_data.load_data<float>(vertices, { 3 });
 
-    auto& shader_program = engine_api.get_shader("TriangleShader");
+    const auto& shader_program = engine_api.get_shader("TriangleShader");
+    QuestGLCore::Model::Mesh<QuestGLCore::VertexData::VertexData> mesh_test{ shader_program, vertex_data };
 
 }

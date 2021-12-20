@@ -5,6 +5,9 @@
 #include <Windows.h>
 #include "framework.h"
 
+// OglTypes
+#include "QuestGLCore/OpenGLTypes/OglTypeResolution.h"
+
 // Handle
 #include "QuestGLCore/Handle/Template/HandleTemplate.h"
 #include "QuestGLCore/Handle/Traits/Vao.h"
