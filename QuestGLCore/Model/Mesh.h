@@ -1,5 +1,6 @@
 #pragma once
-#include "QuestGLCore/Shader/ShaderProgram.h"
+#include "QuestGLCore/VertexData/VertexData.h"
+#include "QuestGLCore/VertexData/VertexDataElement.h"
 
 namespace QuestGLCore::Model {
 
@@ -7,12 +8,20 @@ namespace QuestGLCore::Model {
 	class Mesh {
 
 	public:
-		Mesh(const Shader::ShaderProgram& shader_program, const T& vertex_data)
-			:m_shader_program{ &shader_program }, m_vertex_data{ &vertex_data } {
+		explicit Mesh(T vertex_data)
+			:m_vertex_data{ std::move(vertex_data) } {
 		}
 
-		const Shader::ShaderProgram* m_shader_program;
-		const T* m_vertex_data;
+		void draw(const GLenum draw_mode) const {
+			// Bind materials
+			// Bind textures
+			m_vertex_data->draw(draw_mode);
+			// Unbind materials
+			// Unbind textures
+		}
+
+	private:
+		T m_vertex_data;
 	};
 
 } // namespace QuestGLCore::Model 

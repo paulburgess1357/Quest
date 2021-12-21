@@ -4,6 +4,7 @@
 #include "QuestGLCore/VertexData/VertexData.h"
 #include "QuestUtility/String/FileToString.h"
 #include "QuestGLCore/Model/Mesh.h"
+#include "QuestGLCore/Model/Model.h"
 
 int main(){
 
@@ -17,8 +18,9 @@ int main(){
     	std::pair{QuestGLCore::Shader::ShaderEnum::FRAGMENT, fragment_string }
     });
 
-    // Testing loading of data to gpu:
-    const std::vector<float> vertices = {
+
+    // Standard model (Single Array Buffer) Test ==========================================================================================
+    std::vector<float> vertices = {
         // first triangle
          0.5f,  0.5f, 0.0f,  // top right
          0.5f, -0.5f, 0.0f,  // bottom right
@@ -28,11 +30,45 @@ int main(){
         -0.5f, -0.5f, 0.0f,  // bottom left
         -0.5f,  0.5f, 0.0f   // top left
     };
-
+    
     QuestGLCore::VertexData::VertexData vertex_data{ GL_ARRAY_BUFFER };
     vertex_data.load_data<float>(vertices, { 3 });
 
-    const auto& shader_program = engine_api.get_shader("TriangleShader");
-    QuestGLCore::Model::Mesh<QuestGLCore::VertexData::VertexData> mesh_test{ shader_program, vertex_data };
+    // Move vertex data into mesh
+   QuestGLCore::Model::Mesh standard_mesh { std::move(vertex_data) };
+
+	// Move mesh into vector
+   std::vector<QuestGLCore::Model::Mesh<QuestGLCore::VertexData::VertexData>> meshes;
+   meshes.push_back(std::move(standard_mesh));
+
+   // Move vector of mesh's into model
+   const auto& shader_program = engine_api.get_shader("TriangleShader");
+   QuestGLCore::Model::Model<QuestGLCore::VertexData::VertexData> model_test{ shader_program, std::move(meshes) };
+
+
+   // Indexed model (VBO + EBO) Test =====================================================================================================
+   vertices = {
+    0.5f,  0.5f, 0.0f,  // top right
+    0.5f, -0.5f, 0.0f,  // bottom right
+   -0.5f, -0.5f, 0.0f,  // bottom left
+   -0.5f,  0.5f, 0.0f   // top left 
+   };
+   std::vector<unsigned int> indices = {  // note that we start from 0!
+       0, 1, 3,   // first triangle
+       1, 2, 3    // second triangle
+   };
+   QuestGLCore::VertexData::VertexDataElement vertex_data_element{ GL_ARRAY_BUFFER, GL_ELEMENT_ARRAY_BUFFER };
+   vertex_data_element.load_data(vertices, indices, { 3 });
+
+   // Move vertex data into mesh
+   QuestGLCore::Model::Mesh indexed_mesh{ std::move(vertex_data_element) };
+
+   // Move mesh into vector
+   std::vector<QuestGLCore::Model::Mesh<QuestGLCore::VertexData::VertexDataElement>> indexed_meshes;
+   indexed_meshes.push_back(std::move(indexed_mesh));
+
+   // Move vector of mesh's into model
+   QuestGLCore::Model::Model<QuestGLCore::VertexData::VertexDataElement> indexed_model_test { shader_program, std::move(indexed_meshes) };
+
 
 }

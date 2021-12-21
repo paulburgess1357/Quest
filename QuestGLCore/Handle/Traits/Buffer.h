@@ -6,7 +6,11 @@ namespace QuestGLCore::Traits {
 	class BufferTraits{
 
 	public:
-		BufferTraits(const GLenum target)
+		explicit BufferTraits()
+			:m_target{ 0 } {
+		}
+
+		explicit BufferTraits(const GLenum target)
 			:m_target{ target } {
 		}
 
@@ -29,7 +33,7 @@ namespace QuestGLCore::Traits {
 		}
 
 	private:
-		const GLenum m_target;
+		GLenum m_target;
 
 	};
 

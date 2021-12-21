@@ -1,4 +1,5 @@
 #pragma once
+#include "QuestGLCore/Handle/Traits/Buffer.h" // Specialized move constructor
 #include "QuestUtility/Include/Logger.h"
 
 namespace QuestGLCore::Handle {
@@ -24,7 +25,8 @@ namespace QuestGLCore::Handle {
 
 		HandleTemplate(HandleTemplate&& source) noexcept
 			:m_handle_is_initialized{ source.m_handle_is_initialized },
-			m_handle{ source.m_handle }{
+			m_handle{ source.m_handle },
+			m_trait{ source.m_trait }{
 			reset(source);
 		}
 
@@ -33,6 +35,7 @@ namespace QuestGLCore::Handle {
 				this->destroy();
 				this->m_handle_is_initialized = rhs.m_handle_is_initialized;
 				this->m_handle = rhs.m_handle;
+				this->m_trait = rhs.m_trait;
 				reset(rhs);
 			}
 			return *this;
@@ -68,15 +71,12 @@ namespace QuestGLCore::Handle {
 		static void reset(HandleTemplate& handle) {
 			handle.m_handle_is_initialized = false;
 			handle.m_handle = HandleTypedef{};
+			handle.m_trait = TraitType{ };
 		}
 
 		bool m_handle_is_initialized;
 		HandleTypedef m_handle;
 		TraitType m_trait;
-
 	};
-
-
-
 
 } // namespace QuestGLCore::Handle
