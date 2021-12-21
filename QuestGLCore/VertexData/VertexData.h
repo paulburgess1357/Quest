@@ -23,7 +23,7 @@ namespace QuestGLCore::VertexData {
 			m_vao.unbind();
 		}
 
-		Typedefs::GLSize get_vertex_count() const {
+		[[nodiscard]] Typedefs::GLSize get_vertex_count() const {
 			return m_vertex_count;
 		}
 
