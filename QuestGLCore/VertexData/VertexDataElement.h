@@ -9,10 +9,10 @@
 
 namespace QuestGLCore::VertexData {
 
-	class VertexDataElement {
+	class IndexedVertexData {
 
 	public:
-		explicit VertexDataElement(const GLenum vbo_target, const GLenum ebo_target)
+		explicit IndexedVertexData(const GLenum vbo_target, const GLenum ebo_target)
 			:m_vbo_target{ vbo_target },
 			m_ebo_target{ ebo_target },
 			m_vbo{ m_vbo_target },

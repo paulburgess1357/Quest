@@ -171,6 +171,7 @@
     <ClInclude Include="Model\Mesh.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Resource\ResourceManager.h" />
+    <ClInclude Include="Using\Model.h" />
     <ClInclude Include="Using\Resource.h" />
     <ClInclude Include="Resource\TResource.h" />
     <ClInclude Include="Using\Shader.h" />

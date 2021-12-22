@@ -12,7 +12,7 @@ namespace QuestEngine::API {
 		m_engine->run();
 	}
 
-	// ======= Shader =======
+	// ======================== Shader ========================
 	Shader::ShaderProgram& QuestEngineAPI::get_shader(const std::string& shader_id) const {
 		return m_engine->m_resource_manager.get_shader(shader_id);
 	}
@@ -20,5 +20,23 @@ namespace QuestEngine::API {
 	void QuestEngineAPI::load_shader(const std::string& shader_id, const std::initializer_list<std::pair<Shader::ShaderEnum, std::string>> shaders) const {
 		m_engine->m_resource_manager.load_shader(shader_id, shaders);
 	}
+
+	//// ======================== Model ========================
+	//Model::StandardModel& QuestEngineAPI::get_model(const std::string& model_id) const {
+	//	return m_engine->m_resource_manager.get_model(model_id);
+	//}
+
+	//void QuestEngineAPI::load_model(const std::string& model_id, std::vector<Model::StandardMesh>& meshes) const {
+	//	m_engine->m_resource_manager.load_model(model_id, meshes);
+	//}
+
+	//// ==================== Indexed Model ====================
+	//Model::IndexedModel& QuestEngineAPI::get_indexed_model(const std::string& model_id) const {
+	//	return m_engine->m_resource_manager.get_indexed_model(model_id);
+	//}
+
+	//void QuestEngineAPI::load_indexed_model(const std::string& model_id, std::vector<Model::IndexedMesh>& meshes) const {
+	//	m_engine->m_resource_manager.load_indexed_model(model_id, meshes);
+	//}
 
 } // namespace QuestEngine::API

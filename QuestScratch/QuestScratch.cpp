@@ -6,6 +6,9 @@
 #include "QuestGLCore/Model/Mesh.h"
 #include "QuestGLCore/Model/Model.h"
 
+#include <unordered_map>
+#include <variant>
+
 int main(){
 
     const QuestEngine::API::QuestEngineAPI engine_api;
@@ -57,18 +60,32 @@ int main(){
        0, 1, 3,   // first triangle
        1, 2, 3    // second triangle
    };
-   QuestGLCore::VertexData::VertexDataElement vertex_data_element{ GL_ARRAY_BUFFER, GL_ELEMENT_ARRAY_BUFFER };
+   QuestGLCore::VertexData::IndexedVertexData vertex_data_element{ GL_ARRAY_BUFFER, GL_ELEMENT_ARRAY_BUFFER };
    vertex_data_element.load_data(vertices, indices, { 3 });
 
    // Move vertex data into mesh
    QuestGLCore::Model::Mesh indexed_mesh{ std::move(vertex_data_element) };
 
    // Move mesh into vector
-   std::vector<QuestGLCore::Model::Mesh<QuestGLCore::VertexData::VertexDataElement>> indexed_meshes;
+   std::vector<QuestGLCore::Model::Mesh<QuestGLCore::VertexData::IndexedVertexData>> indexed_meshes;
    indexed_meshes.push_back(std::move(indexed_mesh));
 
    // Move vector of mesh's into model
-   QuestGLCore::Model::Model<QuestGLCore::VertexData::VertexDataElement> indexed_model_test { shader_program, std::move(indexed_meshes) };
+   QuestGLCore::Model::Model<QuestGLCore::VertexData::IndexedVertexData> indexed_model_test { shader_program, std::move(indexed_meshes) };
+
+
+   // Map Test ================================================================================================================================
+
+
+   //std::unordered_map<std::string, std::variant<QuestGLCore::Model::Model<QuestGLCore::VertexData::VertexData>,
+   //    QuestGLCore::Model::Model<QuestGLCore::VertexData::VertexDataElement>>
+   //    > variant_map_test;
+
+   //std::variant<QuestGLCore::VertexData::VertexData> variant_test{ std::move(model_test) };
+
+
+
+   //variant_map_test.insert("array model", std::move(model_test));
 
 
 }
