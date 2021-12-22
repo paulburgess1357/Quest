@@ -33,6 +33,8 @@ namespace QuestEngine::Resource {
 	}
 
 	void ResourceManager::load_model(const std::string& model_id, std::vector<Model::StandardMesh>& meshes) {
+		get_shader() // TODO need sahder program!!! The model constsructor doesn't take a model it! IT
+		// TODO takes a shader program!  Also, should I make tehse returned references const???
 		m_standard_model_resource.load(model_id, std::move(meshes));
 	}
 
