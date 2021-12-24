@@ -32,26 +32,21 @@ namespace QuestEngine::Resource {
 		return m_standard_model_resource.get_pointer(model_id);
 	}
 
-	void ResourceManager::load_model(const std::string& model_id, std::vector<Model::StandardMesh>& meshes) {
-		get_shader() // TODO need sahder program!!! The model constsructor doesn't take a model it! IT
-		// TODO takes a shader program!  Also, should I make tehse returned references const???
-		m_standard_model_resource.load(model_id, std::move(meshes));
+	void ResourceManager::load_model(const std::string& model_id, const Shader::ShaderProgram& shader_program, std::vector<Model::StandardMesh>& meshes) {
+		m_standard_model_resource.load(model_id, shader_program, std::move(meshes));
 	}
 
-	//// ==================== Indexed Model ====================
-	//Model::IndexedModel& ResourceManager::get_indexed_model(const std::string& model_id) {
-	//	return m_indexed_model_resource[model_id];
-	//}
+	// ==================== Indexed Model ====================
+	Model::IndexedModel& ResourceManager::get_indexed_model(const std::string& model_id) {
+		return m_indexed_model_resource[model_id];
+	}
 
-	//Model::IndexedModel* ResourceManager::get_indexed_model_pointer(const std::string& model_id) {
-	//	return m_indexed_model_resource.get_pointer(model_id);
-	//}
+	Model::IndexedModel* ResourceManager::get_indexed_model_pointer(const std::string& model_id) {
+		return m_indexed_model_resource.get_pointer(model_id);
+	}
 
-	//void ResourceManager::load_indexed_model(const std::string& model_id, std::vector<Model::IndexedMesh>& meshes) {
-	//	m_indexed_model_resource.load(model_id, std::move(meshes));
-	//}
-
-
-
+	void ResourceManager::load_indexed_model(const std::string& model_id, const Shader::ShaderProgram& shader_program, std::vector<Model::IndexedMesh>& meshes) {
+		m_indexed_model_resource.load(model_id, shader_program, std::move(meshes));
+	}
 
 } // namespace QuestEngine::Resource

@@ -20,7 +20,7 @@ namespace QuestGLCore::Model {
 			// Set model matrix
 			// Set normal matrix
 			for(const auto& mesh : m_meshes) {
-				mesh->draw(draw_mode);
+				mesh.draw(draw_mode);
 			}
 
 			m_shader_program->unbind();

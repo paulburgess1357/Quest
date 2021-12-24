@@ -15,7 +15,7 @@ namespace QuestGLCore::Model {
 		void draw(const GLenum draw_mode) const {
 			// Bind materials
 			// Bind textures
-			m_vertex_data->draw(draw_mode);
+			m_vertex_data.draw(draw_mode);
 			// Unbind materials
 			// Unbind textures
 		}

@@ -14,17 +14,15 @@ namespace QuestEngine::Resource {
 		// ======================== Model ========================
 		[[nodiscard]] Model::StandardModel& get_model(const std::string& model_id);
 		[[nodiscard]] Model::StandardModel* get_model_pointer(const std::string& model_id);
-		void load_model(const std::string& model_id, std::vector<Model::StandardMesh>& meshes);
+		void load_model(const std::string& model_id, const Shader::ShaderProgram& shader_program, std::vector<Model::StandardMesh>& meshes);
 
 		//// ==================== Indexed Model ====================
-		//[[nodiscard]] Model::IndexedModel& get_indexed_model(const std::string& model_id);
-		//[[nodiscard]] Model::IndexedModel* get_indexed_model_pointer(const std::string& model_id);
-		//void load_indexed_model(const std::string& model_id, std::vector<Model::IndexedMesh>& meshes);
+		[[nodiscard]] Model::IndexedModel& get_indexed_model(const std::string& model_id);
+		[[nodiscard]] Model::IndexedModel* get_indexed_model_pointer(const std::string& model_id);
+		void load_indexed_model(const std::string& model_id, const Shader::ShaderProgram& shader_program, std::vector<Model::IndexedMesh>& meshes);
 
 	private:
 		ShaderResource m_shader_resource;
-
-
 		StandardModelResource m_standard_model_resource;
 		IndexedModelResource m_indexed_model_resource;
 		

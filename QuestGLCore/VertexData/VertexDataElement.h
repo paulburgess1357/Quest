@@ -38,12 +38,13 @@ namespace QuestGLCore::VertexData {
 
 			m_vao.bind();
 			m_vbo.bind();
-			m_ebo.bind();
 
 			// Store data
 			glBufferData(m_vbo_target, static_cast<Typedefs::GLSizePtr>(sizeof(T) * input_data.size()), input_data.data(), draw_usage);
 
+			m_ebo.bind();
 			// Store indices
+			auto test = sizeof(unsigned int) * indices.size();
 			glBufferData(m_ebo_target, static_cast<Typedefs::GLSizePtr>(sizeof(unsigned int) * indices.size()), indices.data(), draw_usage);
 
 			// Describe attributes (for shader)
@@ -58,8 +59,8 @@ namespace QuestGLCore::VertexData {
 				offset += vertex_description.at(i);
 			}
 
-			m_vao.unbind();
 			m_vbo.unbind();
+			m_vao.unbind();
 			m_ebo.unbind();
 
 			m_vertex_count = static_cast<QuestGLCore::Typedefs::GLSize>(input_data.size()) / column_num;
