@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "OGLWindow.h"
 #include "OGLWindowException.h"
+#include "OGLDebugContext.h"
 #include "QuestUtility/Include/Logger.h"
 
 namespace QuestWindow {
@@ -8,7 +9,7 @@ namespace QuestWindow {
 
 		OGLWindow::OGLWindow(const int width, const int height)
 			:IWindow{ } {
-			initialize(width, height, 3, 3);
+			initialize(width, height, 4, 3);
 		}
 
 		OGLWindow::OGLWindow(const int width, const int height, const int major_version, const int minor_version)
@@ -24,6 +25,9 @@ namespace QuestWindow {
 			glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 			glfwWindowHint(GLFW_SAMPLES, 4);
 
+			// GLFW OpenGL Debug Context
+			InitGLFWOpenGLDebugContext()
+
 			// Create Window (Must be after hints)
 			IWindow::create_window(width, height);
 
@@ -36,6 +40,9 @@ namespace QuestWindow {
 				throw OGLGladException();
 			}
 			QUEST_TRACE("OpenGL Version: {}", glGetString(GL_VERSION))
+
+			// GLFW OpenGL Debug Context (Must be after GLAD); OpenGL 4.3 Minimum
+			InitOpenGLErrorCheck()
 
 			// Set OGL Settings
 			glViewport(0, 0, width, height);

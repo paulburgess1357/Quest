@@ -53,8 +53,8 @@ namespace QuestSandbox::Tests {
 			-0.5f,  0.5f, 0.0f   // top left 
         };
         const std::vector<unsigned int> indices = {
-            0, 1, 3,   // first triangle
-            1, 2, 3    // second triangle
+            0, 2, 1,   // first triangle
+            3, 2, 0    // second triangle
         };
 
         QuestGLCore::VertexData::IndexedVertexData vertex_data_element{ GL_ARRAY_BUFFER, GL_ELEMENT_ARRAY_BUFFER };
