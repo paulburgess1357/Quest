@@ -12,14 +12,15 @@ namespace QuestGLCore::VertexData {
 	class VertexData {
 
 	public:
-		explicit VertexData(const GLenum vbo_target)
+		explicit VertexData(const GLenum vbo_target, const GLenum draw_mode)
 			:m_vbo_target{ vbo_target },
+			m_draw_mode{ draw_mode },
 			m_vbo{ m_vbo_target } {
 		}
 
-		void draw(const GLenum draw_mode) const {
+		void draw() const {
 			m_vao.bind();
-			glDrawArrays(draw_mode, 0, m_vertex_count);
+			glDrawArrays(m_draw_mode, 0, m_vertex_count);
 			m_vao.unbind();
 		}
 
@@ -54,6 +55,7 @@ namespace QuestGLCore::VertexData {
 
 	private:
 		GLenum m_vbo_target;
+		GLenum m_draw_mode;
 		Handle::HandleTemplate<Traits::VAOTraits, Typedefs::GLHandle> m_vao;
 		Handle::HandleTemplate<Traits::BufferTraits, Typedefs::GLHandle> m_vbo;
 		Typedefs::GLSize m_vertex_count{ 0 };

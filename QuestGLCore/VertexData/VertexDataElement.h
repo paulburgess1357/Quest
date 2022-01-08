@@ -12,16 +12,17 @@ namespace QuestGLCore::VertexData {
 	class IndexedVertexData {
 
 	public:
-		explicit IndexedVertexData(const GLenum vbo_target, const GLenum ebo_target)
+		explicit IndexedVertexData(const GLenum vbo_target, const GLenum ebo_target, const GLenum draw_mode)
 			:m_vbo_target{ vbo_target },
 			m_ebo_target{ ebo_target },
+			m_draw_mode{ draw_mode },
 			m_vbo{ m_vbo_target },
 			m_ebo{ m_ebo_target } {
 		}
 
-		void draw(const GLenum draw_mode) const {
+		void draw() const {
 			m_vao.bind();
-			glDrawElements(draw_mode, m_index_count, GL_UNSIGNED_INT, 0);
+			glDrawElements(m_draw_mode, m_index_count, GL_UNSIGNED_INT, 0);
 			m_vao.unbind();
 		}
 
@@ -38,11 +39,11 @@ namespace QuestGLCore::VertexData {
 
 			m_vao.bind();
 			m_vbo.bind();
+			m_ebo.bind();
 
 			// Store data
 			glBufferData(m_vbo_target, static_cast<Typedefs::GLSizePtr>(sizeof(T) * input_data.size()), input_data.data(), draw_usage);
-
-			m_ebo.bind();
+			
 			// Store indices
 			auto test = sizeof(unsigned int) * indices.size();
 			glBufferData(m_ebo_target, static_cast<Typedefs::GLSizePtr>(sizeof(unsigned int) * indices.size()), indices.data(), draw_usage);
@@ -59,8 +60,8 @@ namespace QuestGLCore::VertexData {
 				offset += vertex_description.at(i);
 			}
 
-			m_vbo.unbind();
 			m_vao.unbind();
+			m_vbo.unbind();
 			m_ebo.unbind();
 
 			m_vertex_count = static_cast<QuestGLCore::Typedefs::GLSize>(input_data.size()) / column_num;
@@ -70,6 +71,7 @@ namespace QuestGLCore::VertexData {
 	private:
 		GLenum m_vbo_target;
 		GLenum m_ebo_target;
+		GLenum m_draw_mode;
 
 		Handle::HandleTemplate<Traits::VAOTraits, Typedefs::GLHandle> m_vao;
 		Handle::HandleTemplate<Traits::BufferTraits, Typedefs::GLHandle> m_vbo;

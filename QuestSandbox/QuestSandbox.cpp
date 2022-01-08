@@ -8,8 +8,8 @@
 int main() {
     const QuestEngine::API::QuestEngineAPI engine_api;
 	const QuestSandbox::Tests::TriangleTests triangle_test { &engine_api };
-	// triangle_test.load_standard_triangle();
-	triangle_test.load_indexed_triangle();
+	triangle_test.load_standard_triangle();
+	//triangle_test.load_indexed_triangle();
 	engine_api.run();
 }
 

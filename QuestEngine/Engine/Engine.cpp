@@ -31,8 +31,8 @@ namespace QuestEngine::Engine {
 	}
 
 	void Engine::LOADED_MODEL_TEST() {
-		// m_resource_manager.get_model("Test Model").draw(GL_TRIANGLES);
-		m_resource_manager.get_indexed_model("Test Model").draw(GL_TRIANGLES); //TODO i'd prefer draw model set when i create the model
+		m_resource_manager.get_model("Test Model").draw();
+		// m_resource_manager.get_indexed_model("Test Model").draw();
 	}
 
 

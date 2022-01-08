@@ -12,10 +12,10 @@ namespace QuestGLCore::Model {
 			:m_vertex_data{ std::move(vertex_data) } {
 		}
 
-		void draw(const GLenum draw_mode) const {
+		void draw() const {
 			// Bind materials
 			// Bind textures
-			m_vertex_data.draw(draw_mode);
+			m_vertex_data.draw();
 			// Unbind materials
 			// Unbind textures
 		}

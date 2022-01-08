@@ -15,8 +15,6 @@ namespace QuestSandbox::Tests {
 		static const std::string m_vertex_str;
 		static const std::string m_fragment_str;
 
-
-
 	};
 
 } // QuestSandbox::Tests

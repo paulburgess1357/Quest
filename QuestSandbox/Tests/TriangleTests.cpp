@@ -23,7 +23,7 @@ namespace QuestSandbox::Tests {
         };
 
         // Load Vertex Data
-        QuestGLCore::VertexData::VertexData vertex_data{ GL_ARRAY_BUFFER };
+        QuestGLCore::VertexData::VertexData vertex_data{ GL_ARRAY_BUFFER, GL_TRIANGLES };
         vertex_data.load_data<float>(vertices, { 3 });
 
         // Move vertex data into mesh
@@ -57,7 +57,7 @@ namespace QuestSandbox::Tests {
             3, 2, 0    // second triangle
         };
 
-        QuestGLCore::VertexData::IndexedVertexData vertex_data_element{ GL_ARRAY_BUFFER, GL_ELEMENT_ARRAY_BUFFER };
+        QuestGLCore::VertexData::IndexedVertexData vertex_data_element{ GL_ARRAY_BUFFER, GL_ELEMENT_ARRAY_BUFFER, GL_TRIANGLES };
         vertex_data_element.load_data(vertices, indices, { 3 });
 
         // Move vertex data into mesh
@@ -73,26 +73,14 @@ namespace QuestSandbox::Tests {
 
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
     const std::string TriangleTests::m_vertex_str{
-    R"(
+		R"(
         	#version 330 core
             layout(location = 0) in vec3 aPos;
         	void main(){
 				gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);
             }
-        	)"
+    	)"
     };
 
     const std::string TriangleTests::m_fragment_str{
@@ -102,7 +90,7 @@ namespace QuestSandbox::Tests {
 			void main(){
 			    FragColor = vec4(1.0f, 0.0f, 0.0f, 1.0f);
 			} 
-        	)"
+    	)"
     };
 
 

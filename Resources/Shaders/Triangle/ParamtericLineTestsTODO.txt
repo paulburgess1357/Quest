@@ -1,0 +1,2 @@
+// TODO possible checks:
+// Lines are in the same dimension! e.g. no 2D and 3D mixed inputs!!

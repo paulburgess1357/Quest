@@ -15,12 +15,12 @@ namespace QuestGLCore::Model {
 			m_meshes { std::move(meshes) } {
 		}
 
-		void draw(const GLenum draw_mode) const {
+		void draw() const {
 			m_shader_program->bind();
 			// Set model matrix
 			// Set normal matrix
 			for(const auto& mesh : m_meshes) {
-				mesh.draw(draw_mode);
+				mesh.draw();
 			}
 
 			m_shader_program->unbind();
