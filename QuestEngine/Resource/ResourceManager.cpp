@@ -5,7 +5,7 @@
 
 namespace QuestEngine::Resource {
 
-	// Shader
+	// ======================== Shader ========================
 	Shader::ShaderProgram& ResourceManager::get_shader(const std::string& shader_id) {
 		return m_shader_resource[shader_id];
 	}
@@ -23,6 +23,30 @@ namespace QuestEngine::Resource {
 		m_shader_resource.load(shader_id, shader_id, Shader::ShaderProgramCreator{ shader_string_map });
 	}
 
+	// ======================== Model ========================
+	Model::StandardModel& ResourceManager::get_model(const std::string& model_id) {
+		return m_standard_model_resource[model_id];
+	}
 
+	Model::StandardModel* ResourceManager::get_model_pointer(const std::string& model_id) {
+		return m_standard_model_resource.get_pointer(model_id);
+	}
+
+	void ResourceManager::load_model(const std::string& model_id, const Shader::ShaderProgram& shader_program, std::vector<Model::StandardMesh>& meshes) {
+		m_standard_model_resource.load(model_id, shader_program, std::move(meshes));
+	}
+
+	// ==================== Indexed Model ====================
+	Model::IndexedModel& ResourceManager::get_indexed_model(const std::string& model_id) {
+		return m_indexed_model_resource[model_id];
+	}
+
+	Model::IndexedModel* ResourceManager::get_indexed_model_pointer(const std::string& model_id) {
+		return m_indexed_model_resource.get_pointer(model_id);
+	}
+
+	void ResourceManager::load_indexed_model(const std::string& model_id, const Shader::ShaderProgram& shader_program, std::vector<Model::IndexedMesh>& meshes) {
+		m_indexed_model_resource.load(model_id, shader_program, std::move(meshes));
+	}
 
 } // namespace QuestEngine::Resource
