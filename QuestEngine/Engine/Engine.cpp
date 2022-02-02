@@ -5,7 +5,8 @@
 namespace QuestEngine::Engine {
 
 	Engine::Engine(const int width, const int height)
-		:m_window{ width, height } {
+		:m_window{ width, height },
+		m_projection_matrix{ m_window }{
 		QUEST_INFO("Quest Engine v{}.{} Initialized\n", 0, 1);
 	}
 
@@ -17,8 +18,10 @@ namespace QuestEngine::Engine {
 		while (!shutdown()){
 			m_window.clear_buffer();
 
-
+			// Testing =======
 			LOADED_MODEL_TEST();
+			m_projection_matrix.get_projection_matrix();
+			// =================
 
 
 			m_window.swap_buffer();
@@ -34,6 +37,5 @@ namespace QuestEngine::Engine {
 		m_resource_manager.get_model("Test Model").draw();
 		// m_resource_manager.get_indexed_model("Test Model").draw();
 	}
-
 
 } // namespace QuestEngine::Engine
