@@ -1,6 +1,7 @@
 #pragma once
 #include "QuestEngine/Using/Window.h"
 #include "QuestEngine/Resource/ResourceManager.h"
+#include "QuestEngine/Camera/ProjectionMatrix.h"
 
 namespace QuestEngine::API {
 	class QuestEngineAPI; 
@@ -22,6 +23,8 @@ namespace QuestEngine::Engine {
 
 		const Window::Window m_window;
 		Resource::ResourceManager m_resource_manager;
+
+		Camera::ProjectionMatrix m_projection_matrix;
 
 
 		friend class API::QuestEngineAPI;

@@ -13,7 +13,7 @@ namespace QuestWindow {
 			static void set_viewport(const int width, const int height);
 
 		private:
-			void initialize(const int width, const int height, const int major_version, const int minor_version);
+			void initialize(const int major_version, const int minor_version);
 			void set_ogl_callbacks() const;
 			static void framebuffer_callback(GLFWwindow* window, const int width, const int height);
 

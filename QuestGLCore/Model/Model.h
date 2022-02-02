@@ -2,7 +2,6 @@
 #include "QuestGLCore/Model/Mesh.h"
 #include "QuestGLCore/Shader/ShaderProgram.h"
 #include <glm/glm.hpp>
-#include <glad/glad.h>
 
 namespace QuestGLCore::Model {
 

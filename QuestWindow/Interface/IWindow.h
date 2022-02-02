@@ -9,7 +9,7 @@ namespace QuestWindow {
 		class IWindow {
 
 		public:
-			IWindow();
+			IWindow(const int width, const int height);
 			~IWindow();
 
 			IWindow(const IWindow& source) = delete;
@@ -23,17 +23,21 @@ namespace QuestWindow {
 			[[nodiscard]] bool close_window() const;
 			static void poll_events();
 
+			[[nodiscard]] static int get_width();
+			[[nodiscard]] static int get_height();
+
 		protected:
 			static void initialize();
-			void create_window(const int width, const int height);
+			void create_window();
 			void set_callbacks() const;
 			GLFWwindow* m_window;
+			static int m_width;
+			static int m_height;
 
 		private:
 			// Forced single window
 			static bool m_window_exists;
 			static void check_window_exists();
-
 		};
 
 	} // namespace Interface

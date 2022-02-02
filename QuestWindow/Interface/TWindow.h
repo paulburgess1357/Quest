@@ -51,6 +51,14 @@ namespace QuestWindow {
 				T::poll_events();
 			}
 
+			static int get_width() {
+				return T::get_width();
+			}
+
+			static int get_height() {
+				return T::get_height();
+			}
+
 		private:
 			T m_window;
 		};

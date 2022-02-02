@@ -10,13 +10,17 @@
 
 namespace QuestWindow::Interface {
 
-	bool IWindow::m_window_exists = false;
+	bool IWindow::m_window_exists{ false };
+	int IWindow::m_width { 0 };
+	int IWindow::m_height { 0 };
 
-	IWindow::IWindow()
-		:m_window{ nullptr } {
+	IWindow::IWindow(const int width, const int height)
+		:m_window{ nullptr }{
 		check_window_exists();
 		initialize();
 		m_window_exists = true;
+		m_width = width;
+		m_height = height;
 	}
 
 	IWindow::~IWindow() {
@@ -47,9 +51,9 @@ namespace QuestWindow::Interface {
 		}
 	}
 
-	void IWindow::create_window(const int width, const int height) {
+	void IWindow::create_window() {
 		QUEST_TRACE("Creating Window")
-		m_window = glfwCreateWindow(width, height, "Quest Engine", nullptr, nullptr);
+		m_window = glfwCreateWindow(m_width, m_height, "Quest Engine", nullptr, nullptr);
 		if (m_window == nullptr) {
 			glfwTerminate();
 			throw IWindowCreationException();
@@ -90,6 +94,14 @@ namespace QuestWindow::Interface {
 		if(m_window_exists) {
 			throw IWindowExistsException();
 		}
+	}
+
+	int IWindow::get_width() {
+		return m_width;
+	}
+
+	int IWindow::get_height() {
+		return m_height;
 	}
 
 } // namespace QuestWindow::Interface

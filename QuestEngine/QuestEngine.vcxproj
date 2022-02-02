@@ -166,6 +166,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="API\EngineAPI.h" />
+    <ClInclude Include="Camera\Camera.h" />
+    <ClInclude Include="Camera\ProjectionMatrix.h" />
     <ClInclude Include="Engine\Engine.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Model\Mesh.h" />
@@ -179,6 +181,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="API\EngineAPI.cpp" />
+    <ClCompile Include="Camera\Camera.cpp" />
+    <ClCompile Include="Camera\ProjectionMatrix.cpp" />
     <ClCompile Include="Engine\Engine.cpp" />
     <ClCompile Include="Model\Mesh.cpp" />
     <ClCompile Include="pch.cpp">
