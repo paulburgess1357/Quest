@@ -166,11 +166,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="API\EngineAPI.h" />
+    <ClInclude Include="API\OpenGL\ModelLoader.h" />
+    <ClInclude Include="API\OpenGL\ShaderLoader.h" />
     <ClInclude Include="Camera\Camera.h" />
     <ClInclude Include="Camera\ProjectionMatrix.h" />
     <ClInclude Include="Engine\Engine.h" />
     <ClInclude Include="PCH\framework.h" />
-    <ClInclude Include="Model\Mesh.h" />
     <ClInclude Include="PCH\pch.h" />
     <ClInclude Include="Resource\ResourceManager.h" />
     <ClInclude Include="Using\Model.h" />
@@ -181,10 +182,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="API\EngineAPI.cpp" />
+    <ClCompile Include="API\OpenGL\ModelLoader.cpp" />
+    <ClCompile Include="API\OpenGL\ShaderLoader.cpp" />
     <ClCompile Include="Camera\Camera.cpp" />
     <ClCompile Include="Camera\ProjectionMatrix.cpp" />
     <ClCompile Include="Engine\Engine.cpp" />
-    <ClCompile Include="Model\Mesh.cpp" />
     <ClCompile Include="PCH\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
