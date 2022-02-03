@@ -22,21 +22,31 @@ namespace QuestEngine::API {
 	}
 
 	// ======================== Model ========================
-	Model::StandardModel& QuestEngineAPI::get_model(const std::string& model_id) const {
-		return m_engine->m_resource_manager.get_model(model_id);
-	}
+	//Model::StandardModel& QuestEngineAPI::get_model(const std::string& model_id) const {
+	//	return m_engine->m_resource_manager.get_model(model_id);
+	//}
 
 	void QuestEngineAPI::load_model(const std::string& model_id, const Shader::ShaderProgram& shader_program, std::vector<Model::StandardMesh>& meshes) const {
 		m_engine->m_resource_manager.load_model(model_id, shader_program, meshes);
 	}
 
 	// ==================== Indexed Model ====================
-	Model::IndexedModel& QuestEngineAPI::get_indexed_model(const std::string& model_id) const {
-		return m_engine->m_resource_manager.get_indexed_model(model_id);
-	}
+	//Model::IndexedModel& QuestEngineAPI::get_indexed_model(const std::string& model_id) const {
+	//	return m_engine->m_resource_manager.get_indexed_model(model_id);
+	//}
 
 	void QuestEngineAPI::load_indexed_model(const std::string& model_id, const Shader::ShaderProgram& shader_program, std::vector<Model::IndexedMesh>& meshes) const {
 		m_engine->m_resource_manager.load_indexed_model(model_id, shader_program, meshes);
 	}
+
+	// ======================== Camera ========================
+	void QuestEngineAPI::load_camera(const std::string& camera_id, const glm::vec3& camera_position, const glm::vec3& pt_to_look_at_in_world) const {
+		m_engine->m_resource_manager.load_camera(camera_id, camera_position, pt_to_look_at_in_world);
+	}
+
+	void QuestEngineAPI::set_active_camera(const std::string& camera_id) const {
+		m_engine->set_active_camera(camera_id);
+	}
+
 
 } // namespace QuestEngine::API

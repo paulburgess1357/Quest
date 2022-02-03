@@ -6,8 +6,8 @@ namespace QuestEngine::Camera {
 
 	Camera::Camera(const glm::vec3& camera_position, const glm::vec3& pt_to_look_at_in_world)
 		:m_camera_position{ camera_position },
-		m_camera_forward{ 1.0f },
-		m_camera_right{ 1.0f },
+		m_camera_forward{ 0.0f, 0.0f, 1.0f },
+		m_camera_right{ 1.0f, 0.0f, 0.0f },
 		m_camera_up{ 0.0f, 1.0f, 0.0f },
 		m_world_up{ 0.0f, 1.0f, 0.0f },
 		m_view_matrix{ 1.0f } {

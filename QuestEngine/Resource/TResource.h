@@ -1,5 +1,7 @@
 #pragma once
 #include <unordered_map>
+#include "QuestUtility/Include/Logger.h"
+#include "QuestUtility/Logging/LogMacros.h"
 
 namespace QuestEngine::Resource {
 
@@ -25,7 +27,12 @@ namespace QuestEngine::Resource {
 		}
 
 		Value* get_pointer(const Key& key) {
-			return &m_resource_map.find(key)->second;
+			Value* ptr = &m_resource_map.find(key)->second;
+			#ifdef DEBUG
+				const std::string key_val = std::is_same_v<Key, std::string> ? key : "Key type is not string";
+				QUEST_WARN_CONDITION(ptr != nullptr, "Returning null pointer from resource.  Searched Key: " + key_val);
+			#endif
+			return ptr;
 		}
 
 	private:

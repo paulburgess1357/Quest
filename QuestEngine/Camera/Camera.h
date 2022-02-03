@@ -1,4 +1,5 @@
 #pragma once
+#include <glm/glm.hpp>
 
 namespace QuestEngine::Camera {
 
@@ -22,3 +23,4 @@ namespace QuestEngine::Camera {
 	};
 
 } // namespace QuestEngine::Camera
+

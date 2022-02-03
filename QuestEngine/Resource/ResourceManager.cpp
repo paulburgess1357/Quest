@@ -49,4 +49,17 @@ namespace QuestEngine::Resource {
 		m_indexed_model_resource.load(model_id, shader_program, std::move(meshes));
 	}
 
+	// ==================== Camera ====================
+	Camera::Camera& ResourceManager::get_camera(const std::string& camera_id) {
+		return m_camera_resource[camera_id];
+	}
+
+	Camera::Camera* ResourceManager::get_camera_pointer(const std::string& camera_id) {
+		return m_camera_resource.get_pointer(camera_id);
+	}
+
+	void ResourceManager::load_camera(const std::string& camera_id, const glm::vec3& camera_position, const glm::vec3& pt_to_look_at_in_world) {
+		m_camera_resource.load(camera_id, camera_position, pt_to_look_at_in_world);
+	}
+
 } // namespace QuestEngine::Resource

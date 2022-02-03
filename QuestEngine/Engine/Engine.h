@@ -17,7 +17,15 @@ namespace QuestEngine::Engine {
 	private:
 		void run();
 		void gameloop();
+
+		void initialize();
+
+		void init_camera();
+		void set_active_camera(const std::string& camera_id);
+
 		[[nodiscard]] bool shutdown() const;
+
+
 
 		void LOADED_MODEL_TEST();
 
@@ -25,10 +33,7 @@ namespace QuestEngine::Engine {
 		Resource::ResourceManager m_resource_manager;
 
 		Camera::ProjectionMatrix m_projection_matrix;
-
-		// TODO store active camera here
-		// TODO create camera resource.  Set active camera from resource.
-
+		Camera::Camera* m_active_camera;
 
 		friend class API::QuestEngineAPI;
 	};
