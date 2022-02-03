@@ -21,7 +21,7 @@ namespace QuestEngine::Camera {
 		m_projection_matrix = glm::perspective(glm::radians(DEFAULT_FOV),
 			static_cast<float>(m_window_width) / static_cast<float>(m_window_height),
 			DEFAULT_ZNEAR, DEFAULT_ZFAR);
-		QUEST_TRACE("Setting projection matrix based on window dimensions: {}x{}", m_window_width, m_window_height)
+			QUEST_TRACE("Setting projection matrix based on window dimensions: {}x{}", m_window_width, m_window_height)
 	}
 
 	glm::mat4 ProjectionMatrix::get_projection_matrix() {

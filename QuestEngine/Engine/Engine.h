@@ -26,6 +26,9 @@ namespace QuestEngine::Engine {
 
 		Camera::ProjectionMatrix m_projection_matrix;
 
+		// TODO store active camera here
+		// TODO create camera resource.  Set active camera from resource.
+
 
 		friend class API::QuestEngineAPI;
 	};
