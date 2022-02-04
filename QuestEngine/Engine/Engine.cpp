@@ -51,8 +51,8 @@ namespace QuestEngine::Engine {
 	}
 
 	void Engine::LOADED_MODEL_TEST() {
-		m_resource_manager.get_model("Test Model").draw();
-		// m_resource_manager.get_indexed_model("Test Model").draw();
+		// m_resource_manager.get_model("Test Model").draw();
+		m_resource_manager.get_indexed_model("Test Model").draw();
 	}
 
 } // namespace QuestEngine::Engine

@@ -1,19 +1,19 @@
 // ReSharper disable CppClangTidyClangDiagnosticExitTimeDestructors
 #pragma once
 #include "TriangleTests.h"
+#include "QuestEngine/API/OpenGL/ShaderLoader.h"
+#include "QuestEngine/API/OpenGL/ModelLoader.h"
 
 namespace QuestSandbox::Tests {
 
-    TriangleTests::TriangleTests(const QuestEngine::API::QuestEngineAPI* engine_api)
+    TriangleTests::TriangleTests(const QuestEngine::API::QuestEngineAPI& engine_api)
         :m_engine_api{ engine_api } {
     }
 
 	void TriangleTests::load_standard_triangle() const {
 
-    	m_engine_api->load_shader("TriangleShader", {
-	        std::pair{QuestGLCore::Shader::ShaderEnum::VERTEX, m_vertex_str },
-	        std::pair{QuestGLCore::Shader::ShaderEnum::FRAGMENT, m_fragment_str }
-        });
+        const QuestEngine::API::OpenGL::ShaderLoader shader_loader {m_engine_api};
+        shader_loader.load_shader_program("Triangle Shader", m_vertex_str, m_fragment_str, false);
 
         // Standard model (Single Array Buffer)
         const std::vector<float> vertices = {
@@ -22,29 +22,15 @@ namespace QuestSandbox::Tests {
              0.0f,  0.5f, 0.0f  // top   
         };
 
-        // Load Vertex Data
-        QuestGLCore::VertexData::VertexData vertex_data{ GL_ARRAY_BUFFER, GL_TRIANGLES };
-        vertex_data.load_data<float>(vertices, { 3 });
-
-        // Move vertex data into mesh
-        QuestGLCore::Model::Mesh standard_mesh{ std::move(vertex_data) };
-
-        // Move mesh into vector
-        std::vector<QuestGLCore::Model::Mesh<QuestGLCore::VertexData::VertexData>> meshes;
-        meshes.push_back(std::move(standard_mesh));
-
-        // Move vector of mesh's into model
-        const auto& shader_program = m_engine_api->get_shader("TriangleShader");
-        m_engine_api->load_model("Test Model", shader_program, meshes);
+        const QuestEngine::API::OpenGL::ModelLoader model_loader { m_engine_api };
+        model_loader.load_model("Test Model", "Triangle Shader", { vertices }, { 3 });
 
 	}
 
     void TriangleTests::load_indexed_triangle() const {
 
-        m_engine_api->load_shader("TriangleShader", {
-		    std::pair{QuestGLCore::Shader::ShaderEnum::VERTEX, m_vertex_str },
-		    std::pair{QuestGLCore::Shader::ShaderEnum::FRAGMENT, m_fragment_str }
-        });
+        const QuestEngine::API::OpenGL::ShaderLoader shader_loader{ m_engine_api };
+        shader_loader.load_shader_program("Triangle Shader", m_vertex_str, m_fragment_str, false);
 
         const std::vector<float> vertices = {
 			 0.5f,  0.5f, 0.0f,  // top right
@@ -57,20 +43,8 @@ namespace QuestSandbox::Tests {
             3, 2, 0    // second triangle
         };
 
-        QuestGLCore::VertexData::IndexedVertexData vertex_data_element{ GL_ARRAY_BUFFER, GL_ELEMENT_ARRAY_BUFFER, GL_TRIANGLES };
-        vertex_data_element.load_data(vertices, indices, { 3 });
-
-        // Move vertex data into mesh
-        QuestGLCore::Model::Mesh indexed_mesh{ std::move(vertex_data_element) };
-
-        // Move mesh into vector
-        std::vector<QuestGLCore::Model::Mesh<QuestGLCore::VertexData::IndexedVertexData>> indexed_meshes;
-        indexed_meshes.push_back(std::move(indexed_mesh));
-
-        // Move vector of mesh's into model
-        const auto& shader_program = m_engine_api->get_shader("TriangleShader");
-        m_engine_api->load_indexed_model("Test Model", shader_program, indexed_meshes);
-
+        const QuestEngine::API::OpenGL::ModelLoader model_loader{ m_engine_api };
+        model_loader.load_indexed_model("Test Model", "Triangle Shader", { vertices }, { indices }, { 3 });
     }
 
     const std::string TriangleTests::m_vertex_str{
