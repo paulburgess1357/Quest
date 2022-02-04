@@ -6,7 +6,8 @@ namespace QuestEngine::Engine {
 
 	Engine::Engine(const int width, const int height)
 		:m_window{ width, height },
-		m_projection_matrix{ m_window }{
+		m_projection_matrix{ m_window },
+		m_active_camera{ nullptr }{
 		initialize();
 		QUEST_INFO("Quest Engine v{}.{} Initialized\n", 0, 1)
 	}
@@ -16,7 +17,12 @@ namespace QuestEngine::Engine {
 	}
 
 	void Engine::run() { //TODO make const
+		qc_checks();
 		gameloop();
+	}
+
+	void Engine::qc_checks() const {
+		m_resource_manager.shader_qc();
 	}
 
 	void Engine::gameloop() { //TODO make const
@@ -51,8 +57,17 @@ namespace QuestEngine::Engine {
 	}
 
 	void Engine::LOADED_MODEL_TEST() {
-		// m_resource_manager.get_model("Test Model").draw();
-		m_resource_manager.get_indexed_model("Test Model").draw();
+		m_resource_manager.get_model("Test Model").draw();
+		// m_resource_manager.get_indexed_model("Test Model").draw();
+	}
+
+	void Engine::CUBE_UNIFORM_TEST() {
+		Shader::ShaderProgram& shader = m_resource_manager.get_shader("Cube Shader");
+		// shader.set_uniform("model", model_matrix_here); this can be done in the model class
+		shader.bind();
+		shader.set_uniform("view_matrix", m_active_camera->get_view_matrix());
+		shader.set_uniform("projection_matrix", m_projection_matrix.get_projection_matrix());
+		shader.unbind();
 	}
 
 } // namespace QuestEngine::Engine

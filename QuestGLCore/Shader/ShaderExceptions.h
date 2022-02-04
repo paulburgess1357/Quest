@@ -21,4 +21,10 @@ namespace QuestGLCore::Shader {
 		}
 	};
 
+	class UniformNotFoundException final : public std::exception {
+		[[nodiscard]] const char* what() const override {
+			return "Uniform does not exist in the GLSL ShaderProgram code!";
+		}
+	};
+
 } // namespace QuestGLCore::ShaderProgram

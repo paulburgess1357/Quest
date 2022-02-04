@@ -22,11 +22,11 @@ namespace QuestEngine::API {
 	}
 
 	// ======================== Model ========================
-	void QuestEngineAPI::load_model(const std::string& model_id, const Shader::ShaderProgram& shader_program, std::vector<Model::StandardMesh>& meshes) const {
+	void QuestEngineAPI::load_model(const std::string& model_id, Shader::ShaderProgram& shader_program, std::vector<Model::StandardMesh>& meshes) const {
 		m_engine->m_resource_manager.load_model(model_id, shader_program, meshes);
 	}
 
-	void QuestEngineAPI::load_indexed_model(const std::string& model_id, const Shader::ShaderProgram& shader_program, std::vector<Model::IndexedMesh>& meshes) const {
+	void QuestEngineAPI::load_indexed_model(const std::string& model_id, Shader::ShaderProgram& shader_program, std::vector<Model::IndexedMesh>& meshes) const {
 		m_engine->m_resource_manager.load_indexed_model(model_id, shader_program, meshes);
 	}
 

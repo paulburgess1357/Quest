@@ -3,13 +3,13 @@
 #include "QuestEngine/API/EngineAPI.h"
 
 // Tests
-#include "QuestSandbox/Tests/TriangleTests.h"
+#include "QuestSandbox/Tests/ShapeTests.h"
 
 int main() {
     const QuestEngine::API::QuestEngineAPI engine_api;
-	const QuestSandbox::Tests::TriangleTests triangle_test { engine_api };
-	// triangle_test.load_standard_triangle();
-	triangle_test.load_indexed_triangle();
+	const QuestSandbox::Tests::ShapeTests triangle_test { engine_api };
+	triangle_test.load_standard_triangle();
+	// triangle_test.load_indexed_triangle();
 	engine_api.run();
 }
 

@@ -15,10 +15,11 @@ namespace QuestEngine::Engine {
 		explicit Engine(const int width = 1920, const int height = 1080);
 
 	private:
+		void initialize();
+		void qc_checks() const;
+
 		void run();
 		void gameloop();
-
-		void initialize();
 
 		void init_camera();
 		void set_active_camera(const std::string& camera_id);
@@ -28,6 +29,7 @@ namespace QuestEngine::Engine {
 
 
 		void LOADED_MODEL_TEST();
+		void CUBE_UNIFORM_TEST();
 
 		const Window::Window m_window;
 		Resource::ResourceManager m_resource_manager;

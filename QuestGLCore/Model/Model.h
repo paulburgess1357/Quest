@@ -9,15 +9,19 @@ namespace QuestGLCore::Model {
 	class Model {
 
 	public:
-		Model(const Shader::ShaderProgram& shader_program, std::vector<Mesh<VertexDataType>> meshes)
+		Model(Shader::ShaderProgram& shader_program, std::vector<Mesh<VertexDataType>> meshes)
 			:m_shader_program{ &shader_program },
 			m_meshes { std::move(meshes) } {
 		}
 
 		void draw() const {
 			m_shader_program->bind();
-			// Set model matrix
+			m_shader_program->set_uniform("model_matrix", m_model_matrix);
+
+
 			// Set normal matrix
+
+
 			for(const auto& mesh : m_meshes) {
 				mesh.draw();
 			}
@@ -26,7 +30,7 @@ namespace QuestGLCore::Model {
 		}
 
 	private:
-		const Shader::ShaderProgram* m_shader_program;
+		Shader::ShaderProgram* m_shader_program;
 		std::vector<Mesh<VertexDataType>> m_meshes;
 		glm::mat4 m_model_matrix{ 1.0 };
 		glm::mat3 m_normal_matrix{ 1.0 };
