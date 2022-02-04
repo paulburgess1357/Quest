@@ -23,6 +23,12 @@ namespace QuestEngine::Resource {
 		}
 
 		Value& operator[](const Key& key) {
+			#ifdef DEBUG
+				if(m_resource_map.count(key) == 0) {
+					const std::string key_val = std::is_same_v<Key, std::string> ? key : "Key type is not string";
+					QUEST_WARN("Key does not exist in map.  Unable to return reference.  Searched Key: " + key_val);
+				}
+			#endif
 			return m_resource_map.find(key)->second;
 		}
 
@@ -38,6 +44,5 @@ namespace QuestEngine::Resource {
 	private:
 		std::unordered_map<Key, Value> m_resource_map{};
 	};
-
 
 } // namespace QuestEngine::Resource

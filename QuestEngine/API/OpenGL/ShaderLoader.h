@@ -7,7 +7,7 @@ namespace QuestEngine::API::OpenGL {
 
 	public:
 		ShaderLoader(const QuestEngineAPI& engine_api);
-		void load_shader_program(const std::string& shader_program_name, std::string vertex, std::string fragment, const bool from_file = true) const;
+		void load_shader_program(const std::string& shader_program_id, std::string vertex, std::string fragment, const bool from_file = true) const;
 
 	private:
 		const QuestEngineAPI& m_engine_api;

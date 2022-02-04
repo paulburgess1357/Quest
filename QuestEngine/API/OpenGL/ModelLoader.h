@@ -7,15 +7,11 @@ namespace QuestEngine::API::OpenGL {
 
 	public:
 		ModelLoader(const QuestEngineAPI& engine_api);
-		//std::vector<QuestGLCore::Model::Mesh<QuestGLCore::VertexData::VertexData>> create_model(const std::string& shader_program_name, const std::vector<float>& vertices, const std::vector<int>& vertex_description);
-
-		//TODO do the same for indexed model
-		//TODO for textures later on, possible add something lile 'attach texture' to a specific model name? E.g. If i have a loaded box, I can then say attach texture and the box uses that texture...  Seems more intuitive than attaching to the shader program.  Still need to create texture handler.
-
-
-
+		void load_model(const std::string& model_id, const std::string& shader_program_id, const std::vector<std::vector<float>>& all_mesh_vertices, const std::vector<int>& vertex_description) const;
+		void load_indexed_model(const std::string& model_id, const std::string& shader_program_id, const std::vector<std::vector<float>>& all_mesh_vertices, const std::vector<std::vector<unsigned int>>& all_mesh_indices, const std::vector<int>& vertex_description) const;
 
 	private:
+		static void check_indexed_vertices_indices(const std::vector<std::vector<float>>& all_mesh_vertices, const std::vector<std::vector<unsigned>>& all_mesh_indices);
 		const QuestEngineAPI& m_engine_api;
 	};
 

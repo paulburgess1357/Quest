@@ -167,6 +167,7 @@
   <ItemGroup>
     <ClInclude Include="API\EngineAPI.h" />
     <ClInclude Include="API\OpenGL\ModelLoader.h" />
+    <ClInclude Include="API\OpenGL\ModelLoaderExceptions.h" />
     <ClInclude Include="API\OpenGL\ShaderLoader.h" />
     <ClInclude Include="Camera\Camera.h" />
     <ClInclude Include="Camera\ProjectionMatrix.h" />
