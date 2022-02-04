@@ -15,10 +15,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="framework.h">
+    <ClInclude Include="PCH\framework.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="pch.h">
+    <ClInclude Include="PCH\pch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Engine.h">
@@ -42,9 +42,6 @@
     <ClInclude Include="Using\Shader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Model\Mesh.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Using\Model.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -54,9 +51,18 @@
     <ClInclude Include="Camera\ProjectionMatrix.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="API\OpenGL\ModelLoader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="API\OpenGL\ShaderLoader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="API\OpenGL\ModelLoaderExceptions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="pch.cpp">
+    <ClCompile Include="PCH\pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Engine.cpp">
@@ -68,13 +74,16 @@
     <ClCompile Include="Resource\ResourceManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Model\Mesh.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Camera\Camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Camera\ProjectionMatrix.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="API\OpenGL\ModelLoader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="API\OpenGL\ShaderLoader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

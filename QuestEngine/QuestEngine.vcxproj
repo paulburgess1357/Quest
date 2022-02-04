@@ -86,12 +86,12 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>QUESTLOGGER</PreprocessorDefinitions>
+      <PreprocessorDefinitions>QUESTLOGGER; DEBUG</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir); $(ProjectDir)/PCH</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
@@ -112,7 +112,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir); $(ProjectDir)/PCH</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
@@ -127,12 +127,12 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>QUESTLOGGER</PreprocessorDefinitions>
+      <PreprocessorDefinitions>QUESTLOGGER; DEBUG</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir); $(ProjectDir)/PCH</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
@@ -153,7 +153,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir); $(ProjectDir)/PCH</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
@@ -166,12 +166,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="API\EngineAPI.h" />
+    <ClInclude Include="API\OpenGL\ModelLoader.h" />
+    <ClInclude Include="API\OpenGL\ModelLoaderExceptions.h" />
+    <ClInclude Include="API\OpenGL\ShaderLoader.h" />
     <ClInclude Include="Camera\Camera.h" />
     <ClInclude Include="Camera\ProjectionMatrix.h" />
     <ClInclude Include="Engine\Engine.h" />
-    <ClInclude Include="framework.h" />
-    <ClInclude Include="Model\Mesh.h" />
-    <ClInclude Include="pch.h" />
+    <ClInclude Include="PCH\framework.h" />
+    <ClInclude Include="PCH\pch.h" />
     <ClInclude Include="Resource\ResourceManager.h" />
     <ClInclude Include="Using\Model.h" />
     <ClInclude Include="Using\Resource.h" />
@@ -181,11 +183,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="API\EngineAPI.cpp" />
+    <ClCompile Include="API\OpenGL\ModelLoader.cpp" />
+    <ClCompile Include="API\OpenGL\ShaderLoader.cpp" />
     <ClCompile Include="Camera\Camera.cpp" />
     <ClCompile Include="Camera\ProjectionMatrix.cpp" />
     <ClCompile Include="Engine\Engine.cpp" />
-    <ClCompile Include="Model\Mesh.cpp" />
-    <ClCompile Include="pch.cpp">
+    <ClCompile Include="PCH\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>

@@ -1,5 +1,4 @@
-#ifndef PCH_H
-#define PCH_H
+#pragma once
 
 // add headers that you want to pre-compile here
 #include <Windows.h>
@@ -14,5 +13,3 @@
 // Using
 #include "QuestEngine/Using/Window.h"
 #include "QuestEngine/Using/Resource.h"
-
-#endif //PCH_H

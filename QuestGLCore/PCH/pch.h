@@ -1,6 +1,4 @@
-#ifndef PCH_H
-#define PCH_H
-
+#pragma once
 // add headers that you want to pre-compile here
 #include <Windows.h>
 #include "framework.h"
@@ -28,5 +26,3 @@
 
 // Include
 #include "QuestGLCore/Include/Shader.h"
-
-#endif //PCH_H
