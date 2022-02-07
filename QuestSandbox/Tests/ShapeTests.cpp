@@ -15,6 +15,8 @@ namespace QuestSandbox::Tests {
     // ====================== Triangle ======================
 	void ShapeTests::load_standard_triangle() const {
 
+		// *** TODO: this test isn't being loaded into the registry!! 
+
         const QuestEngine::API::OpenGL::ShaderLoader shader_loader { m_engine_api };
         shader_loader.load_shader_program("Triangle Shader", m_base_shader_path + "TriangleVertex.glsl", m_base_shader_path + "TriangleFragment.glsl", true);
 
@@ -29,8 +31,9 @@ namespace QuestSandbox::Tests {
         model_loader.load_model("Test Model", "Triangle Shader", { vertices }, { 3 });
 
 	}
-
     void ShapeTests::load_indexed_triangle() const {
+
+		// *** TODO: this test isn't being loaded into the registry!! 
 
         const QuestEngine::API::OpenGL::ShaderLoader shader_loader{ m_engine_api };
         shader_loader.load_shader_program("Triangle Shader", m_base_shader_path + "TriangleVertex.glsl", m_base_shader_path + "TriangleFragment.glsl", true);
@@ -50,28 +53,24 @@ namespace QuestSandbox::Tests {
         model_loader.load_indexed_model("Test Model", "Triangle Shader", { vertices }, { indices }, { 3 });
     }
 
-
     // ======================== Cube ========================
     void ShapeTests::load_standard_cube() const {
         const QuestEngine::API::OpenGL::ShaderLoader shader_loader{ m_engine_api };
         shader_loader.load_shader_program("Cube Shader", m_base_shader_path + "CubeVertex.glsl", m_base_shader_path + "CubeFragment.glsl", true);
 
-		// Cubemap needs to be in clockwise winding order.  If its not,
-		// face culling will prevent the texture from being visible
-
 		const std::vector<float> vertices = {
 			// back face
 			-1.0f, -1.0f, -1.0f, // bottom right
 			 1.0f, -1.0f, -1.0f, // bottom left   
-			-1.0f,  1.0f, -1.0f,  // top right
-			-1.0f,  1.0f, -1.0f,  // top right
+			-1.0f,  1.0f, -1.0f, // top right
+			-1.0f,  1.0f, -1.0f, // top right
 			 1.0f, -1.0f, -1.0f, // bottom left
-			 1.0f,  1.0f, -1.0f,  // top left			 
+			 1.0f,  1.0f, -1.0f, // top left			 
 
 			// left face
-			-1.0f, -1.0f,  1.0f,  // bottom right
+			-1.0f, -1.0f,  1.0f, // bottom right
 			-1.0f, -1.0f, -1.0f, // bottom left	   
-			-1.0f,  1.0f,  1.0f,  // top right
+			-1.0f,  1.0f,  1.0f, // top right
 			-1.0f,  1.0f,  1.0f, // top right
 			-1.0f, -1.0f, -1.0f, // bottom left	
 			-1.0f,  1.0f, -1.0f, // top left			   
@@ -109,14 +108,93 @@ namespace QuestSandbox::Tests {
 			-1.0f, -1.0f,  1.0f, // top left
 		};
 
+
+		//TODO need to handle indexed vs normal model the same!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! (load model vs load indexed model)
+
 		const QuestEngine::API::OpenGL::ModelLoader model_loader{ m_engine_api };
 		model_loader.load_model("Test Model", "Cube Shader", { vertices }, { 3 });
-    }
 
+		// Take loaded model and create ECS entity
+		model_loader.load_model_into_registry("Test Model");
+ 
+    }
     void ShapeTests::load_indexed_cube() const {
-	    
+
+		const QuestEngine::API::OpenGL::ShaderLoader shader_loader{ m_engine_api };
+		shader_loader.load_shader_program("Indexed Cube Shader", m_base_shader_path + "CubeVertex.glsl", m_base_shader_path + "CubeFragment.glsl", true);
+
+		const std::vector<float> vertices = {
+
+			// back face
+			 1.0f, -1.0f, -1.0f, // bottom left   
+			-1.0f, -1.0f, -1.0f, // bottom right
+			-1.0f,  1.0f, -1.0f, // top right
+			 1.0f,  1.0f, -1.0f, // top left			 
+
+			// front face   
+			-1.0f, -1.0f,  1.0f, // bottom left
+			 1.0f, -1.0f,  1.0f, // bottom right
+			 1.0f,  1.0f,  1.0f, // top right
+			-1.0f,  1.0f,  1.0f, // top left
+
+			// left face
+			-1.0f, -1.0f, -1.0f, // bottom left
+			-1.0f, -1.0f,  1.0f, // bottom right
+			-1.0f,  1.0f,  1.0f, // top right
+			-1.0f,  1.0f, -1.0f, // top left			   
+
+			 // right face 	 	
+			 1.0f, -1.0f,  1.0f, // bottom left
+			 1.0f, -1.0f, -1.0f, // bottom right
+			 1.0f,  1.0f, -1.0f, // top right
+			 1.0f,  1.0f,  1.0f, // top left	
+
+			 // bottom face   
+			-1.0f, -1.0f, -1.0f, // bottom left
+			 1.0f, -1.0f, -1.0f, // bottom right
+			 1.0f, -1.0f,  1.0f, // top right
+			-1.0f, -1.0f,  1.0f, // top left
+
+			 // top face   
+			-1.0f,  1.0f,  1.0f, // bottom left
+			 1.0f,  1.0f,  1.0f, // bottom right
+			 1.0f,  1.0f, -1.0f, // top right
+			-1.0f,  1.0f, -1.0f, // top left
+		};
+
+		const std::vector<unsigned int> indices = {
+			// back face
+			0, 1, 2,
+			2, 3, 0,
+
+			// front face
+			4, 5, 6,
+			6, 7, 4,
+
+			// left face
+			8, 9, 10,
+			10, 11, 8,
+
+			// right face
+			12, 13, 14,
+			14, 15, 12,
+
+			// bottom face
+			16, 17, 18,
+			18, 19, 16,
+
+			// top face
+			20, 21, 22,
+			22, 23, 20
+		};
+
+		//TODO need to handle indexed vs normal model the same!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! (load model vs load indexed model)
+
+		const QuestEngine::API::OpenGL::ModelLoader model_loader{ m_engine_api };
+		model_loader.load_indexed_model("Test Indexed Model", "Indexed Cube Shader", { vertices }, { indices }, { 3 });
+
+		// Take loaded model and create ECS entity
+		model_loader.load_indexed_model_into_registry("Test Indexed Model");
     }
-
-
 
 } // namespace QuestSandbox::Tests

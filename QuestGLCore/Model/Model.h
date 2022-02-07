@@ -16,17 +16,29 @@ namespace QuestGLCore::Model {
 
 		void draw() const {
 			m_shader_program->bind();
-			m_shader_program->set_uniform("model_matrix", m_model_matrix);
+			m_shader_program->set_uniform("model_matrix", m_model_matrix); // TODO re-enable.
 
+			// Set normal matrix =================
 
-			// Set normal matrix
-
+			// ===================================
 
 			for(const auto& mesh : m_meshes) {
 				mesh.draw();
 			}
 
 			m_shader_program->unbind();
+		}
+
+		[[nodiscard]] Shader::ShaderProgram* get_shader_program() const {
+			return m_shader_program;
+		}
+
+		[[nodiscard]] glm::mat4 get_model_matrix() const {
+			return m_model_matrix;
+		}
+
+		void set_model_matrix(const glm::mat4& model_matrix) {
+			m_model_matrix = model_matrix;
 		}
 
 	private:

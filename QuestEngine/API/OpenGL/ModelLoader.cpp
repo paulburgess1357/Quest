@@ -60,4 +60,12 @@ namespace QuestEngine::API::OpenGL {
 		}
 	}
 
+	void ModelLoader::load_model_into_registry(const std::string& model_id) const {
+		m_engine_api.load_model_into_registry(model_id);
+	}
+
+	void ModelLoader::load_indexed_model_into_registry(const std::string& model_id) const {
+		m_engine_api.load_indexed_model_into_registry(model_id);
+	}
+
 } // namespace QuestEngine::API::OpenGL

@@ -24,9 +24,11 @@ namespace QuestEngine::Resource {
 	}
 
 	void ResourceManager::shader_qc() const {
+		QUEST_TRACE("Checking Shader Uniforms Initialized")
 		for(const auto& shader : m_shader_resource) {
 			shader.second.check_uniforms_initialized();
 		}
+		QUEST_TRACE("Passed")
 	}
 
 	// ======================== Model ========================

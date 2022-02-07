@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "QuestEngine/API/EngineAPI.h"
 #include "QuestEngine/Engine/Engine.h"
+#include "QuestEngine/ECS/Components/ModelComponent.h"
+#include "QuestEngine/ECS/Components/RotateComponent.h"
 
 namespace QuestEngine::API {
 
@@ -39,5 +41,21 @@ namespace QuestEngine::API {
 		m_engine->set_active_camera(camera_id);
 	}
 
+	// ========================= Registry ======================
+	void QuestEngineAPI::load_model_into_registry(const std::string& model_id) const {
+		Model::StandardModel* model = m_engine->m_resource_manager.get_model_pointer(model_id);
+		const entt::entity entity = m_engine->m_registry.create();
+		m_engine->m_registry.emplace<ECS::Components::StandardModelComponent>(entity, model);
+		// Testing w/ rotation
+		m_engine->m_registry.emplace<ECS::Components::RotateComponent>(entity);
+	}
+
+	void QuestEngineAPI::load_indexed_model_into_registry(const std::string& model_id) const {
+		Model::IndexedModel* model = m_engine->m_resource_manager.get_indexed_model_pointer(model_id);
+		const entt::entity entity = m_engine->m_registry.create();
+		m_engine->m_registry.emplace<ECS::Components::IndexedModelComponent>(entity, model);
+		// Testing w/ rotation
+		m_engine->m_registry.emplace<ECS::Components::RotateComponent>(entity);
+	}
 
 } // namespace QuestEngine::API

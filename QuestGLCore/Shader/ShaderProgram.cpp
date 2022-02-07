@@ -70,8 +70,6 @@ namespace QuestGLCore::Shader {
 		// not exist in the map, it means we have not initialized the GLSL uniform
 
 		// This check is meant to be performed prior to the gameloop
-
-		QUEST_TRACE("   - Checking Uniforms In GLSL: ");
 		const std::unordered_set<std::string> ignore_strings = {"model_matrix", "view_matrix", "projection_matrix", "normal_matrix"};
 
 		GLint count, size;

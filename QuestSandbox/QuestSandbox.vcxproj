@@ -151,7 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="QuestSandbox.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="Tests\ShapeTests.cpp" />
   </ItemGroup>
   <ItemGroup>

@@ -1,5 +1,7 @@
 #include "pch.h"
 #include "Engine.h"
+#include "QuestEngine/ECS/Systems/RenderSystem.h"
+#include "QuestEngine/ECS/Systems/TransformSystem.h"
 #include "QuestUtility/Logging/LogMacros.h"
 
 namespace QuestEngine::Engine {
@@ -28,21 +30,24 @@ namespace QuestEngine::Engine {
 	void Engine::gameloop() { //TODO make const
 		while (!shutdown()){
 			m_window.clear_buffer();
-
-			// Testing =======
-			LOADED_MODEL_TEST();
-			m_projection_matrix.get_projection_matrix();
-			// =================
-
-
+			update();
+			render();
 			m_window.swap_buffer();
 			m_window.poll_events();
 		}
 	}
 
+	void Engine::update() const {
+		ECS::Systems::TransformSystem::transform(m_registry);
+	}
+
+	void Engine::render() {
+		ECS::Systems::RenderSystem::render(m_registry, m_projection_matrix, *m_active_camera);
+	}
+
 	void Engine::init_camera() {
 		const std::string camera_id{ "Main Camera" };
-		m_resource_manager.load_camera(camera_id, { 0.0f, 0.0f, -3.0f }, { 0.0f, 0.0f, 0.0f });
+		m_resource_manager.load_camera(camera_id, { 0.0f, 0.0f, -6.0f }, { 0.0f, 0.0f, 0.0f });
 		set_active_camera(camera_id);
 	}
 
@@ -54,20 +59,6 @@ namespace QuestEngine::Engine {
 
 	bool Engine::shutdown() const {
 		return m_window.close_window() || Window::KeyboardInput::is_pressed(Window::Keyboard::ESCAPE);
-	}
-
-	void Engine::LOADED_MODEL_TEST() {
-		m_resource_manager.get_model("Test Model").draw();
-		// m_resource_manager.get_indexed_model("Test Model").draw();
-	}
-
-	void Engine::CUBE_UNIFORM_TEST() {
-		Shader::ShaderProgram& shader = m_resource_manager.get_shader("Cube Shader");
-		// shader.set_uniform("model", model_matrix_here); this can be done in the model class
-		shader.bind();
-		shader.set_uniform("view_matrix", m_active_camera->get_view_matrix());
-		shader.set_uniform("projection_matrix", m_projection_matrix.get_projection_matrix());
-		shader.unbind();
 	}
 
 } // namespace QuestEngine::Engine

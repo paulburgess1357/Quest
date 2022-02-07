@@ -23,6 +23,10 @@ namespace QuestEngine::API {
 		void load_camera(const std::string& camera_id, const glm::vec3& camera_position, const glm::vec3& pt_to_look_at_in_world) const;
 		void set_active_camera(const std::string& camera_id) const;
 
+		// Registry
+		void load_model_into_registry(const std::string& model_id) const;
+		void load_indexed_model_into_registry(const std::string& model_id) const;
+
 	private:
 		std::unique_ptr<Engine::Engine> m_engine = nullptr;
 	};

@@ -171,6 +171,10 @@
     <ClInclude Include="API\OpenGL\ShaderLoader.h" />
     <ClInclude Include="Camera\Camera.h" />
     <ClInclude Include="Camera\ProjectionMatrix.h" />
+    <ClInclude Include="ECS\Components\ModelComponent.h" />
+    <ClInclude Include="ECS\Components\RotateComponent.h" />
+    <ClInclude Include="ECS\Systems\RenderSystem.h" />
+    <ClInclude Include="ECS\Systems\TransformSystem.h" />
     <ClInclude Include="Engine\Engine.h" />
     <ClInclude Include="PCH\framework.h" />
     <ClInclude Include="PCH\pch.h" />
