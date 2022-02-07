@@ -21,7 +21,7 @@ namespace QuestEngine::Resource {
 		// ==================== Indexed Model ====================
 		[[nodiscard]] Model::IndexedModel& get_indexed_model(const std::string& model_id);
 		[[nodiscard]] Model::IndexedModel* get_indexed_model_pointer(const std::string& model_id);
-		void load_indexed_model(const std::string& model_id, Shader::ShaderProgram& shader_program, std::vector<Model::IndexedMesh>& meshes);
+		void load_model(const std::string& model_id, Shader::ShaderProgram& shader_program, std::vector<Model::IndexedMesh>& meshes);
 
 		// ======================= Camera ========================
 		[[nodiscard]] Camera::Camera& get_camera(const std::string& camera_id);

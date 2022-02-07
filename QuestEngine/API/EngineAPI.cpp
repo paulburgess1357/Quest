@@ -28,8 +28,8 @@ namespace QuestEngine::API {
 		m_engine->m_resource_manager.load_model(model_id, shader_program, meshes);
 	}
 
-	void QuestEngineAPI::load_indexed_model(const std::string& model_id, Shader::ShaderProgram& shader_program, std::vector<Model::IndexedMesh>& meshes) const {
-		m_engine->m_resource_manager.load_indexed_model(model_id, shader_program, meshes);
+	void QuestEngineAPI::load_model(const std::string& model_id, Shader::ShaderProgram& shader_program, std::vector<Model::IndexedMesh>& meshes) const {
+		m_engine->m_resource_manager.load_model(model_id, shader_program, meshes);
 	}
 
 	// ======================== Camera ========================
@@ -42,20 +42,28 @@ namespace QuestEngine::API {
 	}
 
 	// ========================= Registry ======================
-	void QuestEngineAPI::load_model_into_registry(const std::string& model_id) const {
-		Model::StandardModel* model = m_engine->m_resource_manager.get_model_pointer(model_id);
-		const entt::entity entity = m_engine->m_registry.create();
-		m_engine->m_registry.emplace<ECS::Components::StandardModelComponent>(entity, model);
-		// Testing w/ rotation
+	void QuestEngineAPI::load_model_into_registry(const std::string& model_id, const Model::ModelType model_type) const {
+		entt::entity entity = m_engine->m_registry.create();
+		switch (model_type) {
+			case Model::ModelType::Standard:
+				load_model_into_registry_standard(model_id, entity);
+				break;
+			case Model::ModelType::Indexed:
+				load_model_into_registry_indexed(model_id, entity);
+				break;
+		}
+		// Testing rotation
 		m_engine->m_registry.emplace<ECS::Components::RotateComponent>(entity);
 	}
 
-	void QuestEngineAPI::load_indexed_model_into_registry(const std::string& model_id) const {
-		Model::IndexedModel* model = m_engine->m_resource_manager.get_indexed_model_pointer(model_id);
-		const entt::entity entity = m_engine->m_registry.create();
-		m_engine->m_registry.emplace<ECS::Components::IndexedModelComponent>(entity, model);
-		// Testing w/ rotation
-		m_engine->m_registry.emplace<ECS::Components::RotateComponent>(entity);
+	void QuestEngineAPI::load_model_into_registry_standard(const std::string& model_id, entt::entity& entity) const {
+		Model::StandardModel* model = m_engine->m_resource_manager.get_model_pointer(model_id);
+		m_engine->m_registry.emplace<ECS::Components::StandardModelComponent>(entity, model);
+	}
+
+	void QuestEngineAPI::load_model_into_registry_indexed(const std::string& model_id, entt::entity& entity) const {
+		Model::IndexedModel* indexed_model = m_engine->m_resource_manager.get_indexed_model_pointer(model_id);
+		m_engine->m_registry.emplace<ECS::Components::IndexedModelComponent>(entity, indexed_model);
 	}
 
 } // namespace QuestEngine::API

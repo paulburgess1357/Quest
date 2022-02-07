@@ -50,7 +50,7 @@ namespace QuestSandbox::Tests {
         };
 
         const QuestEngine::API::OpenGL::ModelLoader model_loader{ m_engine_api };
-        model_loader.load_indexed_model("Test Model", "Triangle Shader", { vertices }, { indices }, { 3 });
+        model_loader.load_model("Test Model", "Triangle Shader", { vertices }, { indices }, { 3 });
     }
 
     // ======================== Cube ========================
@@ -108,14 +108,11 @@ namespace QuestSandbox::Tests {
 			-1.0f, -1.0f,  1.0f, // top left
 		};
 
-
-		//TODO need to handle indexed vs normal model the same!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! (load model vs load indexed model)
-
 		const QuestEngine::API::OpenGL::ModelLoader model_loader{ m_engine_api };
 		model_loader.load_model("Test Model", "Cube Shader", { vertices }, { 3 });
 
 		// Take loaded model and create ECS entity
-		model_loader.load_model_into_registry("Test Model");
+		model_loader.load_model_into_registry("Test Model", QuestEngine::Model::ModelType::Standard);
  
     }
     void ShapeTests::load_indexed_cube() const {
@@ -188,13 +185,11 @@ namespace QuestSandbox::Tests {
 			22, 23, 20
 		};
 
-		//TODO need to handle indexed vs normal model the same!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! (load model vs load indexed model)
-
 		const QuestEngine::API::OpenGL::ModelLoader model_loader{ m_engine_api };
-		model_loader.load_indexed_model("Test Indexed Model", "Indexed Cube Shader", { vertices }, { indices }, { 3 });
+		model_loader.load_model("Test Indexed Model", "Indexed Cube Shader", { vertices }, { indices }, { 3 });
 
 		// Take loaded model and create ECS entity
-		model_loader.load_indexed_model_into_registry("Test Indexed Model");
+		model_loader.load_model_into_registry("Test Indexed Model", QuestEngine::Model::ModelType::Indexed);
     }
 
 } // namespace QuestSandbox::Tests

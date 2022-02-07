@@ -30,7 +30,7 @@ namespace QuestEngine::API::OpenGL {
 		m_engine_api.load_model(model_id, shader_program, all_meshes);
 	}
 
-	void ModelLoader::load_indexed_model(const std::string& model_id, const std::string& shader_program_id, const std::vector<std::vector<float>>& all_mesh_vertices, const std::vector<std::vector<unsigned>>& all_mesh_indices, const std::vector<int>& vertex_description) const {
+	void ModelLoader::load_model(const std::string& model_id, const std::string& shader_program_id, const std::vector<std::vector<float>>& all_mesh_vertices, const std::vector<std::vector<unsigned>>& all_mesh_indices, const std::vector<int>& vertex_description) const {
 		// Load multiple indexed mesh's.  The length of all_mesh_vertices must
 		// be the same length as all_mesh_indices, as each mesh would have its
 		// own corresponding vector of indices.
@@ -50,7 +50,7 @@ namespace QuestEngine::API::OpenGL {
 		}
 
 		// Move vector of mesh's into model
-		m_engine_api.load_indexed_model(model_id, shader_program, all_indexed_meshes);
+		m_engine_api.load_model(model_id, shader_program, all_indexed_meshes);
 	}
 
 	void ModelLoader::check_indexed_vertices_indices(const std::vector<std::vector<float>>& all_mesh_vertices, const std::vector<std::vector<unsigned>>& all_mesh_indices) {
@@ -60,12 +60,8 @@ namespace QuestEngine::API::OpenGL {
 		}
 	}
 
-	void ModelLoader::load_model_into_registry(const std::string& model_id) const {
-		m_engine_api.load_model_into_registry(model_id);
-	}
-
-	void ModelLoader::load_indexed_model_into_registry(const std::string& model_id) const {
-		m_engine_api.load_indexed_model_into_registry(model_id);
+	void ModelLoader::load_model_into_registry(const std::string& model_id, const Model::ModelType model_type) const {
+		m_engine_api.load_model_into_registry(model_id, model_type);
 	}
 
 } // namespace QuestEngine::API::OpenGL
