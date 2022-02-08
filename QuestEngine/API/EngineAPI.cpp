@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "QuestEngine/API/EngineAPI.h"
-#include "QuestEngine/Engine/Engine.h"
 
 namespace QuestEngine::API {
 
@@ -22,12 +21,20 @@ namespace QuestEngine::API {
 	}
 
 	// ======================== Model ========================
-	void QuestEngineAPI::load_model(const std::string& model_id, const Shader::ShaderProgram& shader_program, std::vector<Model::StandardMesh>& meshes) const {
+	void QuestEngineAPI::load_model(const std::string& model_id, Shader::ShaderProgram& shader_program, std::vector<Model::StandardMesh>& meshes) const {
 		m_engine->m_resource_manager.load_model(model_id, shader_program, meshes);
 	}
 
-	void QuestEngineAPI::load_indexed_model(const std::string& model_id, const Shader::ShaderProgram& shader_program, std::vector<Model::IndexedMesh>& meshes) const {
-		m_engine->m_resource_manager.load_indexed_model(model_id, shader_program, meshes);
+	void QuestEngineAPI::load_model(const std::string& model_id, Shader::ShaderProgram& shader_program, std::vector<Model::IndexedMesh>& meshes) const {
+		m_engine->m_resource_manager.load_model(model_id, shader_program, meshes);
+	}
+
+	Model::StandardModel* QuestEngineAPI::get_model_pointer(const std::string& model_id) const {
+		return m_engine->m_resource_manager.get_model_pointer(model_id);
+	}
+
+	Model::IndexedModel* QuestEngineAPI::get_indexed_model_pointer(const std::string& model_id) const {
+		return m_engine->m_resource_manager.get_indexed_model_pointer(model_id);
 	}
 
 	// ======================== Camera ========================
@@ -39,5 +46,13 @@ namespace QuestEngine::API {
 		m_engine->set_active_camera(camera_id);
 	}
 
+	// ========================= Registry ======================
+	void QuestEngineAPI::load_model_into_registry(const std::string& entity_id, Model::StandardModel* model, const glm::vec3& world_position) const {
+		m_engine->m_registry_manager.load_model_into_registry(entity_id, model, world_position);
+	}
+
+	void QuestEngineAPI::load_model_into_registry(const std::string& entity_id, Model::IndexedModel* model, const glm::vec3& world_position) const {
+		m_engine->m_registry_manager.load_model_into_registry(entity_id, model, world_position);
+	}
 
 } // namespace QuestEngine::API

@@ -39,7 +39,9 @@ namespace QuestWindow {
 			if (!gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress))) {
 				throw OGLGladException();
 			}
-			QUEST_TRACE("OpenGL Version: {}", glGetString(GL_VERSION))
+			// The results of glGetString mess up with SPD Logger hence the following conversion:
+			auto result = std::string{ reinterpret_cast<const char*>(glGetString(GL_VERSION)) };
+			QUEST_TRACE("OpenGL Version: {}", result)
 
 			// GLFW OpenGL Debug Context (Must be after GLAD); OpenGL 4.3 Minimum
 			InitOpenGLErrorCheck()

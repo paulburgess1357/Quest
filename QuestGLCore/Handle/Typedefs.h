@@ -4,4 +4,6 @@ namespace QuestGLCore::Typedefs {
 	typedef GLuint GLHandle;
 	typedef GLsizei GLSize;
 	typedef GLsizeiptr GLSizePtr;
+	typedef GLint GLint;
+	typedef GLenum GLenum;
 } // namespace QuestGLCore::Typedefs

@@ -1,9 +1,12 @@
 #include "pch.h"
 #include "ResourceManager.h"
-// ReSharper disable once CppUnusedIncludeDirective
 #include "QuestUtility/Logging/LogHandler.h"
 
 namespace QuestEngine::Resource {
+
+	ResourceManager::ResourceManager() {
+		load_main_camera();
+	}
 
 	// ======================== Shader ========================
 	Shader::ShaderProgram& ResourceManager::get_shader(const std::string& shader_id) {
@@ -17,10 +20,18 @@ namespace QuestEngine::Resource {
 	void ResourceManager::load_shader(const std::string& shader_id, const std::initializer_list<std::pair<Shader::ShaderEnum, std::string>> shaders) {
 		std::unordered_map<Shader::ShaderEnum, std::string> shader_string_map;
 		for (const auto& [shader_type, shader_string] : shaders) {
-			QUEST_WARN_CONDITION(shader_string_map.count(shader_type) == 0, "You are loading two of the same shader type (e.g. two vertex shaders) into a single shader program!");
+			QUEST_WARN_CONDITION(shader_string_map.count(shader_type) == 0, "You are loading two of the same shader type (e.g. two vertex shaders) into a single shader program!")
 			shader_string_map[shader_type] = shader_string;
 		}
 		m_shader_resource.load(shader_id, shader_id, Shader::ShaderProgramCreator{ shader_string_map });
+	}
+
+	void ResourceManager::shader_qc() const {
+		QUEST_TRACE("Checking Shader Uniforms Initialized")
+		for(const auto& shader : m_shader_resource) {
+			shader.second.check_uniforms_initialized();
+		}
+		QUEST_TRACE("Passed")
 	}
 
 	// ======================== Model ========================
@@ -32,7 +43,7 @@ namespace QuestEngine::Resource {
 		return m_standard_model_resource.get_pointer(model_id);
 	}
 
-	void ResourceManager::load_model(const std::string& model_id, const Shader::ShaderProgram& shader_program, std::vector<Model::StandardMesh>& meshes) {
+	void ResourceManager::load_model(const std::string& model_id, Shader::ShaderProgram& shader_program, std::vector<Model::StandardMesh>& meshes) {
 		m_standard_model_resource.load(model_id, shader_program, std::move(meshes));
 	}
 
@@ -45,11 +56,15 @@ namespace QuestEngine::Resource {
 		return m_indexed_model_resource.get_pointer(model_id);
 	}
 
-	void ResourceManager::load_indexed_model(const std::string& model_id, const Shader::ShaderProgram& shader_program, std::vector<Model::IndexedMesh>& meshes) {
+	void ResourceManager::load_model(const std::string& model_id, Shader::ShaderProgram& shader_program, std::vector<Model::IndexedMesh>& meshes) {
 		m_indexed_model_resource.load(model_id, shader_program, std::move(meshes));
 	}
 
 	// ==================== Camera ====================
+	void ResourceManager::load_main_camera() {
+		load_camera("Main Camera", { 0.0f, 0.0f, -6.0f }, { 0.0f, 0.0f, 0.0f });
+	}
+
 	Camera::Camera& ResourceManager::get_camera(const std::string& camera_id) {
 		return m_camera_resource[camera_id];
 	}

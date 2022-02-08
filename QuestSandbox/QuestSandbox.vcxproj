@@ -151,8 +151,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="QuestSandbox.cpp" />
-    <ClCompile Include="Tests\TriangleTests.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Tests\ShapeTests.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\QuestEngine\QuestEngine.vcxproj">
@@ -163,7 +163,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Tests\TriangleTests.h" />
+    <ClInclude Include="Tests\ShapeTests.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

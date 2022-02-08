@@ -41,6 +41,14 @@ namespace QuestEngine::Resource {
 			return ptr;
 		}
 
+		[[nodiscard]] auto begin() const {
+			return m_resource_map.begin();
+		}
+
+		[[nodiscard]] auto end() const {
+			return m_resource_map.end();
+		}
+
 	private:
 		std::unordered_map<Key, Value> m_resource_map{};
 	};
