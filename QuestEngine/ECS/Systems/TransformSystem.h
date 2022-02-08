@@ -2,34 +2,74 @@
 #include <entt/entity/registry.hpp>
 #include "QuestEngine/ECS/Components/ModelComponent.h"
 #include "QuestEngine/ECS/Components/RotateComponent.h"
+#include "QuestEngine/ECS/Components/TransformComponent.h"
 #include <glm/ext/matrix_transform.hpp>
 
 namespace QuestEngine::ECS::Systems {
 
 	struct TransformSystem {
-		static void transform(const entt::registry& registry) {
+		static void transform(entt::registry& registry) {
 			rotate(registry);
-			rotate_indexed(registry);
+			ui_transform(registry);
+
+
+			update_model_matrix(registry); // set last
 		}
 
-		// TODO I think a solution for this is to do what I did in ExtraLifeEngine.  Create a transform component that houses the model matrix (and possible world position-  not sure about this yet)
-		// TODO This would allow me to not have so many copies of systems (I just operate on the transform component).  For rendering, I set the model matrix (so anything in the world would have to have its own model matrix).
-		// TODO I think this works fine because I can only wriet one rotation system, one movement, one physiucs, etc.  I just need to make sure the model matrix is set for rendering when the shader call to set_uniform is made.
-		// TODO Not sure about normal matrix.  I should look through my old ExtraLifeEngine code and see what I did there.
-
-		static void rotate(const entt::registry& registry) {
-			registry.view<Components::StandardModelComponent, Components::RotateComponent>().each([&](auto& model) {
-				glm::mat4 model_matrix = model.m_model->get_model_matrix();
-				model_matrix = glm::rotate(model_matrix, 0.01f, glm::vec3(0.5f, 1.0f, 0.0f));
-				model.m_model->set_model_matrix(model_matrix);
+		static void rotate(entt::registry& registry) {
+			registry.view<Components::TransformComponent, Components::RotateComponent>().each([](auto& transform, auto& rotate) {
+				transform.m_model_matrix = glm::rotate(transform.m_model_matrix, rotate.m_rate, rotate.m_axis);
 			});
 		}
 
-		static void rotate_indexed(const entt::registry& registry) {
-			registry.view<Components::IndexedModelComponent, Components::RotateComponent>().each([&](auto& model) {
-				glm::mat4 model_matrix = model.m_model->get_model_matrix();
-				model_matrix = glm::rotate(model_matrix, 0.06f, glm::vec3(0.5f, 1.0f, 0.0f));
-				model.m_model->set_model_matrix(model_matrix);
+		static void ui_transform(entt::registry& registry) {
+
+			// Even better, I *think* I can make a map of
+			// model id and entity id.  I can then access the entity that way.
+			//  I need to make sure the entity in the associated map is destroyed when the registry destroys it as well...
+
+
+
+			// When ui is open, see active model/indexed model entities:
+			// Perhaps add flag to the entity that says (add ui component)
+			// This system adds the ui component
+
+
+			//  - Add ui component to entity based on the name
+
+			// Take entity with ui component.  Perform transformations here.
+			// Set Rotation
+			// Move along world
+			// Rotate
+			// etc.
+
+
+			// Once complete, I remove that component from the entity
+		}
+
+		static void get_model_entity(entt::registry& registry, const std::string& model_id) {
+			registry.view<Components::StandardModelComponent>().each([](auto& model) {
+				
+			});
+			registry.view<Components::IndexedModelComponent>().each([](auto& model) {
+				
+			});
+		}
+
+		//TODO is is possible to manipulate the transform component for a given entity? So the entity does not hold its own model matrix???
+		//TODO similarly, the entity would not hold its normal matrix.  That sort of messed up the set uniform stuff though...
+
+		// Pointer to transform component??? Seems messy.
+
+		// Perhaps I create a system that has a 'user manipulation' component? When I select an entity, I add the component to that entity.
+		// then, in that system I access the asscicated transform component and update the actual component.
+
+		static void update_model_matrix(entt::registry& registry) {
+			registry.view<Components::StandardModelComponent, Components::TransformComponent>().each([](auto& model, auto& transform) {
+				model.m_model->set_model_matrix(transform.m_model_matrix);
+			});
+			registry.view<Components::IndexedModelComponent, Components::TransformComponent>().each([](auto& model, auto& transform) {
+				model.m_model->set_model_matrix(transform.m_model_matrix);
 			});
 		}
 

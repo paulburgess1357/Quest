@@ -1,5 +1,4 @@
 // ReSharper disable CppClangTidyClangDiagnosticExitTimeDestructors
-#pragma once
 #include "ShapeTests.h"
 #include "QuestEngine/API/OpenGL/ShaderLoader.h"
 #include "QuestEngine/API/OpenGL/ModelLoader.h"
@@ -108,11 +107,14 @@ namespace QuestSandbox::Tests {
 			-1.0f, -1.0f,  1.0f, // top left
 		};
 
+		// Load created model into resource
+		const std::string model_entity_id{ "Test Model" };
 		const QuestEngine::API::OpenGL::ModelLoader model_loader{ m_engine_api };
-		model_loader.load_model("Test Model", "Cube Shader", { vertices }, { 3 });
+		model_loader.load_model(model_entity_id, "Cube Shader", { vertices }, { 3 });
 
 		// Take loaded model and create ECS entity
-		model_loader.load_model_into_registry("Test Model", QuestEngine::Model::ModelType::Standard);
+		QuestEngine::Model::StandardModel* model_pointer = m_engine_api.get_model_pointer(model_entity_id);
+		m_engine_api.load_model_into_registry(model_entity_id, model_pointer, { 0.0f, 3.0f, 0.0f });
  
     }
     void ShapeTests::load_indexed_cube() const {
@@ -185,11 +187,14 @@ namespace QuestSandbox::Tests {
 			22, 23, 20
 		};
 
+		// Load created model into resource
+		const std::string model_entity_id{ "Test Indexed Model" };
 		const QuestEngine::API::OpenGL::ModelLoader model_loader{ m_engine_api };
-		model_loader.load_model("Test Indexed Model", "Indexed Cube Shader", { vertices }, { indices }, { 3 });
+		model_loader.load_model(model_entity_id, "Indexed Cube Shader", { vertices }, { indices }, { 3 });
 
 		// Take loaded model and create ECS entity
-		model_loader.load_model_into_registry("Test Indexed Model", QuestEngine::Model::ModelType::Indexed);
+		QuestEngine::Model::IndexedModel* model_pointer = m_engine_api.get_indexed_model_pointer(model_entity_id);
+		m_engine_api.load_model_into_registry(model_entity_id, model_pointer, { 0.0f, 1.0f, 0.0f });
     }
 
 } // namespace QuestSandbox::Tests

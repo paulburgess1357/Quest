@@ -1,24 +1,25 @@
 #include "pch.h"
 #include "Engine.h"
 #include "QuestEngine/ECS/Systems/RenderSystem.h"
-#include "QuestEngine/ECS/Systems/TransformSystem.h"
 #include "QuestUtility/Logging/LogMacros.h"
 
 namespace QuestEngine::Engine {
 
 	Engine::Engine(const int width, const int height)
 		:m_window{ width, height },
-		m_projection_matrix{ m_window },
-		m_active_camera{ nullptr }{
-		initialize();
+		m_systems_manager{ m_registry_manager.get_active_registry(),
+			              m_window,
+			              m_resource_manager.get_camera("Main Camera")}{
 		QUEST_INFO("Quest Engine v{}.{} Initialized\n", 0, 1)
 	}
 
-	void Engine::initialize() {
-		init_camera();
+	void Engine::set_active_camera(const std::string& camera_id) {
+		if (auto* camera = m_resource_manager.get_camera_pointer(camera_id)) {
+			m_systems_manager.set_active_camera(*camera);
+		}
 	}
 
-	void Engine::run() { //TODO make const
+	void Engine::run() {
 		qc_checks();
 		gameloop();
 	}
@@ -30,30 +31,9 @@ namespace QuestEngine::Engine {
 	void Engine::gameloop() { //TODO make const
 		while (!shutdown()){
 			m_window.clear_buffer();
-			update();
-			render();
+			m_systems_manager.run();
 			m_window.swap_buffer();
 			m_window.poll_events();
-		}
-	}
-
-	void Engine::update() const {
-		ECS::Systems::TransformSystem::transform(m_registry);
-	}
-
-	void Engine::render() {
-		ECS::Systems::RenderSystem::render(m_registry, m_projection_matrix, *m_active_camera);
-	}
-
-	void Engine::init_camera() {
-		const std::string camera_id{ "Main Camera" };
-		m_resource_manager.load_camera(camera_id, { 0.0f, 0.0f, -6.0f }, { 0.0f, 0.0f, 0.0f });
-		set_active_camera(camera_id);
-	}
-
-	void Engine::set_active_camera(const std::string& camera_id) {
-		if(auto* camera = m_resource_manager.get_camera_pointer(camera_id)) {
-			m_active_camera = camera;
 		}
 	}
 

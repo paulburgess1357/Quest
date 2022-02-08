@@ -7,6 +7,8 @@ namespace QuestEngine::Resource {
 	class ResourceManager {
 
 	public:
+		ResourceManager();
+
 		// ======================== Shader ========================
 		[[nodiscard]] Shader::ShaderProgram& get_shader(const std::string& shader_id);
 		[[nodiscard]] Shader::ShaderProgram* get_shader_pointer(const std::string& shader_id);
@@ -29,6 +31,8 @@ namespace QuestEngine::Resource {
 		void load_camera(const std::string& camera_id, const glm::vec3& camera_position, const glm::vec3& pt_to_look_at_in_world);
 
 	private:
+		void load_main_camera();
+
 		ShaderResource m_shader_resource;
 		StandardModelResource m_standard_model_resource;
 		IndexedModelResource m_indexed_model_resource;

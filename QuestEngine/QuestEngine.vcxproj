@@ -173,6 +173,9 @@
     <ClInclude Include="Camera\ProjectionMatrix.h" />
     <ClInclude Include="ECS\Components\ModelComponent.h" />
     <ClInclude Include="ECS\Components\RotateComponent.h" />
+    <ClInclude Include="ECS\Components\TransformComponent.h" />
+    <ClInclude Include="ECS\Manage\RegistryManager.h" />
+    <ClInclude Include="ECS\Manage\SystemManager.h" />
     <ClInclude Include="ECS\Systems\RenderSystem.h" />
     <ClInclude Include="ECS\Systems\TransformSystem.h" />
     <ClInclude Include="Engine\Engine.h" />
@@ -191,6 +194,8 @@
     <ClCompile Include="API\OpenGL\ShaderLoader.cpp" />
     <ClCompile Include="Camera\Camera.cpp" />
     <ClCompile Include="Camera\ProjectionMatrix.cpp" />
+    <ClCompile Include="ECS\Manage\RegistryManager.cpp" />
+    <ClCompile Include="ECS\Manage\SystemManager.cpp" />
     <ClCompile Include="Engine\Engine.cpp" />
     <ClCompile Include="PCH\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
