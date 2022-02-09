@@ -4,11 +4,6 @@
 #include "QuestEngine/ECS/Manage/RegistryManager.h"
 #include "QuestEngine/ECS/Manage/SystemManager.h"
 
-//TODO
-// Cleanup
-// Const testing on functions
-// Add new api and other classes to pch (QuestEngine project)
-
 namespace QuestEngine::Engine {
 
 	class Engine{

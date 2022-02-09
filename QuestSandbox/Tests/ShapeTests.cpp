@@ -1,7 +1,7 @@
 // ReSharper disable CppClangTidyClangDiagnosticExitTimeDestructors
 #include "ShapeTests.h"
-#include "QuestEngine/API/OpenGL/ShaderLoader.h"
-#include "QuestEngine/API/OpenGL/ModelLoader.h"
+#include "QuestEngine/API/OpenGL/ShaderLoaderAPI.h"
+#include "QuestEngine/API/OpenGL/ModelLoaderAPI.h"
 
 namespace QuestSandbox::Tests {
 
@@ -15,9 +15,9 @@ namespace QuestSandbox::Tests {
 	void ShapeTests::load_standard_triangle() const {
 
 		// *** TODO: this test isn't being loaded into the registry!! 
-		QuestEngine::API::ResourceAPI& resource_api = m_engine_api.get_resource_api();
-        const QuestEngine::API::OpenGL::ShaderLoader shader_loader { resource_api };
-        shader_loader.load_shader_program("Triangle Shader", m_base_shader_path + "TriangleVertex.glsl", m_base_shader_path + "TriangleFragment.glsl", true);
+		const QuestEngine::API::OpenGL::ShaderLoaderAPI shader_loader = m_engine_api.get_shader_loader_api();
+		const std::string shader_id{ "Triangle Shader" };
+        shader_loader.load_shader(shader_id, m_base_shader_path + "TriangleVertex.glsl", m_base_shader_path + "TriangleFragment.glsl", true);
 
         // Standard model (Single Array Buffer)
         const std::vector<float> vertices = {
@@ -26,16 +26,16 @@ namespace QuestSandbox::Tests {
              0.0f,  0.5f, 0.0f  // top   
         };
 
-        const QuestEngine::API::OpenGL::ModelLoader model_loader { m_engine_api.get_resource_api() };
-        model_loader.load_model("Test Model", "Triangle Shader", { vertices }, { 3 });
+        const QuestEngine::API::OpenGL::ModelLoaderAPI model_loader = m_engine_api.get_model_loader_api();
+        model_loader.load_model("Test Model", shader_id, { vertices }, { 3 });
 
 	}
     void ShapeTests::load_indexed_triangle() const {
 
 		// *** TODO: this test isn't being loaded into the registry!! 
-		QuestEngine::API::ResourceAPI& resource_api = m_engine_api.get_resource_api();
-        const QuestEngine::API::OpenGL::ShaderLoader shader_loader{ resource_api };
-        shader_loader.load_shader_program("Triangle Shader", m_base_shader_path + "TriangleVertex.glsl", m_base_shader_path + "TriangleFragment.glsl", true);
+		const QuestEngine::API::OpenGL::ShaderLoaderAPI shader_loader = m_engine_api.get_shader_loader_api();
+		const std::string shader_id{ "Triangle Shader" };
+        shader_loader.load_shader(shader_id, m_base_shader_path + "TriangleVertex.glsl", m_base_shader_path + "TriangleFragment.glsl", true);
 
         const std::vector<float> vertices = {
 			 0.5f,  0.5f, 0.0f,  // top right
@@ -48,15 +48,16 @@ namespace QuestSandbox::Tests {
             3, 2, 0    // second triangle
         };
 
-        const QuestEngine::API::OpenGL::ModelLoader model_loader{ m_engine_api.get_resource_api() };
-        model_loader.load_model("Test Model", "Triangle Shader", { vertices }, { indices }, { 3 });
+		const QuestEngine::API::OpenGL::ModelLoaderAPI model_loader = m_engine_api.get_model_loader_api();
+        model_loader.load_model("Test Model", shader_id, { vertices }, { indices }, { 3 });
     }
 
     // ======================== Cube ========================
     void ShapeTests::load_standard_cube() const {
-		QuestEngine::API::ResourceAPI& resource_api = m_engine_api.get_resource_api();
-        const QuestEngine::API::OpenGL::ShaderLoader shader_loader{ resource_api };
-        shader_loader.load_shader_program("Cube Shader", m_base_shader_path + "CubeVertex.glsl", m_base_shader_path + "CubeFragment.glsl", true);
+		
+		const QuestEngine::API::OpenGL::ShaderLoaderAPI shader_loader = m_engine_api.get_shader_loader_api();
+		const std::string shader_id{ "Cube Shader" };
+        shader_loader.load_shader(shader_id, m_base_shader_path + "CubeVertex.glsl", m_base_shader_path + "CubeFragment.glsl", true);
 
 		const std::vector<float> vertices = {
 			// back face
@@ -110,20 +111,22 @@ namespace QuestSandbox::Tests {
 
 		// Load created model into resource
 		const std::string model_entity_id{ "Test Model" };
-		const QuestEngine::API::OpenGL::ModelLoader model_loader{ resource_api };
-		model_loader.load_model(model_entity_id, "Cube Shader", { vertices }, { 3 });
+		const QuestEngine::API::OpenGL::ModelLoaderAPI model_loader = m_engine_api.get_model_loader_api();
+		model_loader.load_model(model_entity_id, shader_id, { vertices }, { 3 });
 
 		// Take loaded model and create ECS entity
+		const QuestEngine::API::ResourceAPI& resource_api = m_engine_api.get_resource_api();
 		QuestEngine::Model::StandardModel* model_pointer = resource_api.get_model_pointer(model_entity_id);
 
-		QuestEngine::API::RegistryAPI registry_api = m_engine_api.get_registry_api();
+		const QuestEngine::API::RegistryAPI registry_api = m_engine_api.get_registry_api();
 		registry_api.load_model_into_world(model_entity_id, model_pointer, { 0.0f, 3.0f, 0.0f });
  
     }
     void ShapeTests::load_indexed_cube() const {
-		QuestEngine::API::ResourceAPI& resource_api = m_engine_api.get_resource_api();
-		const QuestEngine::API::OpenGL::ShaderLoader shader_loader{ resource_api };
-		shader_loader.load_shader_program("Indexed Cube Shader", m_base_shader_path + "CubeVertex.glsl", m_base_shader_path + "CubeFragment.glsl", true);
+		
+		const QuestEngine::API::OpenGL::ShaderLoaderAPI shader_loader = m_engine_api.get_shader_loader_api();
+		const std::string shader_id{ "Indexed Cube Shader" };
+		shader_loader.load_shader(shader_id, m_base_shader_path + "CubeVertex.glsl", m_base_shader_path + "CubeFragment.glsl", true);
 
 		const std::vector<float> vertices = {
 
@@ -192,13 +195,14 @@ namespace QuestSandbox::Tests {
 
 		// Load created model into resource
 		const std::string model_entity_id{ "Test Indexed Model" };
-		const QuestEngine::API::OpenGL::ModelLoader model_loader{ resource_api };
-		model_loader.load_model(model_entity_id, "Indexed Cube Shader", { vertices }, { indices }, { 3 });
+		const QuestEngine::API::OpenGL::ModelLoaderAPI model_loader = m_engine_api.get_model_loader_api();
+		model_loader.load_model(model_entity_id, shader_id, { vertices }, { indices }, { 3 });
 
 		// Take loaded model and create ECS entity
+		const QuestEngine::API::ResourceAPI& resource_api = m_engine_api.get_resource_api();
 		QuestEngine::Model::IndexedModel* model_pointer = resource_api.get_indexed_model_pointer(model_entity_id);
 
-		QuestEngine::API::RegistryAPI registry_api = m_engine_api.get_registry_api();
+		const QuestEngine::API::RegistryAPI registry_api = m_engine_api.get_registry_api();
 		registry_api.load_model_into_world(model_entity_id, model_pointer, { 0.0f, 1.0f, 0.0f });
     }
 

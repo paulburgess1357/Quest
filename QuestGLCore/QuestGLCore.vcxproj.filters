@@ -51,9 +51,6 @@
     <ClInclude Include="Shader\Typedefs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\Shader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Model\Mesh.h">
       <Filter>Header Files</Filter>
     </ClInclude>

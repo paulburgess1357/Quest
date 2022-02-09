@@ -2,6 +2,7 @@
 #include "QuestEngine/Engine/Engine.h"
 #include "QuestEngine/API/Neutral/RegistryAPI.h"
 #include "QuestEngine/API/Neutral/ResourceAPI.h"
+#include "QuestEngine/Using/API.h"
 #include <memory>
 
 namespace QuestEngine::API {
@@ -15,11 +16,15 @@ namespace QuestEngine::API {
 
 		ResourceAPI& get_resource_api();
 		RegistryAPI& get_registry_api();
+		ModelLoaderAPI& get_model_loader_api();
+		ShaderLoaderAPI& get_shader_loader_api();
 
 	private:
 		std::unique_ptr<Engine::Engine> m_engine{ nullptr };
 		ResourceAPI m_resource_api{ nullptr };
 		RegistryAPI m_registry_api{ nullptr };
+		ModelLoaderAPI m_model_loader_api{ nullptr };
+		ShaderLoaderAPI m_shader_loader_api{ nullptr };
 
 	};
 

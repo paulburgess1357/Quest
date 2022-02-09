@@ -51,10 +51,10 @@
     <ClInclude Include="Camera\ProjectionMatrix.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="API\OpenGL\ModelLoader.h">
+    <ClInclude Include="API\OpenGL\ModelLoaderAPI.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="API\OpenGL\ShaderLoader.h">
+    <ClInclude Include="API\OpenGL\ShaderLoaderAPI.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="API\OpenGL\ModelLoaderExceptions.h">
@@ -87,6 +87,9 @@
     <ClInclude Include="API\Neutral\EngineAPI.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Using\API.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PCH\pch.cpp">
@@ -107,10 +110,10 @@
     <ClCompile Include="Camera\ProjectionMatrix.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="API\OpenGL\ModelLoader.cpp">
+    <ClCompile Include="API\OpenGL\ModelLoaderAPI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="API\OpenGL\ShaderLoader.cpp">
+    <ClCompile Include="API\OpenGL\ShaderLoaderAPI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ECS\Manage\RegistryManager.cpp">

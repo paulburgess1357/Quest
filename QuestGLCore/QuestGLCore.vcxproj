@@ -170,7 +170,6 @@
     <ClInclude Include="Handle\Traits\Buffer.h" />
     <ClInclude Include="Handle\Traits\ShaderProgram.h" />
     <ClInclude Include="Handle\Traits\Vao.h" />
-    <ClInclude Include="Include\Shader.h" />
     <ClInclude Include="Model\Mesh.h" />
     <ClInclude Include="Model\Model.h" />
     <ClInclude Include="OpenGLTypes\OglTypeResolution.h" />

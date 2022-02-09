@@ -4,8 +4,12 @@
 #include <Windows.h>
 #include "framework.h"
 
+// Engine
+#include "QuestEngine/Engine/Engine.h"
+
 // Resource
 #include "QuestEngine/Resource/TResource.h"
+#include "QuestEngine/Resource/ResourceManager.h"
 
 // Camera
 #include "QuestEngine/Camera/ProjectionMatrix.h"
@@ -14,14 +18,9 @@
 // Using
 #include "QuestEngine/Using/Window.h"
 #include "QuestEngine/Using/Resource.h"
-
-// Systems
-#include "QuestEngine/ECS/Systems/RenderSystem.h"
-#include "QuestEngine/ECS/Systems/TransformSystem.h"
-
-// Components
-#include "QuestEngine/ECS/Components/ModelComponent.h"
-#include "QuestEngine/ECS/Components/RotateComponent.h"
+#include "QuestEngine/Using/API.h"
+#include "QuestEngine/Using/Model.h"
+#include "QuestEngine/Using/Shader.h"
 
 // ECS
 #include "QuestEngine/ECS/Components/TransformComponent.h"
@@ -33,3 +32,12 @@
 
 #include "QuestEngine/ECS/Systems/RenderSystem.h"
 #include "QuestEngine/ECS/Systems/TransformSystem.h"
+
+// API
+#include "QuestEngine/API/Neutral/EngineAPI.h"
+#include "QuestEngine/API/Neutral/RegistryAPI.h"
+#include "QuestEngine/API/Neutral/ResourceAPI.h"
+
+#include "QuestEngine/API/OpenGL/ModelLoaderAPI.h"
+#include "QuestEngine/API/OpenGL/ShaderLoaderAPI.h"
+#include "QuestEngine/API/OpenGL/ModelLoaderExceptions.h"

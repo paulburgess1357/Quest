@@ -6,7 +6,10 @@ namespace QuestEngine::API {
 	EngineAPI::EngineAPI(const int width, const int height)
 		:m_engine{ std::make_unique<Engine::Engine>(width, height) },
 		m_resource_api{ m_engine.get() },
-		m_registry_api{ m_engine.get() }{
+		m_registry_api{ m_engine.get() },
+		m_model_loader_api{ m_engine.get() },
+		m_shader_loader_api{ m_engine.get() }{
+
 	}
 
 	void EngineAPI::run() const {
@@ -23,6 +26,14 @@ namespace QuestEngine::API {
 
 	RegistryAPI& EngineAPI::get_registry_api() {
 		return m_registry_api;
+	}
+
+	ModelLoaderAPI& EngineAPI::get_model_loader_api() {
+		return m_model_loader_api;
+	}
+
+	ShaderLoaderAPI& EngineAPI::get_shader_loader_api() {
+		return m_shader_loader_api;
 	}
 
 } // namespace QuestEngine::API
