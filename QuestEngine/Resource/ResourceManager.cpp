@@ -26,6 +26,10 @@ namespace QuestEngine::Resource {
 		m_shader_resource.load(shader_id, shader_id, Shader::ShaderProgramCreator{ shader_string_map });
 	}
 
+	void ResourceManager::load_shader(const std::string& shader_id, Shader::ShaderProgram& shader_program) {
+		m_shader_resource[shader_id] = std::move(shader_program);
+	}
+
 	void ResourceManager::shader_qc() const {
 		QUEST_TRACE("Checking Shader Uniforms Initialized")
 		for(const auto& shader : m_shader_resource) {
@@ -47,6 +51,11 @@ namespace QuestEngine::Resource {
 		m_standard_model_resource.load(model_id, shader_program, std::move(meshes));
 	}
 
+	void ResourceManager::load_model(const std::string& model_id, Model::StandardModel& model) {
+		m_standard_model_resource[model_id] = std::move(model);
+	}
+
+
 	// ==================== Indexed Model ====================
 	Model::IndexedModel& ResourceManager::get_indexed_model(const std::string& model_id) {
 		return m_indexed_model_resource[model_id];
@@ -59,6 +68,11 @@ namespace QuestEngine::Resource {
 	void ResourceManager::load_model(const std::string& model_id, Shader::ShaderProgram& shader_program, std::vector<Model::IndexedMesh>& meshes) {
 		m_indexed_model_resource.load(model_id, shader_program, std::move(meshes));
 	}
+
+	void ResourceManager::load_model(const std::string& model_id, Model::IndexedModel& model) {
+		m_indexed_model_resource[model_id] = std::move(model);
+	}
+
 
 	// ==================== Camera ====================
 	void ResourceManager::load_main_camera() {
@@ -76,5 +90,10 @@ namespace QuestEngine::Resource {
 	void ResourceManager::load_camera(const std::string& camera_id, const glm::vec3& camera_position, const glm::vec3& pt_to_look_at_in_world) {
 		m_camera_resource.load(camera_id, camera_position, pt_to_look_at_in_world);
 	}
+
+	void ResourceManager::load_camera(const std::string& camera_id, const Camera::Camera& camera) {
+		m_camera_resource[camera_id] = camera;
+	}
+
 
 } // namespace QuestEngine::Resource

@@ -1,5 +1,5 @@
 #pragma once
-#include "QuestEngine/API/EngineAPI.h"
+#include "QuestEngine/API/Neutral/EngineAPI.h"
 #include <string>
 
 namespace QuestSandbox::Tests {
@@ -7,7 +7,7 @@ namespace QuestSandbox::Tests {
 	class ShapeTests {
 
 	public:
-		ShapeTests(const QuestEngine::API::QuestEngineAPI& engine_api);
+		ShapeTests(QuestEngine::API::EngineAPI& engine_api);
 
 		// Triangle
 		void load_standard_triangle() const;
@@ -18,7 +18,7 @@ namespace QuestSandbox::Tests {
 		void load_indexed_cube() const;
 
 	private:
-		const QuestEngine::API::QuestEngineAPI& m_engine_api;
+		QuestEngine::API::EngineAPI& m_engine_api;
 		static const std::string m_base_shader_path;
 	};
 

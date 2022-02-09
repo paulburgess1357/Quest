@@ -6,10 +6,4 @@ namespace QuestEngine::Model {
 	using StandardMesh = QuestGLCore::Model::Mesh<QuestGLCore::VertexData::VertexData>;
 	using IndexedModel = QuestGLCore::Model::Model<QuestGLCore::VertexData::IndexedVertexData>;
 	using IndexedMesh = QuestGLCore::Model::Mesh<QuestGLCore::VertexData::IndexedVertexData>;
-
-	enum class ModelType {
-		Standard,
-		Indexed
-	};
-
 } // namespace QuestEngine::Model

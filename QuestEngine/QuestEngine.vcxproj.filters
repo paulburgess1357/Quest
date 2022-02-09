@@ -33,7 +33,7 @@
     <ClInclude Include="Using\Resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="API\EngineAPI.h">
+    <ClInclude Include="API\Neutral\ResourceAPI.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Resource\ResourceManager.h">
@@ -51,10 +51,10 @@
     <ClInclude Include="Camera\ProjectionMatrix.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="API\OpenGL\ModelLoader.h">
+    <ClInclude Include="API\OpenGL\ModelLoaderAPI.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="API\OpenGL\ShaderLoader.h">
+    <ClInclude Include="API\OpenGL\ShaderLoaderAPI.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="API\OpenGL\ModelLoaderExceptions.h">
@@ -81,6 +81,15 @@
     <ClInclude Include="ECS\Manage\SystemManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="API\Neutral\RegistryAPI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="API\Neutral\EngineAPI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Using\API.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PCH\pch.cpp">
@@ -89,7 +98,7 @@
     <ClCompile Include="Engine\Engine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="API\EngineAPI.cpp">
+    <ClCompile Include="API\Neutral\ResourceAPI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Resource\ResourceManager.cpp">
@@ -101,16 +110,22 @@
     <ClCompile Include="Camera\ProjectionMatrix.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="API\OpenGL\ModelLoader.cpp">
+    <ClCompile Include="API\OpenGL\ModelLoaderAPI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="API\OpenGL\ShaderLoader.cpp">
+    <ClCompile Include="API\OpenGL\ShaderLoaderAPI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ECS\Manage\RegistryManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ECS\Manage\SystemManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="API\Neutral\RegistryAPI.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="API\Neutral\EngineAPI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
