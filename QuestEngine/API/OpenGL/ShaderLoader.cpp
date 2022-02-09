@@ -4,8 +4,8 @@
 
 namespace QuestEngine::API::OpenGL {
 
-	ShaderLoader::ShaderLoader(const QuestEngineAPI& engine_api)
-		:m_engine_api{ engine_api } {
+	ShaderLoader::ShaderLoader(ResourceAPI& resource_api)
+		:m_resource_api{ resource_api } {
 	}
 
 	void ShaderLoader::load_shader_program(const std::string& shader_program_id, std::string vertex, std::string fragment, const bool from_file) const {
@@ -14,7 +14,7 @@ namespace QuestEngine::API::OpenGL {
 			fragment = QuestUtility::String::FileToString::load(fragment);
 		}
 
-		m_engine_api.load_shader(shader_program_id, {
+		m_resource_api.load_shader(shader_program_id, {
 			std::pair{QuestGLCore::Shader::ShaderEnum::VERTEX, vertex },
 			std::pair{QuestGLCore::Shader::ShaderEnum::FRAGMENT, fragment }
 		});

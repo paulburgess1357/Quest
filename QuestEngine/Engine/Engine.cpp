@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "Engine.h"
-#include "QuestEngine/ECS/Systems/RenderSystem.h"
 #include "QuestUtility/Logging/LogMacros.h"
 
 namespace QuestEngine::Engine {
@@ -40,5 +39,15 @@ namespace QuestEngine::Engine {
 	bool Engine::shutdown() const {
 		return m_window.close_window() || Window::KeyboardInput::is_pressed(Window::Keyboard::ESCAPE);
 	}
+
+	Resource::ResourceManager& Engine::get_resource_manager() {
+		return m_resource_manager;
+	}
+
+	ECS::RegistryManager& Engine::get_registry_manager() {
+		return m_registry_manager;
+	}
+
+
 
 } // namespace QuestEngine::Engine

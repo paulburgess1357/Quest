@@ -4,14 +4,14 @@
 
 namespace QuestEngine::API::OpenGL {
 
-	ModelLoader::ModelLoader(const QuestEngineAPI& engine_api)
-		:m_engine_api{ engine_api } {
+	ModelLoader::ModelLoader(ResourceAPI& resource_api)
+		:m_resource_api{ resource_api } {
 	}
 
 	void ModelLoader::load_model(const std::string& model_id, const std::string& shader_program_id, const std::vector<std::vector<float>>& all_mesh_vertices, const std::vector<int>& vertex_description) const {
 		// Load multiple vectors of vertices.  For example, you can load a model
 		// that has multiple meshes.  Each mesh would have its own vector of vertices
-		Shader::ShaderProgram& shader_program = m_engine_api.get_shader(shader_program_id);
+		Shader::ShaderProgram& shader_program = m_resource_api.get_shader(shader_program_id);
 
 		// Load vertex data
 		std::vector<QuestGLCore::Model::Mesh<QuestGLCore::VertexData::VertexData>> all_meshes;
@@ -27,7 +27,7 @@ namespace QuestEngine::API::OpenGL {
 		}
 
 		// Move vector of mesh's into model
-		m_engine_api.load_model(model_id, shader_program, all_meshes);
+		m_resource_api.load_model(model_id, shader_program, all_meshes);
 	}
 
 	void ModelLoader::load_model(const std::string& model_id, const std::string& shader_program_id, const std::vector<std::vector<float>>& all_mesh_vertices, const std::vector<std::vector<unsigned>>& all_mesh_indices, const std::vector<int>& vertex_description) const {
@@ -35,7 +35,7 @@ namespace QuestEngine::API::OpenGL {
 		// be the same length as all_mesh_indices, as each mesh would have its
 		// own corresponding vector of indices.
 		check_indexed_vertices_indices(all_mesh_vertices, all_mesh_indices);
-		Shader::ShaderProgram& shader_program = m_engine_api.get_shader(shader_program_id);
+		Shader::ShaderProgram& shader_program = m_resource_api.get_shader(shader_program_id);
 
 		std::vector<QuestGLCore::Model::Mesh<QuestGLCore::VertexData::IndexedVertexData>> all_indexed_meshes;
 		for(size_t i = 0; i < all_mesh_vertices.size(); i++) {
@@ -50,7 +50,7 @@ namespace QuestEngine::API::OpenGL {
 		}
 
 		// Move vector of mesh's into model
-		m_engine_api.load_model(model_id, shader_program, all_indexed_meshes);
+		m_resource_api.load_model(model_id, shader_program, all_indexed_meshes);
 	}
 
 	void ModelLoader::check_indexed_vertices_indices(const std::vector<std::vector<float>>& all_mesh_vertices, const std::vector<std::vector<unsigned>>& all_mesh_indices) {

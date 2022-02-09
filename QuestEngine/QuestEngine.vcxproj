@@ -165,7 +165,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="API\EngineAPI.h" />
+    <ClInclude Include="API\Neutral\EngineAPI.h" />
+    <ClInclude Include="API\Neutral\RegistryAPI.h" />
+    <ClInclude Include="API\Neutral\ResourceAPI.h" />
     <ClInclude Include="API\OpenGL\ModelLoader.h" />
     <ClInclude Include="API\OpenGL\ModelLoaderExceptions.h" />
     <ClInclude Include="API\OpenGL\ShaderLoader.h" />
@@ -189,7 +191,9 @@
     <ClInclude Include="Using\Window.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="API\EngineAPI.cpp" />
+    <ClCompile Include="API\Neutral\EngineAPI.cpp" />
+    <ClCompile Include="API\Neutral\RegistryAPI.cpp" />
+    <ClCompile Include="API\Neutral\ResourceAPI.cpp" />
     <ClCompile Include="API\OpenGL\ModelLoader.cpp" />
     <ClCompile Include="API\OpenGL\ShaderLoader.cpp" />
     <ClCompile Include="Camera\Camera.cpp" />

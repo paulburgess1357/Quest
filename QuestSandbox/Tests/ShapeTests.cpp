@@ -7,7 +7,7 @@ namespace QuestSandbox::Tests {
 
     const std::string ShapeTests::m_base_shader_path{"../Resources/Shaders/Shape/"};
 
-    ShapeTests::ShapeTests(const QuestEngine::API::QuestEngineAPI& engine_api)
+    ShapeTests::ShapeTests(QuestEngine::API::EngineAPI& engine_api)
         :m_engine_api{ engine_api } {
     }
 
@@ -15,8 +15,8 @@ namespace QuestSandbox::Tests {
 	void ShapeTests::load_standard_triangle() const {
 
 		// *** TODO: this test isn't being loaded into the registry!! 
-
-        const QuestEngine::API::OpenGL::ShaderLoader shader_loader { m_engine_api };
+		QuestEngine::API::ResourceAPI& resource_api = m_engine_api.get_resource_api();
+        const QuestEngine::API::OpenGL::ShaderLoader shader_loader { resource_api };
         shader_loader.load_shader_program("Triangle Shader", m_base_shader_path + "TriangleVertex.glsl", m_base_shader_path + "TriangleFragment.glsl", true);
 
         // Standard model (Single Array Buffer)
@@ -26,15 +26,15 @@ namespace QuestSandbox::Tests {
              0.0f,  0.5f, 0.0f  // top   
         };
 
-        const QuestEngine::API::OpenGL::ModelLoader model_loader { m_engine_api };
+        const QuestEngine::API::OpenGL::ModelLoader model_loader { m_engine_api.get_resource_api() };
         model_loader.load_model("Test Model", "Triangle Shader", { vertices }, { 3 });
 
 	}
     void ShapeTests::load_indexed_triangle() const {
 
 		// *** TODO: this test isn't being loaded into the registry!! 
-
-        const QuestEngine::API::OpenGL::ShaderLoader shader_loader{ m_engine_api };
+		QuestEngine::API::ResourceAPI& resource_api = m_engine_api.get_resource_api();
+        const QuestEngine::API::OpenGL::ShaderLoader shader_loader{ resource_api };
         shader_loader.load_shader_program("Triangle Shader", m_base_shader_path + "TriangleVertex.glsl", m_base_shader_path + "TriangleFragment.glsl", true);
 
         const std::vector<float> vertices = {
@@ -48,13 +48,14 @@ namespace QuestSandbox::Tests {
             3, 2, 0    // second triangle
         };
 
-        const QuestEngine::API::OpenGL::ModelLoader model_loader{ m_engine_api };
+        const QuestEngine::API::OpenGL::ModelLoader model_loader{ m_engine_api.get_resource_api() };
         model_loader.load_model("Test Model", "Triangle Shader", { vertices }, { indices }, { 3 });
     }
 
     // ======================== Cube ========================
     void ShapeTests::load_standard_cube() const {
-        const QuestEngine::API::OpenGL::ShaderLoader shader_loader{ m_engine_api };
+		QuestEngine::API::ResourceAPI& resource_api = m_engine_api.get_resource_api();
+        const QuestEngine::API::OpenGL::ShaderLoader shader_loader{ resource_api };
         shader_loader.load_shader_program("Cube Shader", m_base_shader_path + "CubeVertex.glsl", m_base_shader_path + "CubeFragment.glsl", true);
 
 		const std::vector<float> vertices = {
@@ -109,17 +110,19 @@ namespace QuestSandbox::Tests {
 
 		// Load created model into resource
 		const std::string model_entity_id{ "Test Model" };
-		const QuestEngine::API::OpenGL::ModelLoader model_loader{ m_engine_api };
+		const QuestEngine::API::OpenGL::ModelLoader model_loader{ resource_api };
 		model_loader.load_model(model_entity_id, "Cube Shader", { vertices }, { 3 });
 
 		// Take loaded model and create ECS entity
-		QuestEngine::Model::StandardModel* model_pointer = m_engine_api.get_model_pointer(model_entity_id);
-		m_engine_api.load_model_into_registry(model_entity_id, model_pointer, { 0.0f, 3.0f, 0.0f });
+		QuestEngine::Model::StandardModel* model_pointer = resource_api.get_model_pointer(model_entity_id);
+
+		QuestEngine::API::RegistryAPI registry_api = m_engine_api.get_registry_api();
+		registry_api.load_model_into_world(model_entity_id, model_pointer, { 0.0f, 3.0f, 0.0f });
  
     }
     void ShapeTests::load_indexed_cube() const {
-
-		const QuestEngine::API::OpenGL::ShaderLoader shader_loader{ m_engine_api };
+		QuestEngine::API::ResourceAPI& resource_api = m_engine_api.get_resource_api();
+		const QuestEngine::API::OpenGL::ShaderLoader shader_loader{ resource_api };
 		shader_loader.load_shader_program("Indexed Cube Shader", m_base_shader_path + "CubeVertex.glsl", m_base_shader_path + "CubeFragment.glsl", true);
 
 		const std::vector<float> vertices = {
@@ -189,12 +192,14 @@ namespace QuestSandbox::Tests {
 
 		// Load created model into resource
 		const std::string model_entity_id{ "Test Indexed Model" };
-		const QuestEngine::API::OpenGL::ModelLoader model_loader{ m_engine_api };
+		const QuestEngine::API::OpenGL::ModelLoader model_loader{ resource_api };
 		model_loader.load_model(model_entity_id, "Indexed Cube Shader", { vertices }, { indices }, { 3 });
 
 		// Take loaded model and create ECS entity
-		QuestEngine::Model::IndexedModel* model_pointer = m_engine_api.get_indexed_model_pointer(model_entity_id);
-		m_engine_api.load_model_into_registry(model_entity_id, model_pointer, { 0.0f, 1.0f, 0.0f });
+		QuestEngine::Model::IndexedModel* model_pointer = resource_api.get_indexed_model_pointer(model_entity_id);
+
+		QuestEngine::API::RegistryAPI registry_api = m_engine_api.get_registry_api();
+		registry_api.load_model_into_world(model_entity_id, model_pointer, { 0.0f, 1.0f, 0.0f });
     }
 
 } // namespace QuestSandbox::Tests
