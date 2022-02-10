@@ -75,6 +75,9 @@
     <ClInclude Include="Constants\Constants.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Handle\Traits\Texture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="QuestGLCore.cpp">

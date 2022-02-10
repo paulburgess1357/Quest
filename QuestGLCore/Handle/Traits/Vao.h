@@ -6,7 +6,7 @@ namespace QuestGLCore::Traits {
 	struct VAOTraits {
 
 		static Typedefs::GLHandle create() {
-			Typedefs::GLHandle  vao{ };
+			Typedefs::GLHandle vao{ };
 			glGenVertexArrays(1, &vao);
 			return vao;
 		}

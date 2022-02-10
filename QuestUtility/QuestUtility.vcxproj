@@ -165,6 +165,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="ImageLoading\HDRImageLoader.h" />
+    <ClInclude Include="ImageLoading\ImageExceptions.h" />
+    <ClInclude Include="ImageLoading\IImageLoader.h" />
+    <ClInclude Include="ImageLoading\StandardImageLoader.h" />
+    <ClInclude Include="ImageLoading\STBI.h" />
     <ClInclude Include="PCH\framework.h" />
     <ClInclude Include="Logging\LogHandler.h" />
     <ClInclude Include="Include\Logger.h" />
