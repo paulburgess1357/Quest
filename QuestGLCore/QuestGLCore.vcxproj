@@ -166,6 +166,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Constants\Constants.h" />
+    <ClInclude Include="Handle\Traits\Texture.h" />
     <ClInclude Include="PCH\framework.h" />
     <ClInclude Include="Handle\Template\HandleTemplate.h" />
     <ClInclude Include="Handle\Traits\Buffer.h" />

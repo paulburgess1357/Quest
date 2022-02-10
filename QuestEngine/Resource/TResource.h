@@ -18,7 +18,7 @@ namespace QuestEngine::Resource {
 			// Normally you can use the [] overload below.  However, the qc
 			// check below prevents new objects from being added.  This is a
 			// replacement to use in lieu of the below when adding new items.
-			if(m_resource_map.count(key) > 0) {
+			if(contains_key(key)) {
 				*get_pointer(key) = std::move(value);
 			} else {
 				m_resource_map.emplace(key, std::move(value));
@@ -35,7 +35,7 @@ namespace QuestEngine::Resource {
 
 		Value& operator[](const Key& key) {
 			#ifdef DEBUG
-				if(m_resource_map.count(key) == 0) {
+				if(!contains_key(key)) {
 					const std::string key_val = std::is_same_v<Key, std::string> ? key : "Key type is not string";
 					QUEST_WARN("Key does not exist in map.  Unable to return reference.  Searched Key: " + key_val);
 				}
@@ -58,6 +58,10 @@ namespace QuestEngine::Resource {
 
 		[[nodiscard]] auto end() const {
 			return m_resource_map.end();
+		}
+
+		[[nodiscard]] bool contains_key(const Key& key) {
+			return m_resource_map.count(key) > 0;
 		}
 
 	private:
