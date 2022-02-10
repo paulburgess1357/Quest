@@ -22,7 +22,7 @@ namespace QuestGLCore::VertexData {
 
 		void draw() const {
 			m_vao.bind();
-			glDrawElements(m_draw_mode, m_index_count, GL_UNSIGNED_INT, 0);
+			glDrawElements(m_draw_mode, m_index_count, GL_UNSIGNED_INT, nullptr);
 			m_vao.unbind();
 		}
 
@@ -45,7 +45,6 @@ namespace QuestGLCore::VertexData {
 			glBufferData(m_vbo_target, static_cast<Typedefs::GLSizePtr>(sizeof(T) * input_data.size()), input_data.data(), draw_usage);
 			
 			// Store indices
-			auto test = sizeof(unsigned int) * indices.size();
 			glBufferData(m_ebo_target, static_cast<Typedefs::GLSizePtr>(sizeof(unsigned int) * indices.size()), indices.data(), draw_usage);
 
 			// Describe attributes (for shader)

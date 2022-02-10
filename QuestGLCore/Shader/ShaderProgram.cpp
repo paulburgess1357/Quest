@@ -84,8 +84,7 @@ namespace QuestGLCore::Shader {
 			GLchar name[bufSize];
 
 			glGetActiveUniform(m_handle.get_handle(), i, bufSize, &length, &size, &type, name);
-			const std::string name_str{ name };
-			if (ignore_strings.count(name_str) == 0) {
+			if (const std::string name_str{ name }; ignore_strings.count(name_str) == 0) {
 				QUEST_ASSERT(m_uniform_locations.count(name_str) != 0, "The variable: " + name_str + " exists in your GLSL (ShaderProgram: " + m_program_name + ") code, but has not been set via set_uniform()!")
 			}
 		}

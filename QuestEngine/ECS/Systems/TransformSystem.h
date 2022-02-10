@@ -28,41 +28,12 @@ namespace QuestEngine::ECS::Systems {
 			// model id and entity id.  I can then access the entity that way.
 			//  I need to make sure the entity in the associated map is destroyed when the registry destroys it as well...
 
+			// Access entity via map
+			// May need to add ui component to write a system that manipulates the transform component
+			// The transform component manipulation will be done by the gizmo library
 
-
-			// When ui is open, see active model/indexed model entities:
-			// Perhaps add flag to the entity that says (add ui component)
-			// This system adds the ui component
-
-
-			//  - Add ui component to entity based on the name
-
-			// Take entity with ui component.  Perform transformations here.
-			// Set Rotation
-			// Move along world
-			// Rotate
-			// etc.
-
-
-			// Once complete, I remove that component from the entity
+			// Once complete, I remove that component from the entity (i.e. when the ui window is closed)
 		}
-
-		//static void get_model_entity(entt::registry& registry, const std::string& model_id) {
-		//	registry.view<Components::StandardModelComponent>().each([](auto& model) {
-		//		
-		//	});
-		//	registry.view<Components::IndexedModelComponent>().each([](auto& model) {
-		//		
-		//	});
-		//}
-
-		//TODO is is possible to manipulate the transform component for a given entity? So the entity does not hold its own model matrix???
-		//TODO similarly, the entity would not hold its normal matrix.  That sort of messed up the set uniform stuff though...
-
-		// Pointer to transform component??? Seems messy.
-
-		// Perhaps I create a system that has a 'user manipulation' component? When I select an entity, I add the component to that entity.
-		// then, in that system I access the asscicated transform component and update the actual component.
 
 		static void update_model_matrix(entt::registry& registry) {
 			registry.view<Components::StandardModelComponent, Components::TransformComponent>().each([](auto& model, auto& transform) {

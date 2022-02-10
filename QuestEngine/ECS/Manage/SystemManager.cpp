@@ -13,24 +13,16 @@ namespace QuestEngine::ECS {
 		m_active_registry = &registry;
 	}
 
-	void SystemManager::run() {
+	void SystemManager::run() const {
 		update();
 		render();
 	}
 
 	void SystemManager::update() const {
-		//TODO create entity for update system that is for ubo matrices only?
-		//What if other ubos are added outside of the engine?? For example, the test project.
-		//What if I want to add a UBO and use an entity/system to update it?
-		//I'd like to create an entity that sends up the data for those...
-
-		// ACtually an ECS for this is probably overkill...
-
 		ECS::Systems::TransformSystem::transform(*m_active_registry);
 	}
 
-	void SystemManager::render() {
-		//TODO note that when ubos work, the projection matrix and camera are no longer needed below.  Camera MAY be necessary later if i need world coordinates...
+	void SystemManager::render() const {
 		ECS::Systems::RenderSystem::render(*m_active_registry);
 	}
 

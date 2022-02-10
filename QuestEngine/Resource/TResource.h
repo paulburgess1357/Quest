@@ -17,7 +17,7 @@ namespace QuestEngine::Resource {
 		void load(const Key& key, Value& value) {
 			// Normally you can use the [] overload below.  However, the qc
 			// check below prevents new objects from being added.  This is a
-			// replacement to use in liue of the below when adding new items.
+			// replacement to use in lieu of the below when adding new items.
 			if(m_resource_map.count(key) > 0) {
 				*get_pointer(key) = std::move(value);
 			} else {

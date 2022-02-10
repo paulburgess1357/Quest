@@ -41,23 +41,23 @@ namespace QuestGLCore::UniformBufferObjects {
 	}
 
 	// Overloads (only allowing glm types)
-	void UniformBufferObject::send_data_to_buffer(const std::string& buffer_id, const glm::vec2& data_to_send) const {
-		send_data_to_buffer<glm::vec2>(buffer_id, data_to_send);
+	void UniformBufferObject::send_data_to_buffer(const glm::vec2& data_to_send) const {
+		send_data_to_buffer<glm::vec2>(data_to_send);
 	}
-	void UniformBufferObject::send_data_to_buffer(const std::string& buffer_id, const glm::vec3& data_to_send) const{
-		send_data_to_buffer<glm::vec3>(buffer_id, data_to_send);
+	void UniformBufferObject::send_data_to_buffer(const glm::vec3& data_to_send) const{
+		send_data_to_buffer<glm::vec3>(data_to_send);
 	}
-	void UniformBufferObject::send_data_to_buffer(const std::string& buffer_id, const glm::vec4& data_to_send) const {
-		send_data_to_buffer<glm::vec4>(buffer_id, data_to_send);
+	void UniformBufferObject::send_data_to_buffer(const glm::vec4& data_to_send) const {
+		send_data_to_buffer<glm::vec4>(data_to_send);
 	}
-	void UniformBufferObject::send_data_to_buffer(const std::string& buffer_id, const glm::mat2& data_to_send) const {
-		send_data_to_buffer<glm::mat2>(buffer_id, data_to_send);
+	void UniformBufferObject::send_data_to_buffer(const glm::mat2& data_to_send) const {
+		send_data_to_buffer<glm::mat2>(data_to_send);
 	}
-	void UniformBufferObject::send_data_to_buffer(const std::string& buffer_id, const glm::mat3& data_to_send) const {
-		send_data_to_buffer<glm::mat3>(buffer_id, data_to_send);
+	void UniformBufferObject::send_data_to_buffer(const glm::mat3& data_to_send) const {
+		send_data_to_buffer<glm::mat3>(data_to_send);
 	}
-	void UniformBufferObject::send_data_to_buffer(const std::string& buffer_id, const glm::mat4& data_to_send) const {
-		send_data_to_buffer<glm::mat4>(buffer_id, data_to_send);
+	void UniformBufferObject::send_data_to_buffer(const glm::mat4& data_to_send) const {
+		send_data_to_buffer<glm::mat4>(data_to_send);
 	}
 
 } // namespace QuestGLCore::Shader

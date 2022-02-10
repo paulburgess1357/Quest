@@ -6,8 +6,8 @@
 
 namespace QuestGLCore::Shader {
 
-	ShaderProgramCreator::ShaderProgramCreator(const std::unordered_map<ShaderEnum, std::string>& shader_string_map)
-		:m_shader_string_map{ shader_string_map } {
+	ShaderProgramCreator::ShaderProgramCreator(std::unordered_map<ShaderEnum, std::string> shader_string_map)
+		:m_shader_string_map{ std::move(shader_string_map) } {
 	}
 
 	Typedefs::ShaderProgramHandle ShaderProgramCreator::create() const {
