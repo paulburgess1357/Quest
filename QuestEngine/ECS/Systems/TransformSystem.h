@@ -47,14 +47,14 @@ namespace QuestEngine::ECS::Systems {
 			// Once complete, I remove that component from the entity
 		}
 
-		static void get_model_entity(entt::registry& registry, const std::string& model_id) {
-			registry.view<Components::StandardModelComponent>().each([](auto& model) {
-				
-			});
-			registry.view<Components::IndexedModelComponent>().each([](auto& model) {
-				
-			});
-		}
+		//static void get_model_entity(entt::registry& registry, const std::string& model_id) {
+		//	registry.view<Components::StandardModelComponent>().each([](auto& model) {
+		//		
+		//	});
+		//	registry.view<Components::IndexedModelComponent>().each([](auto& model) {
+		//		
+		//	});
+		//}
 
 		//TODO is is possible to manipulate the transform component for a given entity? So the entity does not hold its own model matrix???
 		//TODO similarly, the entity would not hold its normal matrix.  That sort of messed up the set uniform stuff though...

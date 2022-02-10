@@ -173,6 +173,7 @@
     <ClInclude Include="API\OpenGL\ShaderLoaderAPI.h" />
     <ClInclude Include="Camera\Camera.h" />
     <ClInclude Include="Camera\ProjectionMatrix.h" />
+    <ClInclude Include="Constants\Constants.h" />
     <ClInclude Include="ECS\Components\ModelComponent.h" />
     <ClInclude Include="ECS\Components\RotateComponent.h" />
     <ClInclude Include="ECS\Components\TransformComponent.h" />
@@ -184,11 +185,13 @@
     <ClInclude Include="PCH\framework.h" />
     <ClInclude Include="PCH\pch.h" />
     <ClInclude Include="Resource\ResourceManager.h" />
+    <ClInclude Include="UniformBufferObjects\UniformBufferManager.h" />
     <ClInclude Include="Using\API.h" />
     <ClInclude Include="Using\Model.h" />
     <ClInclude Include="Using\Resource.h" />
     <ClInclude Include="Resource\TResource.h" />
     <ClInclude Include="Using\Shader.h" />
+    <ClInclude Include="Using\UniformBufferObjects.h" />
     <ClInclude Include="Using\Window.h" />
   </ItemGroup>
   <ItemGroup>
@@ -209,6 +212,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Resource\ResourceManager.cpp" />
+    <ClCompile Include="UniformBufferObjects\UniformBufferManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\QuestGLCore\QuestGLCore.vcxproj">

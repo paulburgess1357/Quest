@@ -10,27 +10,13 @@
 namespace QuestEngine::ECS::Systems {
 
 	struct RenderSystem {
-		static void render(const entt::registry& registry, Camera::ProjectionMatrix& projection_matrix, Camera::Camera& camera) {
+		static void render(const entt::registry& registry) {
 
 			registry.view<Components::StandardModelComponent>().each([&](auto& model) {
-
-				// Temp for matrices ==============
-				Shader::ShaderProgram* shader_program = model.m_model->get_shader_program();
-				shader_program->bind();
-				shader_program->set_uniform("view_matrix", camera.get_view_matrix());
-				shader_program->set_uniform("projection_matrix", projection_matrix.get_projection_matrix());
-				// ================================
-
-				model.m_model->draw(); // TODO re-enable model matrix being set when testing complete.
+				model.m_model->draw();
 			});
 
 			registry.view<Components::IndexedModelComponent>().each([&](auto& model) {
-				// Temp for matrices ==============
-				Shader::ShaderProgram* shader_program = model.m_model->get_shader_program();
-				shader_program->bind();
-				shader_program->set_uniform("view_matrix", camera.get_view_matrix());
-				shader_program->set_uniform("projection_matrix", projection_matrix.get_projection_matrix());
-				// ================================
 				model.m_model->draw();
 			});
 

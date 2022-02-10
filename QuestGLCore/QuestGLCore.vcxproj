@@ -165,6 +165,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Constants\Constants.h" />
     <ClInclude Include="PCH\framework.h" />
     <ClInclude Include="Handle\Template\HandleTemplate.h" />
     <ClInclude Include="Handle\Traits\Buffer.h" />
@@ -180,6 +181,8 @@
     <ClInclude Include="Shader\Typedefs.h" />
     <ClInclude Include="Shader\ShaderEnum.h" />
     <ClInclude Include="Handle\Typedefs.h" />
+    <ClInclude Include="UniformBufferObjects\UniformBufferExceptions.h" />
+    <ClInclude Include="UniformBufferObjects\UniformBufferObjects.h" />
     <ClInclude Include="VertexData\VertexData.h" />
     <ClInclude Include="VertexData\VertexDataElement.h" />
   </ItemGroup>
@@ -193,6 +196,7 @@
     <ClCompile Include="QuestGLCore.cpp" />
     <ClCompile Include="Shader\ShaderProgramCreator.cpp" />
     <ClCompile Include="Shader\ShaderProgram.cpp" />
+    <ClCompile Include="UniformBufferObjects\UniformBufferObjects.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\QuestUtility\QuestUtility.vcxproj">

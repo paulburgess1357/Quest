@@ -1,14 +1,16 @@
 #pragma once
-#include "QuestGLCore/Shader/ShaderProgramCreator.h"
 #include "QuestGLCore/Shader/Typedefs.h"
+#include "QuestGLCore/Shader/ShaderProgramCreator.h"
+#include "QuestGLCore/UniformBufferObjects/UniformBufferObjects.h"
 #include <glm/glm.hpp>
+#include <unordered_map>
 
 namespace QuestGLCore::Shader {
 
 	class ShaderProgram {
 
 	public:
-		ShaderProgram(std::string program_name, const ShaderProgramCreator shader_creator);
+		ShaderProgram(std::string program_name, const ShaderProgramCreator& shader_creator);
 		void bind() const;
 		void unbind() const;
 
@@ -28,13 +30,15 @@ namespace QuestGLCore::Shader {
 
 		void check_uniforms_initialized() const;
 
+		// Uniform Blocks
+		void link_shader_to_ubo(const UniformBufferObjects::UniformBufferObject& ubo) const;
+
 	private:
 		int get_uniform(const std::string& uniform_name);
 
 		std::string m_program_name;
 		Typedefs::ShaderProgramHandle m_handle;
 		std::unordered_map<std::string, GLint> m_uniform_locations;
-
 	};
 
 } // namespace QuestGLCore::ShaderProgram

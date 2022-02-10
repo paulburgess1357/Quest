@@ -1,6 +1,7 @@
 #pragma once
 #include "QuestGLCore/Model/Mesh.h"
 #include "QuestGLCore/Shader/ShaderProgram.h"
+#include "QuestGLCore/Constants/Constants.h"
 #include <glm/glm.hpp>
 
 namespace QuestGLCore::Model {
@@ -16,10 +17,10 @@ namespace QuestGLCore::Model {
 
 		void draw() const {
 			m_shader_program->bind();
-			m_shader_program->set_uniform("model_matrix", m_model_matrix); // TODO re-enable.
+			m_shader_program->set_uniform(QuestGLCore::Constants::model_matrix, m_model_matrix);
 
 			// Set normal matrix =================
-
+			// m_shader_program->set_uniform(QuestGLCore::Constants::normal_matrix, m_normal_matrix);
 			// ===================================
 
 			for(const auto& mesh : m_meshes) {

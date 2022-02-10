@@ -13,9 +13,9 @@ namespace QuestSandbox::Tests {
 		void load_standard_triangle() const;
 		void load_indexed_triangle() const;
 
-		// Cube
-		void load_standard_cube() const;
-		void load_indexed_cube() const;
+		// Shape
+		void load_standard_shape() const;
+		void load_indexed_shape() const;
 
 	private:
 		QuestEngine::API::EngineAPI& m_engine_api;

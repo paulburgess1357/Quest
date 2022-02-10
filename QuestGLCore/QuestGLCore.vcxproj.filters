@@ -66,6 +66,15 @@
     <ClInclude Include="Model\Model.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="UniformBufferObjects\UniformBufferObjects.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UniformBufferObjects\UniformBufferExceptions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Constants\Constants.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="QuestGLCore.cpp">
@@ -78,6 +87,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Shader\ShaderProgramCreator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UniformBufferObjects\UniformBufferObjects.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
