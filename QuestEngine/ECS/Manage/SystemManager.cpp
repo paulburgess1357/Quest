@@ -5,21 +5,15 @@
 
 namespace QuestEngine::ECS {
 
-	SystemManager::SystemManager(entt::registry& active_registry, const Window::Window& window, Camera::Camera& camera)
-		:m_active_registry{ &active_registry },
-		m_projection_matrix{ window },
-		m_active_camera{ &camera }{
-	}
-
-	void SystemManager::set_active_camera(Camera::Camera& camera) {
-		m_active_camera = &camera;
+	SystemManager::SystemManager(entt::registry& active_registry)
+		:m_active_registry{ &active_registry }{
 	}
 
 	void SystemManager::set_active_registry(entt::registry& registry) {
 		m_active_registry = &registry;
 	}
 
-	void SystemManager::run() {
+	void SystemManager::run() const {
 		update();
 		render();
 	}
@@ -28,8 +22,8 @@ namespace QuestEngine::ECS {
 		ECS::Systems::TransformSystem::transform(*m_active_registry);
 	}
 
-	void SystemManager::render() {
-		ECS::Systems::RenderSystem::render(*m_active_registry, m_projection_matrix, *m_active_camera);
+	void SystemManager::render() const {
+		ECS::Systems::RenderSystem::render(*m_active_registry);
 	}
 
 } // namespace QuestEngine::ECS

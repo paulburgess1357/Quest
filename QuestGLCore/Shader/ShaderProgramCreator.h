@@ -9,7 +9,7 @@ namespace QuestGLCore::Shader {
 	class ShaderProgramCreator {
 
 	public:
-		explicit ShaderProgramCreator(const std::unordered_map<ShaderEnum, std::string>& shader_string_map);
+		explicit ShaderProgramCreator(std::unordered_map<ShaderEnum, std::string> shader_string_map);
 		[[nodiscard]] Typedefs::ShaderProgramHandle create() const;
 
 	private:

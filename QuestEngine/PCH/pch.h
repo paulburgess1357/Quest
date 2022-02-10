@@ -41,3 +41,9 @@
 #include "QuestEngine/API/OpenGL/ModelLoaderAPI.h"
 #include "QuestEngine/API/OpenGL/ShaderLoaderAPI.h"
 #include "QuestEngine/API/OpenGL/ModelLoaderExceptions.h"
+
+// UBO
+#include "QuestEngine/UniformBufferObjects/UniformBufferManager.h"
+
+// Misc
+#include "QuestEngine/Constants/Constants.h"

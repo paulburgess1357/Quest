@@ -1,5 +1,4 @@
 #pragma once
-#include "QuestGLCore/Handle/Traits/Buffer.h" // Specialized move constructor
 #include "QuestUtility/Include/Logger.h"
 
 namespace QuestGLCore::Handle {
@@ -57,13 +56,13 @@ namespace QuestGLCore::Handle {
 		void create() {
 			m_handle = m_trait.create();
 			m_handle_is_initialized = true;
-			QUEST_TRACE("Creating Handle: {}", m_handle);
+			QUEST_TRACE("Creating Handle: {}", m_handle)
 		}
 
 		void destroy() {
 			if (m_handle_is_initialized) {
 				m_trait.destroy(m_handle);
-				QUEST_TRACE("Destroying Handle: {}", m_handle);
+				QUEST_TRACE("Destroying Handle: {}", m_handle)
 				reset(*this);
 			}
 		}

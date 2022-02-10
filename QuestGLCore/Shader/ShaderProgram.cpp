@@ -1,12 +1,13 @@
 #include "pch.h"
 #include "ShaderProgram.h"
+#include "QuestGLCore/UniformBufferObjects/UniformBufferExceptions.h"
 #include <glm/gtc/type_ptr.hpp>
 #include <glad/glad.h>
 #include <unordered_set>
 
 namespace QuestGLCore::Shader {
 
-	ShaderProgram::ShaderProgram(std::string program_name, const ShaderProgramCreator shader_creator)
+	ShaderProgram::ShaderProgram(std::string program_name, const ShaderProgramCreator& shader_creator)
 		:m_program_name{ std::move(program_name) },
 		m_handle{ shader_creator.create() } {
 		QUEST_TRACE("Shader Program Created: <{}> | Handle: <{}>", m_program_name, m_handle.get_handle());
@@ -70,7 +71,7 @@ namespace QuestGLCore::Shader {
 		// not exist in the map, it means we have not initialized the GLSL uniform
 
 		// This check is meant to be performed prior to the gameloop
-		const std::unordered_set<std::string> ignore_strings = {"model_matrix", "view_matrix", "projection_matrix", "normal_matrix"};
+		const std::unordered_set ignore_strings = {QuestGLCore::Constants::model_matrix, QuestGLCore::Constants::normal_matrix, QuestGLCore::Constants::view_projection_matrix};
 
 		GLint count, size;
 		GLenum type;
@@ -83,13 +84,20 @@ namespace QuestGLCore::Shader {
 			GLchar name[bufSize];
 
 			glGetActiveUniform(m_handle.get_handle(), i, bufSize, &length, &size, &type, name);
-			const std::string name_str{ name };
-			if (ignore_strings.count(name_str) == 0) {
+			if (const std::string name_str{ name }; ignore_strings.count(name_str) == 0) {
 				QUEST_ASSERT(m_uniform_locations.count(name_str) != 0, "The variable: " + name_str + " exists in your GLSL (ShaderProgram: " + m_program_name + ") code, but has not been set via set_uniform()!")
 			}
 		}
 
 	}
 
+	void ShaderProgram::link_shader_to_ubo(const UniformBufferObjects::UniformBufferObject& ubo) const {
+		const GLuint shader_ubo_location = glGetUniformBlockIndex(m_handle.get_handle(), ubo.get_uniform_id().c_str());
+		if(shader_ubo_location == GL_INVALID_INDEX) {
+			QUEST_ERROR("The UBO ID: " + ubo.get_uniform_id() + " has not been found in the GLSL shader code! Are you sure this is the correct name for the uniform buffer object (set via std140)?")
+			throw UniformBufferObjects::UniformBufferVariableNotFound();
+		}
+		glUniformBlockBinding(m_handle.get_handle(), shader_ubo_location, ubo.get_binding_point());
+	}
 
 } // namespace QuestGLCore::ShaderProgram

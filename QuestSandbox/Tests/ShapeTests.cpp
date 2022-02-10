@@ -52,12 +52,12 @@ namespace QuestSandbox::Tests {
         model_loader.load_model("Test Model", shader_id, { vertices }, { indices }, { 3 });
     }
 
-    // ======================== Cube ========================
-    void ShapeTests::load_standard_cube() const {
+    // ======================== Shape ========================
+    void ShapeTests::load_standard_shape() const {
 		
 		const QuestEngine::API::OpenGL::ShaderLoaderAPI shader_loader = m_engine_api.get_shader_loader_api();
-		const std::string shader_id{ "Cube Shader" };
-        shader_loader.load_shader(shader_id, m_base_shader_path + "CubeVertex.glsl", m_base_shader_path + "CubeFragment.glsl", true);
+		const std::string shader_id{ "Shape Shader" };
+        shader_loader.load_shader(shader_id, m_base_shader_path + "ShapeVertexUBO.glsl", m_base_shader_path + "ShapeFragmentUBO.glsl", true);
 
 		const std::vector<float> vertices = {
 			// back face
@@ -122,11 +122,11 @@ namespace QuestSandbox::Tests {
 		registry_api.load_model_into_world(model_entity_id, model_pointer, { 0.0f, 3.0f, 0.0f });
  
     }
-    void ShapeTests::load_indexed_cube() const {
+    void ShapeTests::load_indexed_shape() const {
 		
 		const QuestEngine::API::OpenGL::ShaderLoaderAPI shader_loader = m_engine_api.get_shader_loader_api();
-		const std::string shader_id{ "Indexed Cube Shader" };
-		shader_loader.load_shader(shader_id, m_base_shader_path + "CubeVertex.glsl", m_base_shader_path + "CubeFragment.glsl", true);
+		const std::string shader_id{ "Indexed Shape Shader" };
+		shader_loader.load_shader(shader_id, m_base_shader_path + "ShapeVertexUBO.glsl", m_base_shader_path + "ShapeFragmentUBO.glsl", true);
 
 		const std::vector<float> vertices = {
 

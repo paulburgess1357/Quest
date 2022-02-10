@@ -1,11 +1,13 @@
 #include "pch.h"
 #include "ResourceManager.h"
+#include "QuestEngine/Constants/Constants.h"
 #include "QuestUtility/Logging/LogHandler.h"
 
 namespace QuestEngine::Resource {
 
 	ResourceManager::ResourceManager() {
 		load_main_camera();
+		load_ubo_matrices();
 	}
 
 	// ======================== Shader ========================
@@ -17,23 +19,32 @@ namespace QuestEngine::Resource {
 		return m_shader_resource.get_pointer(shader_id);
 	}
 
-	void ResourceManager::load_shader(const std::string& shader_id, const std::initializer_list<std::pair<Shader::ShaderEnum, std::string>> shaders) {
+	void ResourceManager::load_shader(const std::string& shader_id, const std::initializer_list<std::pair<Shader::ShaderEnum, std::string>> shaders, const bool link_ubo_matrices) {
 		std::unordered_map<Shader::ShaderEnum, std::string> shader_string_map;
 		for (const auto& [shader_type, shader_string] : shaders) {
 			QUEST_WARN_CONDITION(shader_string_map.count(shader_type) == 0, "You are loading two of the same shader type (e.g. two vertex shaders) into a single shader program!")
 			shader_string_map[shader_type] = shader_string;
 		}
 		m_shader_resource.load(shader_id, shader_id, Shader::ShaderProgramCreator{ shader_string_map });
+
+		if(link_ubo_matrices) {
+			get_shader(shader_id).link_shader_to_ubo(get_ubo(Constants::ubo_matrices));
+		}
+
 	}
 
-	void ResourceManager::load_shader(const std::string& shader_id, Shader::ShaderProgram& shader_program) {
-		m_shader_resource[shader_id] = std::move(shader_program);
+	void ResourceManager::load_shader(const std::string& shader_id, Shader::ShaderProgram& shader_program, const bool link_ubo_matrices) {
+		m_shader_resource.load(shader_id, shader_program);
+
+		if (link_ubo_matrices) {
+			get_shader(shader_id).link_shader_to_ubo(get_ubo(Constants::ubo_matrices));
+		}
 	}
 
 	void ResourceManager::shader_qc() const {
 		QUEST_TRACE("Checking Shader Uniforms Initialized")
-		for(const auto& shader : m_shader_resource) {
-			shader.second.check_uniforms_initialized();
+		for(const auto& [shader_id, shader] : m_shader_resource) {
+			shader.check_uniforms_initialized();
 		}
 		QUEST_TRACE("Passed")
 	}
@@ -52,7 +63,7 @@ namespace QuestEngine::Resource {
 	}
 
 	void ResourceManager::load_model(const std::string& model_id, Model::StandardModel& model) {
-		m_standard_model_resource[model_id] = std::move(model);
+		m_standard_model_resource.load(model_id, model);
 	}
 
 
@@ -70,13 +81,13 @@ namespace QuestEngine::Resource {
 	}
 
 	void ResourceManager::load_model(const std::string& model_id, Model::IndexedModel& model) {
-		m_indexed_model_resource[model_id] = std::move(model);
+		m_indexed_model_resource.load(model_id, model);
 	}
 
 
 	// ==================== Camera ====================
 	void ResourceManager::load_main_camera() {
-		load_camera("Main Camera", { 0.0f, 0.0f, -6.0f }, { 0.0f, 0.0f, 0.0f });
+		load_camera(Constants::main_camera, { 0.0f, 0.0f, -6.0f }, { 0.0f, 0.0f, 0.0f });
 	}
 
 	Camera::Camera& ResourceManager::get_camera(const std::string& camera_id) {
@@ -92,8 +103,32 @@ namespace QuestEngine::Resource {
 	}
 
 	void ResourceManager::load_camera(const std::string& camera_id, const Camera::Camera& camera) {
-		m_camera_resource[camera_id] = camera;
+		m_camera_resource.load(camera_id, camera);
 	}
 
+
+	// ==================== UBO ====================
+	UniformBufferObjects::UniformBufferObject& ResourceManager::get_ubo(const std::string& ubo_id) {
+		return m_ubo_resource[ubo_id];
+	}
+
+	UniformBufferObjects::UniformBufferObject* ResourceManager::get_ubo_pointer(const std::string& ubo_id) {
+		return m_ubo_resource.get_pointer(ubo_id);
+	}
+
+	void ResourceManager::load_ubo(const std::string& ubo_id) {
+		m_ubo_resource.load(ubo_id, ubo_id); // map key; ubo id for construction
+	}
+
+	void ResourceManager::load_ubo(const std::string& ubo_id, UniformBufferObjects::UniformBufferObject& ubo) {
+		m_ubo_resource.load(ubo_id, ubo);
+	}
+
+	void ResourceManager::load_ubo_matrices() {
+		const std::string ubo_id{ Constants::ubo_matrices };
+		UniformBufferObjects::UniformBufferObject ubo{ ubo_id };
+		ubo.allocate_buffer_memory(sizeof(glm::mat4));
+		load_ubo(ubo_id, ubo);
+	}
 
 } // namespace QuestEngine::Resource
