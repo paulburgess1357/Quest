@@ -1,6 +1,5 @@
 #pragma once
 
-// add headers that you want to pre-compile here
 #include <Windows.h>
 #include "framework.h"
 
@@ -21,6 +20,8 @@
 #include "QuestEngine/Using/API.h"
 #include "QuestEngine/Using/Model.h"
 #include "QuestEngine/Using/Shader.h"
+#include "QuestEngine/Using/Texture.h"
+#include "QuestEngine/Using/UniformBufferObjects.h"
 
 // ECS
 #include "QuestEngine/ECS/Components/TransformComponent.h"
@@ -40,10 +41,14 @@
 
 #include "QuestEngine/API/OpenGL/ModelLoaderAPI.h"
 #include "QuestEngine/API/OpenGL/ShaderLoaderAPI.h"
+#include "QuestEngine/API/OpenGL/TextureLoaderAPI.h"
 #include "QuestEngine/API/OpenGL/ModelLoaderExceptions.h"
 
 // UBO
 #include "QuestEngine/UniformBufferObjects/UniformBufferManager.h"
+
+// Texture
+#include "QuestEngine/Texture/TextureType.h"
 
 // Misc
 #include "QuestEngine/Constants/Constants.h"

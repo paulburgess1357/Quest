@@ -1,7 +1,6 @@
 #pragma once
 #include <unordered_map>
 #include "QuestUtility/Include/Logger.h"
-#include "QuestUtility/Logging/LogMacros.h"
 
 namespace QuestEngine::Resource {
 
@@ -22,6 +21,19 @@ namespace QuestEngine::Resource {
 				*get_pointer(key) = std::move(value);
 			} else {
 				m_resource_map.emplace(key, std::move(value));
+			}
+		}
+
+		template<typename... Args>
+		void safe_load(const Key& key, Args&&... args) {
+			if (!contains_key(key)) {
+				load(key, std::forward<Args>(args)...);
+			}
+		}
+
+		void safe_load(const Key& key, Value& value) {
+			if(!contains_key(key)) {
+				load(key, value);
 			}
 		}
 

@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "Engine.h"
-#include "QuestUtility/Logging/LogMacros.h"
+#include "QuestUtility/Include/Logger.h"
 #include "QuestEngine/Constants/Constants.h"
 
 namespace QuestEngine::Engine {

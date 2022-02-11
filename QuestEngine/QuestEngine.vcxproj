@@ -171,6 +171,7 @@
     <ClInclude Include="API\OpenGL\ModelLoaderAPI.h" />
     <ClInclude Include="API\OpenGL\ModelLoaderExceptions.h" />
     <ClInclude Include="API\OpenGL\ShaderLoaderAPI.h" />
+    <ClInclude Include="API\OpenGL\TextureLoaderAPI.h" />
     <ClInclude Include="Camera\Camera.h" />
     <ClInclude Include="Camera\ProjectionMatrix.h" />
     <ClInclude Include="Constants\Constants.h" />
@@ -185,12 +186,14 @@
     <ClInclude Include="PCH\framework.h" />
     <ClInclude Include="PCH\pch.h" />
     <ClInclude Include="Resource\ResourceManager.h" />
+    <ClInclude Include="Texture\TextureType.h" />
     <ClInclude Include="UniformBufferObjects\UniformBufferManager.h" />
     <ClInclude Include="Using\API.h" />
     <ClInclude Include="Using\Model.h" />
     <ClInclude Include="Using\Resource.h" />
     <ClInclude Include="Resource\TResource.h" />
     <ClInclude Include="Using\Shader.h" />
+    <ClInclude Include="Using\Texture.h" />
     <ClInclude Include="Using\UniformBufferObjects.h" />
     <ClInclude Include="Using\Window.h" />
   </ItemGroup>
@@ -200,6 +203,7 @@
     <ClCompile Include="API\Neutral\ResourceAPI.cpp" />
     <ClCompile Include="API\OpenGL\ModelLoaderAPI.cpp" />
     <ClCompile Include="API\OpenGL\ShaderLoaderAPI.cpp" />
+    <ClCompile Include="API\OpenGL\TextureLoaderAPI.cpp" />
     <ClCompile Include="Camera\Camera.cpp" />
     <ClCompile Include="Camera\ProjectionMatrix.cpp" />
     <ClCompile Include="ECS\Manage\RegistryManager.cpp" />

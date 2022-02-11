@@ -29,7 +29,7 @@ namespace QuestGLCore::Traits {
 		}
 
 		void unbind() const {
-			glBindBuffer(m_target, 0);
+			glBindTexture(m_target, 0);
 		}
 
 	private:

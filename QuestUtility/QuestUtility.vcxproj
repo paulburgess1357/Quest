@@ -178,6 +178,7 @@
     <ClInclude Include="String\FileToString.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ImageLoading\STBI.cpp" />
     <ClCompile Include="Logging\LogHandler.cpp" />
     <ClCompile Include="PCH\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

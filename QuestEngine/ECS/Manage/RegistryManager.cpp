@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "RegistryManager.h"
-#include "QuestUtility/Logging/LogMacros.h"
+#include "QuestUtility/Include/Logger.h"
 
 namespace QuestEngine::ECS {
 

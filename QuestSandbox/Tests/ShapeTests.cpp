@@ -17,7 +17,7 @@ namespace QuestSandbox::Tests {
 		// *** TODO: this test isn't being loaded into the registry!! 
 		const QuestEngine::API::OpenGL::ShaderLoaderAPI shader_loader = m_engine_api.get_shader_loader_api();
 		const std::string shader_id{ "Triangle Shader" };
-        shader_loader.load_shader(shader_id, m_base_shader_path + "TriangleVertex.glsl", m_base_shader_path + "TriangleFragment.glsl", true);
+        shader_loader.load_shader(shader_id, m_base_shader_path + "TriangleVertex.glsl", m_base_shader_path + "TriangleFragment.glsl", true, true);
 
         // Standard model (Single Array Buffer)
         const std::vector<float> vertices = {
@@ -35,7 +35,7 @@ namespace QuestSandbox::Tests {
 		// *** TODO: this test isn't being loaded into the registry!! 
 		const QuestEngine::API::OpenGL::ShaderLoaderAPI shader_loader = m_engine_api.get_shader_loader_api();
 		const std::string shader_id{ "Triangle Shader" };
-        shader_loader.load_shader(shader_id, m_base_shader_path + "TriangleVertex.glsl", m_base_shader_path + "TriangleFragment.glsl", true);
+        shader_loader.load_shader(shader_id, m_base_shader_path + "TriangleVertex.glsl", m_base_shader_path + "TriangleFragment.glsl", true, true);
 
         const std::vector<float> vertices = {
 			 0.5f,  0.5f, 0.0f,  // top right
@@ -57,7 +57,7 @@ namespace QuestSandbox::Tests {
 		
 		const QuestEngine::API::OpenGL::ShaderLoaderAPI shader_loader = m_engine_api.get_shader_loader_api();
 		const std::string shader_id{ "Shape Shader" };
-        shader_loader.load_shader(shader_id, m_base_shader_path + "ShapeVertexUBO.glsl", m_base_shader_path + "ShapeFragmentUBO.glsl", true);
+        shader_loader.load_shader(shader_id, m_base_shader_path + "ShapeVertexUBO.glsl", m_base_shader_path + "ShapeFragmentUBO.glsl", true, true);
 
 		const std::vector<float> vertices = {
 			// back face
@@ -126,7 +126,7 @@ namespace QuestSandbox::Tests {
 		
 		const QuestEngine::API::OpenGL::ShaderLoaderAPI shader_loader = m_engine_api.get_shader_loader_api();
 		const std::string shader_id{ "Indexed Shape Shader" };
-		shader_loader.load_shader(shader_id, m_base_shader_path + "ShapeVertexUBO.glsl", m_base_shader_path + "ShapeFragmentUBO.glsl", true);
+		shader_loader.load_shader(shader_id, m_base_shader_path + "ShapeVertexUBO.glsl", m_base_shader_path + "ShapeFragmentUBO.glsl", true, true);
 
 		const std::vector<float> vertices = {
 

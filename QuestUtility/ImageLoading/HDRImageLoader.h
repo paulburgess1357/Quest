@@ -1,7 +1,7 @@
 #pragma once
 #include "IImageLoader.h"
 #include "ImageExceptions.h"
-#include "QuestUtility/Logging/LogMacros.h"
+#include "QuestUtility/Include/Logger.h"
 #include <string>
 
 namespace QuestUtility::ImageLoading {
