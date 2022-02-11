@@ -25,6 +25,7 @@ namespace QuestEngine::API {
 		RegistryAPI m_registry_api{ nullptr };
 		ModelLoaderAPI m_model_loader_api{ nullptr };
 		ShaderLoaderAPI m_shader_loader_api{ nullptr };
+		TextureLoaderAPI m_texture_loader_api{ nullptr };
 
 	};
 

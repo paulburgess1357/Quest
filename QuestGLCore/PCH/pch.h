@@ -34,3 +34,8 @@
 
 // Misc
 #include "QuestGLCore/Constants/Constants.h"
+
+// Texture
+#include "QuestGLCore/Texture/OpenGLTextureCreator.h"
+#include "QuestGLCore/Texture/OpenGLTextureFormat.h"
+#include "QuestGLCore/Texture/Typedefs.h"

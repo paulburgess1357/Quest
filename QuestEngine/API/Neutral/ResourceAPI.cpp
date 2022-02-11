@@ -12,12 +12,12 @@ namespace QuestEngine::API {
 		return m_engine_resource_manager.get_shader(shader_id);
 	}
 
-	void ResourceAPI::load_shader(const std::string& shader_id, Shader::ShaderProgram& shader_program) const {
-		m_engine_resource_manager.load_shader(shader_id, shader_program);
+	void ResourceAPI::load_shader(const std::string& shader_id, Shader::ShaderProgram& shader_program, const bool link_ubo_matrices) const {
+		m_engine_resource_manager.load_shader(shader_id, shader_program, link_ubo_matrices);
 	}
 
-	void ResourceAPI::load_shader(const std::string& shader_id, const std::initializer_list<std::pair<Shader::ShaderEnum, std::string>> shaders) const {
-		m_engine_resource_manager.load_shader(shader_id, shaders);
+	void ResourceAPI::load_shader(const std::string& shader_id, const std::unordered_map<Shader::ShaderEnum, std::string>& shader_string_map, const bool link_ubo_matrices) const {
+		m_engine_resource_manager.load_shader(shader_id, shader_string_map, link_ubo_matrices);
 	}
 
 	// ======================== Model ========================
@@ -55,5 +55,11 @@ namespace QuestEngine::API {
 	void ResourceAPI::load_camera(const std::string& camera_id, const Camera::Camera& camera) const {
 		m_engine_resource_manager.load_camera(camera_id, camera);
 	}
+
+	// ======================== Texture ========================
+	void ResourceAPI::load_texture2D(const std::string& texture_id, Texture::Texture& texture) const {
+		m_engine_resource_manager.load_texture2D(texture_id, texture);
+	}
+
 
 } // namespace QuestEngine::API

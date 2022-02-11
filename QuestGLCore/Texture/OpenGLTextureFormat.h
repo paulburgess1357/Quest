@@ -1,5 +1,5 @@
 #pragma once
-#include "QuestUtility/Logging/LogMacros.h"
+#include "QuestUtility/Include/Logger.h"
 #include <glad/glad.h>
 
 namespace QuestGLCore::Texture {

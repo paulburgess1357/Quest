@@ -78,13 +78,13 @@
     <ClInclude Include="Handle\Traits\Texture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Texture\OpenGL2DTextureCreator.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Texture\OpenGLTextureFormat.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Texture\Typedefs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture\OpenGLTextureCreator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -102,9 +102,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="UniformBufferObjects\UniformBufferObjects.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Texture\OpenGL2DTextureCreator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

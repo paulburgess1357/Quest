@@ -12,8 +12,8 @@ namespace QuestEngine::Resource {
 		// ======================== Shader ========================
 		[[nodiscard]] Shader::ShaderProgram& get_shader(const std::string& shader_id);
 		[[nodiscard]] Shader::ShaderProgram* get_shader_pointer(const std::string& shader_id);
-		void load_shader(const std::string& shader_id, const std::initializer_list<std::pair<Shader::ShaderEnum, std::string>> shaders, const bool link_ubo_matrices = true);
-		void load_shader(const std::string& shader_id, Shader::ShaderProgram& shader_program, const bool link_ubo_matrices = true);
+		void load_shader(const std::string& shader_id, const std::unordered_map<Shader::ShaderEnum, std::string>& shader_string_map, const bool link_ubo_matrices);
+		void load_shader(const std::string& shader_id, Shader::ShaderProgram& shader_program, const bool link_ubo_matrices);
 		void shader_qc() const;
 
 		// ======================== Model ========================
@@ -40,6 +40,11 @@ namespace QuestEngine::Resource {
 		void load_ubo(const std::string& ubo_id);
 		void load_ubo(const std::string& ubo_id, UniformBufferObjects::UniformBufferObject& ubo);
 
+		// ======================= Texture ========================
+		[[nodiscard]] Texture::Texture& get_texture(const std::string& texture_id);
+		[[nodiscard]] Texture::Texture* get_texture_ptr(const std::string& texture_id);
+		void load_texture2D(const std::string& texture_id, Texture::Texture& texture);
+
 	private:
 		void load_main_camera();
 		void load_ubo_matrices();
@@ -49,6 +54,7 @@ namespace QuestEngine::Resource {
 		IndexedModelResource m_indexed_model_resource;
 		CameraResource m_camera_resource;
 		UBOResource m_ubo_resource;
+		TextureResource m_texture_resource;
 		
 	};
 

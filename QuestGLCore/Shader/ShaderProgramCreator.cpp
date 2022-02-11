@@ -54,7 +54,7 @@ namespace QuestGLCore::Shader {
 				shader_handle = glCreateShader(GL_GEOMETRY_SHADER);
 				break;
 			}
-			default:
+			default:  // NOLINT(clang-diagnostic-covered-switch-default)
 				throw ShaderCompileTypeException();
 		}
 

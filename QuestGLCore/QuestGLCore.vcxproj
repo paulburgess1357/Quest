@@ -182,8 +182,8 @@
     <ClInclude Include="Shader\Typedefs.h" />
     <ClInclude Include="Shader\ShaderEnum.h" />
     <ClInclude Include="Handle\Typedefs.h" />
-    <ClInclude Include="Texture\OpenGL2DTextureCreator.h" />
     <ClInclude Include="Texture\OpenGLTextureFormat.h" />
+    <ClInclude Include="Texture\OpenGLTextureCreator.h" />
     <ClInclude Include="Texture\Typedefs.h" />
     <ClInclude Include="UniformBufferObjects\UniformBufferExceptions.h" />
     <ClInclude Include="UniformBufferObjects\UniformBufferObjects.h" />
@@ -200,7 +200,6 @@
     <ClCompile Include="QuestGLCore.cpp" />
     <ClCompile Include="Shader\ShaderProgramCreator.cpp" />
     <ClCompile Include="Shader\ShaderProgram.cpp" />
-    <ClCompile Include="Texture\OpenGL2DTextureCreator.cpp" />
     <ClCompile Include="UniformBufferObjects\UniformBufferObjects.cpp" />
   </ItemGroup>
   <ItemGroup>

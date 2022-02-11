@@ -1,5 +1,6 @@
 #pragma once
 #include "QuestEngine/Engine/Engine.h"
+#include "QuestEngine/Using/Resource.h"
 #include <string>
 
 namespace QuestEngine::API {
@@ -11,8 +12,8 @@ namespace QuestEngine::API {
 
 		// ============ Resource Loading ============
 		[[nodiscard]] Shader::ShaderProgram& get_shader(const std::string& shader_id) const;
-		void load_shader(const std::string& shader_id, Shader::ShaderProgram& shader_program) const;
-		void load_shader(const std::string& shader_id, const std::initializer_list<std::pair<Shader::ShaderEnum, std::string>> shaders) const;
+		void load_shader(const std::string& shader_id, Shader::ShaderProgram& shader_program, const bool link_ubo_matrices) const;
+		void load_shader(const std::string& shader_id, const std::unordered_map<Shader::ShaderEnum, std::string>& shader_string_map, const bool link_ubo_matrices) const;
 
 		void load_model(const std::string& model_id, Model::StandardModel& model) const;
 		void load_model(const std::string& model_id, Shader::ShaderProgram& shader_program, std::vector<Model::StandardMesh>& meshes) const;
@@ -22,6 +23,8 @@ namespace QuestEngine::API {
 
 		void load_camera(const std::string& camera_id, const Camera::Camera& camera) const;
 		void load_camera(const std::string& camera_id, const glm::vec3& camera_position, const glm::vec3& pt_to_look_at_in_world) const;
+
+		void load_texture2D(const std::string& texture_id, Texture::Texture& texture) const;
 
 		// ============ Resource Interaction ============
 		[[nodiscard]] Model::StandardModel* get_model_pointer(const std::string& model_id) const;
