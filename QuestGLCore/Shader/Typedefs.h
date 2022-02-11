@@ -4,4 +4,4 @@
 
 namespace QuestGLCore::Typedefs {
 	using ShaderProgramHandle = Handle::HandleTemplate<Traits::ShaderProgramTraits, Typedefs::GLHandle>;
- } // QuestGLCore::ShaderProgram
+ } // namespace QuestGLCore::ShaderProgram
