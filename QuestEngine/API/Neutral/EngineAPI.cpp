@@ -37,4 +37,8 @@ namespace QuestEngine::API {
 		return m_shader_loader_api;
 	}
 
+	TextureLoaderAPI& EngineAPI::get_texture_loader_api() {
+		return m_texture_loader_api;
+	}
+
 } // namespace QuestEngine::API

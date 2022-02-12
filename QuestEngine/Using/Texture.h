@@ -1,6 +1,6 @@
 #pragma once
 #include "QuestGLCore/Texture/Typedefs.h"
-#include "QuestGLCore/Texture/OpenGLTextureCreator.h"
+#include "QuestGLCore/Texture/TextureCreator.h"
 
 namespace QuestEngine::Texture {
 	using Texture = QuestGLCore::Texture::TextureHandle;

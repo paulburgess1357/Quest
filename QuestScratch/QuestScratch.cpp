@@ -1,8 +1,9 @@
 #include <iostream>
 #include "QuestUtility/ImageLoading/StandardImageLoader.h"
 #include "QuestUtility/ImageLoading/HDRImageLoader.h"
-#include "QuestGLCore/Texture/OpenGLTextureCreator.h"
+#include "QuestGLCore/Texture/TextureCreator.h"
 #include "QuestWindow/Include/Window.h"
+#include <glad/glad.h>
 
 int main(){
 

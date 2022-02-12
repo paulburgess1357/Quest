@@ -61,5 +61,10 @@ namespace QuestEngine::API {
 		m_engine_resource_manager.load_texture2D(texture_id, texture);
 	}
 
+	Texture::Texture* ResourceAPI::get_texture_pointer(const std::string& texture_id) const {
+		return m_engine_resource_manager.get_texture_ptr(texture_id);
+	}
+
+
 
 } // namespace QuestEngine::API
