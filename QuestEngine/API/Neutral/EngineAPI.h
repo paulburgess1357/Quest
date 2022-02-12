@@ -18,6 +18,7 @@ namespace QuestEngine::API {
 		RegistryAPI& get_registry_api();
 		ModelLoaderAPI& get_model_loader_api();
 		ShaderLoaderAPI& get_shader_loader_api();
+		TextureLoaderAPI& get_texture_loader_api();
 
 	private:
 		std::unique_ptr<Engine::Engine> m_engine{ nullptr };

@@ -9,7 +9,8 @@ int main() {
     QuestEngine::API::EngineAPI engine_api;
 	const QuestSandbox::Tests::ShapeTests shape_test { engine_api };
 
-	shape_test.load_standard_shape();
-	shape_test.load_indexed_shape();
+	//shape_test.load_standard_shape();
+	// shape_test.load_indexed_shape();
+	shape_test.load_textured_indexed_shape();
 	engine_api.run();
 }

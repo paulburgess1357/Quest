@@ -1,5 +1,5 @@
 #pragma once
-#include "QuestGLCore/Texture/OpenGLTextureFormat.h"
+#include "QuestGLCore/Texture/TextureFormat.h"
 #include "QuestGLCore/Texture/Typedefs.h"
 #include "QuestUtility/ImageLoading/IImageLoader.h"
 #include "QuestUtility/ImageLoading/StandardImageLoader.h"
@@ -9,18 +9,18 @@
 namespace QuestGLCore::Texture {
 
 	template<GLenum TextureType>
-	class OpenGLTextureCreator {
+	class TextureCreator {
 
 	public:
-		explicit OpenGLTextureCreator(const QuestUtility::ImageLoading::IImageLoaderFromFile& image_loader, const bool apply_linear_correction)
+		explicit TextureCreator(const QuestUtility::ImageLoading::IImageLoaderFromFile& image_loader, const bool apply_linear_correction)
 			:m_apply_linear_correction{ apply_linear_correction } {
 			set_texture_metadata(image_loader);
 		}
-		virtual ~OpenGLTextureCreator() = default;
-		OpenGLTextureCreator(const OpenGLTextureCreator& source) = delete;
-		OpenGLTextureCreator(OpenGLTextureCreator&& source) = delete;
-		OpenGLTextureCreator& operator=(const OpenGLTextureCreator& rhs) = delete;
-		OpenGLTextureCreator& operator=(OpenGLTextureCreator&& rhs) = delete;
+		virtual ~TextureCreator() = default;
+		TextureCreator(const TextureCreator& source) = delete;
+		TextureCreator(TextureCreator&& source) = delete;
+		TextureCreator& operator=(const TextureCreator& rhs) = delete;
+		TextureCreator& operator=(TextureCreator&& rhs) = delete;
 
 		[[nodiscard]] TextureHandle generate_texture() const {
 			TextureHandle handle { TextureType };
@@ -47,17 +47,17 @@ namespace QuestGLCore::Texture {
 			m_color_channel_num = image_loader.get_color_channel_num();
 			m_width = image_loader.get_width();
 			m_height = image_loader.get_height();
-			m_internal_format = OpenGLTextureFormat::get_internal_format(m_color_channel_num);
-			m_pixel_format = OpenGLTextureFormat::get_pixel_format(m_color_channel_num);
+			m_internal_format = TextureFormat::get_internal_format(m_color_channel_num);
+			m_pixel_format = TextureFormat::get_pixel_format(m_color_channel_num);
 		}
 	};
 
 	template<GLenum TextureType>
-	class StandardTextureCreator final : public OpenGLTextureCreator<TextureType> {
+	class StandardTextureCreator final : public TextureCreator<TextureType> {
 
 	public:
 		explicit StandardTextureCreator(const QuestUtility::ImageLoading::StandardImageLoaderFromFile& image_loader, const bool apply_linear_correction)
-			:OpenGLTextureCreator<TextureType>{ image_loader, apply_linear_correction },
+			:TextureCreator<TextureType>{ image_loader, apply_linear_correction },
 			m_image_loader{ image_loader }{
 		}
 	private:
@@ -85,11 +85,11 @@ namespace QuestGLCore::Texture {
 	};
 
 	template<GLenum TextureType>
-	class HDRTextureCreator final : public OpenGLTextureCreator<TextureType> {
+	class HDRTextureCreator final : public TextureCreator<TextureType> {
 
 	public:
 		explicit HDRTextureCreator(const QuestUtility::ImageLoading::HDRImageLoaderFromFile& image_loader)
-			:OpenGLTextureCreator<TextureType>{ image_loader, false },
+			:TextureCreator<TextureType>{ image_loader, false },
 			m_image_loader{ image_loader }{
 		}
 

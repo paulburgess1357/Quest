@@ -4,7 +4,7 @@
 
 namespace QuestGLCore::Texture {
 
-	class OpenGLTextureFormat {
+	class TextureFormat {
 	public:
 		static GLint  get_internal_format(const int color_channels) {
 			// Update the below if statement when gamma correction custom framebuffer is added

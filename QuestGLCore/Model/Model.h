@@ -42,6 +42,10 @@ namespace QuestGLCore::Model {
 			m_model_matrix = model_matrix;
 		}
 
+		[[nodiscard]] std::vector<Mesh<VertexDataType>>& get_mesh_vector() {
+			return m_meshes;
+		}
+
 	private:
 		Shader::ShaderProgram* m_shader_program;
 		std::vector<Mesh<VertexDataType>> m_meshes;

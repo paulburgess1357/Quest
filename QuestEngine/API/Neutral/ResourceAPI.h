@@ -29,6 +29,7 @@ namespace QuestEngine::API {
 		// ============ Resource Interaction ============
 		[[nodiscard]] Model::StandardModel* get_model_pointer(const std::string& model_id) const;
 		[[nodiscard]] Model::IndexedModel* get_indexed_model_pointer(const std::string& model_id) const;
+		[[nodiscard]] Texture::Texture* get_texture_pointer(const std::string& texture_id) const;
 
 	private:
 		Resource::ResourceManager& m_engine_resource_manager;
