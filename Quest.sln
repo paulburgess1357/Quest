@@ -19,6 +19,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "QuestTest", "QuestTest\Ques
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "QuestUtility", "QuestUtility\QuestUtility.vcxproj", "{8463A674-7D65-4937-9C1C-C6253EB0352C}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "QuestUITest", "QuestUITest\QuestUITest.vcxproj", "{E46B2494-76A7-4A2F-B45F-C7A05E4A81C0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -91,6 +93,14 @@ Global
 		{8463A674-7D65-4937-9C1C-C6253EB0352C}.Release|x64.Build.0 = Release|x64
 		{8463A674-7D65-4937-9C1C-C6253EB0352C}.Release|x86.ActiveCfg = Release|Win32
 		{8463A674-7D65-4937-9C1C-C6253EB0352C}.Release|x86.Build.0 = Release|Win32
+		{E46B2494-76A7-4A2F-B45F-C7A05E4A81C0}.Debug|x64.ActiveCfg = Debug|x64
+		{E46B2494-76A7-4A2F-B45F-C7A05E4A81C0}.Debug|x64.Build.0 = Debug|x64
+		{E46B2494-76A7-4A2F-B45F-C7A05E4A81C0}.Debug|x86.ActiveCfg = Debug|Win32
+		{E46B2494-76A7-4A2F-B45F-C7A05E4A81C0}.Debug|x86.Build.0 = Debug|Win32
+		{E46B2494-76A7-4A2F-B45F-C7A05E4A81C0}.Release|x64.ActiveCfg = Release|x64
+		{E46B2494-76A7-4A2F-B45F-C7A05E4A81C0}.Release|x64.Build.0 = Release|x64
+		{E46B2494-76A7-4A2F-B45F-C7A05E4A81C0}.Release|x86.ActiveCfg = Release|Win32
+		{E46B2494-76A7-4A2F-B45F-C7A05E4A81C0}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

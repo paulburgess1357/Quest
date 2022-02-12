@@ -39,8 +39,8 @@ namespace QuestEngine::Engine {
 			m_window.clear_buffer();
 			m_ubo_manager.run(*m_active_camera, m_projection_matrix);
 			m_systems_manager.run();
-			m_window.swap_buffer();
 			m_window.poll_events();
+			m_window.swap_buffer();
 		}
 	}
 

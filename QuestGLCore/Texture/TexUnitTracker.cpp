@@ -10,9 +10,10 @@ namespace QuestGLCore::Texture {
 	void TexUnitTracker::register_texture(const std::string& texture_name_in_shader, Shader::ShaderProgram* shader_program, TextureHandle* texture_handle) {
 		shader_program->bind();
 		shader_program->set_uniform(texture_name_in_shader, m_current_tex_unit);
+		shader_program->unbind();
+
 		m_texture_tracker.emplace_back(GL_TEXTURE0 + m_current_tex_unit, texture_handle);
 		++m_current_tex_unit;
-		shader_program->unbind();
 	}
 
 	void TexUnitTracker::bind() const {

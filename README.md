@@ -10,7 +10,7 @@ As development of this repo continues, the above examples will be replaced by wo
 .\vcpkg install entt:x64-windows
 .\vcpkg install glm:x64-windows
 .\vcpkg install stb:x64-windows
-.\vcpkg install imgui:x64-windows
+.\vcpkg install imgui[docking-experimental,opengl3-binding,glfw-binding]:x64-windows
 .\vcpkg install glad:x64-windows
 .\vcpkg install gtest:x64-windows
 .\vcpkg install spdlog:x64-windows
