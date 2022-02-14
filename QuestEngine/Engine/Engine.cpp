@@ -10,7 +10,8 @@ namespace QuestEngine::Engine {
 		m_active_camera{ nullptr },
 		m_projection_matrix {m_window },
 		m_systems_manager{ m_registry_manager.get_active_registry() },
-		m_ubo_manager{ m_resource_manager.get_ubo(Constants::ubo_matrices) }{
+		m_ubo_manager{ m_resource_manager.get_ubo(Constants::ubo_matrices) },
+		m_user_interface{ m_window.get_window() }{
 		QUEST_INFO("Quest Engine v{}.{} Initialized\n", 0, 1)
 		initialization();
 	}
@@ -40,8 +41,15 @@ namespace QuestEngine::Engine {
 			m_ubo_manager.run(*m_active_camera, m_projection_matrix);
 			m_systems_manager.run();
 			m_window.poll_events();
+			TEMP_UI();
 			m_window.swap_buffer();
 		}
+	}
+
+	void Engine::TEMP_UI() const {
+		UserInterface::UserInterface::begin_render();
+		UserInterface::UserInterface::show_demo();
+		m_user_interface.end_render();
 	}
 
 	bool Engine::shutdown() const {

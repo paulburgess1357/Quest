@@ -1,12 +1,13 @@
 #pragma once
 #include "QuestEngine/Using/Window.h"
+#include "QuestEngine/Using/UserInterface.h"
 #include "QuestEngine/Resource/ResourceManager.h"
 #include "QuestEngine/ECS/Manage/RegistryManager.h"
 #include "QuestEngine/ECS/Manage/SystemManager.h"
 #include "QuestEngine/UniformBufferObjects/UniformBufferManager.h"
 #include "QuestEngine/Camera/Camera.h"
 #include "QuestEngine/Camera/ProjectionMatrix.h"
-
+#include "QuestUI/ImguiWindow/ImGuiWindow.h"
 
 namespace QuestEngine::Engine {
 
@@ -25,6 +26,9 @@ namespace QuestEngine::Engine {
 
 		void qc_checks() const;
 		void gameloop();
+
+		void TEMP_UI() const;
+
 		[[nodiscard]] bool shutdown() const;
 
 		const Window::Window m_window;
@@ -36,6 +40,7 @@ namespace QuestEngine::Engine {
 		ECS::SystemManager m_systems_manager;
 		UniformBufferObjects::UniformBufferManager m_ubo_manager;
 
+		UserInterface::UserInterface m_user_interface;
 	};
 
 } // namespace QuestEngine::Engine

@@ -1,20 +1,35 @@
 #pragma once
+#include <imgui.h>
 #include <GLFW/glfw3.h>
 
-namespace QuestUI::ImGuiLib {
+namespace QuestUI::OpenGL {
 
 	class ImguiWindow {
 
 	public:
-		ImguiWindow();
+		explicit ImguiWindow(GLFWwindow* window);
 		~ImguiWindow();
 
-		void create(GLFWwindow* window);
-		void shutdown();
+		ImguiWindow(const ImguiWindow& source) = delete;
+		ImguiWindow(ImguiWindow&& source) = delete;
+		ImguiWindow& operator=(const ImguiWindow& rhs) = delete;
+		ImguiWindow& operator=(ImguiWindow&& rhs) = delete;
 
+		void create();
+		static void destroy();
 		
-		void begin_render();
-		void end_render();
+		static void begin_render();
+		static void show_demo();
+		void end_render() const;
+
+		//static bool ui_using_inputs();
+		//static bool ui_using_mouse();
+		//static bool ui_using_keyboard();
+
+	private:
+		static bool m_created;
+		GLFWwindow* m_window;
+		ImGuiIO* m_imgui_io;
 	};
 
 } // namespace QuestUI::Imgui

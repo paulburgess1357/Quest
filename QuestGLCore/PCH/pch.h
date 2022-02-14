@@ -40,3 +40,6 @@
 #include "QuestGLCore/Texture/TextureFormat.h"
 #include "QuestGLCore/Texture/TexUnitTracker.h"
 #include "QuestGLCore/Texture/Typedefs.h"
+
+// Framebuffer
+#include "QuestGLCore/Framebuffer/Framebuffer.h"

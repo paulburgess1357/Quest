@@ -3,6 +3,10 @@
 #include "QuestUtility/ImageLoading/HDRImageLoader.h"
 #include "QuestGLCore/Texture/TextureCreator.h"
 #include "QuestWindow/Include/Window.h"
+
+#include "QuestGLCore/Framebuffer/Framebuffer.h"
+#include "QuestGLCore/Texture/BlankTextureCreator.h"
+
 #include <glad/glad.h>
 
 int main(){
@@ -11,7 +15,11 @@ int main(){
 
 	const auto image_loader = QuestUtility::ImageLoading::StandardImageLoaderFromFile("C:/users/paulb/desktop/maple.png", false);
 	const QuestGLCore::Texture::StandardTextureCreator<GL_TEXTURE_2D> texture_generator { image_loader , true };
-	auto result = texture_generator.generate_texture();
+	//auto result = texture_generator.generate_texture();
+
+	//auto QuestGLCore::Texture::StandardBlankFramebufferTextureCreator<GL_TEXTURE_2D> fv_creator;
+
+	/*QuestGLCore::Framebuffer::Framebuffer<>*/
 
 
 	std::cout << "hello world" << std::endl;

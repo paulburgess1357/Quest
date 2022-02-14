@@ -4,6 +4,7 @@
 #include "QuestUtility/ImageLoading/IImageLoader.h"
 #include "QuestUtility/ImageLoading/StandardImageLoader.h"
 #include "QuestUtility/ImageLoading/HDRImageLoader.h"
+// #include "QuestGLCore/OpenGLTypes/OpenGLFunctionResolution.h"
 #include <glad/glad.h>
 
 namespace QuestGLCore::Texture {
@@ -69,6 +70,9 @@ namespace QuestGLCore::Texture {
 		}
 
 		void load_texture() const override {
+			// Typically: glTexImage2D when TextureType = GL_TEXTURE_2D
+			// const auto texture_function = OGLResolution::OglTextureFunctionResolution::get_function<TextureType>();
+			auto test = OGLResolution::OglTextureFunctionResolution::get_function<TextureType>();
 			if (this->m_apply_linear_correction) {
 				// When internal format equals: SRGB: OpenGL will correct the colors
 				// to linear space as soon as they are loaded.  This is typically done
@@ -94,7 +98,7 @@ namespace QuestGLCore::Texture {
 		}
 
 	private:
-		void set_parameters() const override{
+		void set_parameters() const override {
 			glTexParameteri(TextureType, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 			glTexParameteri(TextureType, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 			glTexParameteri(TextureType, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -102,6 +106,8 @@ namespace QuestGLCore::Texture {
 		}
 
 		void load_texture() const override {
+			// Typically: glTexImage2D when TextureType = GL_TEXTURE_2D
+			// const auto texture_function = OGLResolution::OglTextureFunctionResolution::get_function<TextureType>();
 			glTexImage2D(TextureType, 0, GL_RGB16F, this->m_width, this->m_height, 0, this->m_pixel_format, GL_FLOAT, m_image_loader.get_image_data());
 		}
 

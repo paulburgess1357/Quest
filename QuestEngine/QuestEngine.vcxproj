@@ -195,6 +195,7 @@
     <ClInclude Include="Using\Shader.h" />
     <ClInclude Include="Using\Texture.h" />
     <ClInclude Include="Using\UniformBufferObjects.h" />
+    <ClInclude Include="Using\UserInterface.h" />
     <ClInclude Include="Using\Window.h" />
   </ItemGroup>
   <ItemGroup>

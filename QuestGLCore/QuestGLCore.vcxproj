@@ -166,7 +166,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Constants\Constants.h" />
+    <ClInclude Include="Framebuffer\Framebuffer.h" />
+    <ClInclude Include="Framebuffer\Typedefs.h" />
+    <ClInclude Include="Handle\Traits\Framebuffer.h" />
+    <ClInclude Include="Handle\Traits\Renderbuffer.h" />
     <ClInclude Include="Handle\Traits\Texture.h" />
+    <ClInclude Include="OpenGLTypes\OpenGLFunctionResolution.h" />
     <ClInclude Include="PCH\framework.h" />
     <ClInclude Include="Handle\Template\HandleTemplate.h" />
     <ClInclude Include="Handle\Traits\Buffer.h" />
@@ -182,6 +187,7 @@
     <ClInclude Include="Shader\Typedefs.h" />
     <ClInclude Include="Shader\ShaderEnum.h" />
     <ClInclude Include="Handle\Typedefs.h" />
+    <ClInclude Include="Texture\BlankTextureCreator.h" />
     <ClInclude Include="Texture\TextureFormat.h" />
     <ClInclude Include="Texture\TextureCreator.h" />
     <ClInclude Include="Texture\TexUnitTracker.h" />

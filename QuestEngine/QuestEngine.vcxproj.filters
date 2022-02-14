@@ -108,6 +108,9 @@
     <ClInclude Include="API\OpenGL\TextureLoaderAPI.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Using\UserInterface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PCH\pch.cpp">
