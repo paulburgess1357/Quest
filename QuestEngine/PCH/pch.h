@@ -22,6 +22,7 @@
 #include "QuestEngine/Using/Shader.h"
 #include "QuestEngine/Using/Texture.h"
 #include "QuestEngine/Using/UniformBufferObjects.h"
+#include "QuestEngine/Using/Framebuffer.h"
 
 // ECS
 #include "QuestEngine/ECS/Components/TransformComponent.h"

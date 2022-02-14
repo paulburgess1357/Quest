@@ -44,6 +44,10 @@ namespace QuestGLCore::Handle {
 			return m_handle;
 		}
 
+		[[nodiscard]] TraitType get_trait() const {
+			return m_trait;
+		}
+
 		void bind() const {
 			m_trait.bind(m_handle);
 		}

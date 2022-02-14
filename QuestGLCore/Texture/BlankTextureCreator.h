@@ -51,8 +51,8 @@ namespace QuestGLCore::Texture {
 		}
 		void load_texture(const int width, const int height) const override {
 			// Typically: glTexImage2D when TextureType = GL_TEXTURE_2D
-			const auto texture_function = OGLResolution::OglTextureFunctionResolution::get_function<TextureType>();
-			texture_function(TextureType, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
+			const auto glTextureFunction = OGLResolution::OglTextureFunctionResolution::get_function<TextureType>();
+			glTextureFunction(TextureType, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
 		}
 	};
 
@@ -70,8 +70,8 @@ namespace QuestGLCore::Texture {
 		}
 		void load_texture(const int width, const int height) const override {
 			// Typically: glTexImage2D when TextureType = GL_TEXTURE_2D
-			const auto texture_function = OGLResolution::OglTextureFunctionResolution::get_function<TextureType>();
-			texture_function(TextureType, 0, GL_RGBA16F, width, height, 0, GL_RGBA, GL_FLOAT, nullptr);
+			const auto glTextureFunction = OGLResolution::OglTextureFunctionResolution::get_function<TextureType>();
+			glTextureFunction(TextureType, 0, GL_RGBA16F, width, height, 0, GL_RGBA, GL_FLOAT, nullptr);
 		}
 	};
 
@@ -89,8 +89,8 @@ namespace QuestGLCore::Texture {
 		}
 		void load_texture(const int width, const int height) const override {
 			// Typically: glTexImage2D when TextureType = GL_TEXTURE_2D
-			const auto texture_function = OGLResolution::OglTextureFunctionResolution::get_function<TextureType>();
-			texture_function(TextureType, 0, GL_RGBA32F, width, height, 0, GL_RGBA, GL_FLOAT, nullptr);
+			const auto glTextureFunction = OGLResolution::OglTextureFunctionResolution::get_function<TextureType>();
+			glTextureFunction(TextureType, 0, GL_RGBA32F, width, height, 0, GL_RGBA, GL_FLOAT, nullptr);
 		}
 	};
 

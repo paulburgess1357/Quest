@@ -108,6 +108,21 @@
     <ClInclude Include="Texture\BlankTextureCreator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Framebuffer\ExternalTypedefs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Model\ExternalTypedefs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader\ExternalTypedefs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture\ExternalTypedefs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UniformBufferObjects\ExternalTypedefs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="QuestGLCore.cpp">

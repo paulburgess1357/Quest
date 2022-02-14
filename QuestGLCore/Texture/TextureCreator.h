@@ -71,14 +71,14 @@ namespace QuestGLCore::Texture {
 
 		void load_texture() const override {
 			// Typically: glTexImage2D when TextureType = GL_TEXTURE_2D
-			const auto texture_function = OGLResolution::OglTextureFunctionResolution::get_function<TextureType>();
+			const auto glTextureFunction = OGLResolution::OglTextureFunctionResolution::get_function<TextureType>();
 			if (this->m_apply_linear_correction) {
 				// When internal format equals: SRGB: OpenGL will correct the colors
 				// to linear space as soon as they are loaded.  This is typically done
 				// for diffuse and other coloring maps (not normal/specular maps)
-				texture_function(TextureType, 0, this->m_internal_format, this->m_width, this->m_height, 0, this->m_pixel_format, GL_UNSIGNED_BYTE, m_image_loader.get_image_data());
+				glTextureFunction(TextureType, 0, this->m_internal_format, this->m_width, this->m_height, 0, this->m_pixel_format, GL_UNSIGNED_BYTE, m_image_loader.get_image_data());
 			} else {
-				texture_function(TextureType, 0, this->m_pixel_format, this->m_width, this->m_height, 0, this->m_pixel_format, GL_UNSIGNED_BYTE, m_image_loader.get_image_data());
+				glTextureFunction(TextureType, 0, this->m_pixel_format, this->m_width, this->m_height, 0, this->m_pixel_format, GL_UNSIGNED_BYTE, m_image_loader.get_image_data());
 			}
 			glGenerateMipmap(TextureType);
 		}
@@ -106,8 +106,8 @@ namespace QuestGLCore::Texture {
 
 		void load_texture() const override {
 			// Typically: glTexImage2D when TextureType = GL_TEXTURE_2D
-			const auto texture_function = OGLResolution::OglTextureFunctionResolution::get_function<TextureType>();
-			texture_function(TextureType, 0, GL_RGB16F, this->m_width, this->m_height, 0, this->m_pixel_format, GL_FLOAT, m_image_loader.get_image_data());
+			const auto glTextureFunction = OGLResolution::OglTextureFunctionResolution::get_function<TextureType>();
+			glTextureFunction(TextureType, 0, GL_RGB16F, this->m_width, this->m_height, 0, this->m_pixel_format, GL_FLOAT, m_image_loader.get_image_data());
 		}
 
 		const QuestUtility::ImageLoading::HDRImageLoaderFromFile& m_image_loader;

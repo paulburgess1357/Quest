@@ -1,7 +1,7 @@
 #pragma once
-#include "QuestGLCore/Shader/ExternalTypedefs.h"
+#include "QuestGLCore/Shader/ShaderProgram.h"
 
-namespace QuestEngine::Shader {
+namespace QuestGLCore::Shader {
 	using ShaderProgram = QuestGLCore::Shader::ShaderProgram;
 	using ShaderEnum = QuestGLCore::Shader::ShaderEnum;
 	using ShaderProgramCreator = QuestGLCore::Shader::ShaderProgramCreator;

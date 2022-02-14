@@ -11,7 +11,8 @@ namespace QuestEngine::Engine {
 		m_projection_matrix {m_window },
 		m_systems_manager{ m_registry_manager.get_active_registry() },
 		m_ubo_manager{ m_resource_manager.get_ubo(Constants::ubo_matrices) },
-		m_user_interface{ m_window.get_window() }{
+		m_user_interface{ m_window.get_window() },
+		m_framebuffer{ width, height, 0}{
 		QUEST_INFO("Quest Engine v{}.{} Initialized\n", 0, 1)
 		initialization();
 	}
@@ -22,6 +23,10 @@ namespace QuestEngine::Engine {
 	}
 
 	void Engine::initialization() {
+
+		// Framebuffer attachments (currently one only)
+		m_framebuffer.create_color_attachments(m_window.get_width(), m_window.get_height(), 1); 
+
 		set_active_camera(Constants::main_camera);
 	}
 

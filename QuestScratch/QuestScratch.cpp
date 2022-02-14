@@ -19,7 +19,7 @@ int main(){
 
 	// QuestGLCore::Texture::StandardBlankFramebufferTextureCreator<GL_TEXTURE_2D> fb_creator;
 
-	QuestGLCore::Framebuffer::Framebuffer<QuestGLCore::Texture::StandardBlankFramebufferTextureCreator, GL_TEXTURE_2D> fb_test;
+	QuestGLCore::Framebuffer::Framebuffer<QuestGLCore::Texture::StandardBlankFramebufferTextureCreator, GL_TEXTURE_2D> fb_test{ 1920, 1080, 1};
 
 
 	std::cout << "hello world" << std::endl;

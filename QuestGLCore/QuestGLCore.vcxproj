@@ -166,11 +166,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Constants\Constants.h" />
+    <ClInclude Include="Framebuffer\ExternalTypedefs.h" />
     <ClInclude Include="Framebuffer\Framebuffer.h" />
     <ClInclude Include="Framebuffer\Typedefs.h" />
     <ClInclude Include="Handle\Traits\Framebuffer.h" />
     <ClInclude Include="Handle\Traits\Renderbuffer.h" />
     <ClInclude Include="Handle\Traits\Texture.h" />
+    <ClInclude Include="Model\ExternalTypedefs.h" />
     <ClInclude Include="OpenGLTypes\OpenGLFunctionResolution.h" />
     <ClInclude Include="PCH\framework.h" />
     <ClInclude Include="Handle\Template\HandleTemplate.h" />
@@ -181,6 +183,7 @@
     <ClInclude Include="Model\Model.h" />
     <ClInclude Include="OpenGLTypes\OglTypeResolution.h" />
     <ClInclude Include="PCH\pch.h" />
+    <ClInclude Include="Shader\ExternalTypedefs.h" />
     <ClInclude Include="Shader\ShaderProgramCreator.h" />
     <ClInclude Include="Shader\ShaderProgram.h" />
     <ClInclude Include="Shader\ShaderExceptions.h" />
@@ -188,10 +191,12 @@
     <ClInclude Include="Shader\ShaderEnum.h" />
     <ClInclude Include="Handle\Typedefs.h" />
     <ClInclude Include="Texture\BlankTextureCreator.h" />
+    <ClInclude Include="Texture\ExternalTypedefs.h" />
     <ClInclude Include="Texture\TextureFormat.h" />
     <ClInclude Include="Texture\TextureCreator.h" />
     <ClInclude Include="Texture\TexUnitTracker.h" />
     <ClInclude Include="Texture\Typedefs.h" />
+    <ClInclude Include="UniformBufferObjects\ExternalTypedefs.h" />
     <ClInclude Include="UniformBufferObjects\UniformBufferExceptions.h" />
     <ClInclude Include="UniformBufferObjects\UniformBufferObjects.h" />
     <ClInclude Include="VertexData\VertexData.h" />

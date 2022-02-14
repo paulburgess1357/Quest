@@ -1,9 +1,8 @@
 #pragma once
-#include "QuestGLCore/Texture/Typedefs.h"
-#include "QuestGLCore/Texture/TextureCreator.h"
+#include "QuestGLCore/Texture/ExternalTypedefs.h"
 
 namespace QuestEngine::Texture {
-	using Texture = QuestGLCore::Texture::TextureHandle;
-	using StandardTextureCreator2D = QuestGLCore::Texture::StandardTextureCreator<GL_TEXTURE_2D>;
-	using HDRTextureCreator2D = QuestGLCore::Texture::HDRTextureCreator<GL_TEXTURE_2D>;
+	using Texture = QuestGLCore::Texture::Texture;
+	using StandardTextureCreator2D = QuestGLCore::Texture::StandardTextureCreator2D;
+	using HDRTextureCreator2D = QuestGLCore::Texture::HDRTextureCreator2D;
 } // namespace QuestEngine::Texture

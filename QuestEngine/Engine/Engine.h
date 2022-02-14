@@ -7,7 +7,8 @@
 #include "QuestEngine/UniformBufferObjects/UniformBufferManager.h"
 #include "QuestEngine/Camera/Camera.h"
 #include "QuestEngine/Camera/ProjectionMatrix.h"
-#include "QuestUI/ImguiWindow/ImGuiWindow.h"
+#include "QuestEngine/Using/UserInterface.h"
+#include "QuestEngine/Using/Framebuffer.h"
 
 namespace QuestEngine::Engine {
 
@@ -41,6 +42,8 @@ namespace QuestEngine::Engine {
 		UniformBufferObjects::UniformBufferManager m_ubo_manager;
 
 		UserInterface::UserInterface m_user_interface;
+		Framebuffer::FramebufferStandard2D m_framebuffer;
+
 	};
 
 } // namespace QuestEngine::Engine

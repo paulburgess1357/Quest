@@ -163,6 +163,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="ImguiWindow\ExternalTypedefs.h" />
     <ClInclude Include="ImGUIWindow\ImGuiWindow.h" />
     <ClInclude Include="PCH\framework.h" />
     <ClInclude Include="PCH\pch.h" />

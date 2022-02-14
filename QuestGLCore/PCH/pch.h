@@ -19,6 +19,7 @@
 #include "QuestGLCore/Shader/ShaderExceptions.h"
 #include "QuestGLCore/Shader/ShaderEnum.h"
 #include "QuestGLCore/Shader/Typedefs.h"
+#include "QuestGLCore/Shader/ExternalTypedefs.h"
 
 // Vertex Data
 #include "QuestGLCore/VertexData/VertexData.h"
@@ -27,10 +28,12 @@
 // Model
 #include "QuestGLCore/Model/Model.h"
 #include "QuestGLCore/Model/Mesh.h"
+#include "QuestGLCore/Model/ExternalTypedefs.h"
 
 // UBO
 #include "QuestGLCore/UniformBufferObjects/UniformBufferObjects.h"
 #include "QuestGLCore/UniformBufferObjects/UniformBufferExceptions.h"
+#include "QuestGLCore/UniformBufferObjects/ExternalTypedefs.h"
 
 // Misc
 #include "QuestGLCore/Constants/Constants.h"
@@ -40,6 +43,9 @@
 #include "QuestGLCore/Texture/TextureFormat.h"
 #include "QuestGLCore/Texture/TexUnitTracker.h"
 #include "QuestGLCore/Texture/Typedefs.h"
+#include "QuestGLCore/Texture/ExternalTypedefs.h"
 
 // Framebuffer
 #include "QuestGLCore/Framebuffer/Framebuffer.h"
+#include "QuestGLCore/Framebuffer/Typedefs.h"
+#include "QuestGLCore/Framebuffer/ExternalTypedefs.h"
