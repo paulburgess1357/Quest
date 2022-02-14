@@ -23,12 +23,18 @@ namespace QuestEngine::Engine {
 	}
 
 	void Engine::initialization() {
-
-		// Framebuffer attachments (currently one only)
-		m_framebuffer.create_color_attachments(m_window.get_width(), m_window.get_height(), 1); 
-
+		init_framebuffer();
 		set_active_camera(Constants::main_camera);
 	}
+
+	void Engine::init_framebuffer() {
+		// Framebuffer attachments (currently one only)
+		m_framebuffer.create_color_attachments(m_window.get_width(), m_window.get_height(), 1);
+
+		// Write to all color attachments:
+		m_framebuffer.set_all_color_attachments_to_write_to();
+	}
+
 
 	void Engine::set_active_camera(const std::string& camera_id) {
 		if (auto* camera = m_resource_manager.get_camera_pointer(camera_id)) {

@@ -25,6 +25,8 @@ namespace QuestEngine::Engine {
 	private:
 		void initialization();
 
+		void init_framebuffer();
+
 		void qc_checks() const;
 		void gameloop();
 
