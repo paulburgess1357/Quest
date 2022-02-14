@@ -20,6 +20,7 @@
 #include "QuestGLCore/Shader/ShaderEnum.h"
 #include "QuestGLCore/Shader/Typedefs.h"
 #include "QuestGLCore/Shader/ExternalTypedefs.h"
+#include "QuestGLCore/Shader/ShaderStrings.h"
 
 // Vertex Data
 #include "QuestGLCore/VertexData/VertexData.h"
@@ -49,3 +50,4 @@
 #include "QuestGLCore/Framebuffer/Framebuffer.h"
 #include "QuestGLCore/Framebuffer/Typedefs.h"
 #include "QuestGLCore/Framebuffer/ExternalTypedefs.h"
+#include "QuestGLCore/Framebuffer/FramebufferPostProcess.h"

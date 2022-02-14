@@ -123,6 +123,12 @@
     <ClInclude Include="UniformBufferObjects\ExternalTypedefs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Framebuffer\FramebufferPostProcess.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader\ShaderStrings.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="QuestGLCore.cpp">

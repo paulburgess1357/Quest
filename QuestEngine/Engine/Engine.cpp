@@ -12,7 +12,7 @@ namespace QuestEngine::Engine {
 		m_systems_manager{ m_registry_manager.get_active_registry() },
 		m_ubo_manager{ m_resource_manager.get_ubo(Constants::ubo_matrices) },
 		m_user_interface{ m_window.get_window() },
-		m_framebuffer{ width, height, 0}{
+		m_post_process_framebuffer{ width, height, 1, m_resource_manager.get_shader(Constants::post_process_shader)}{
 		QUEST_INFO("Quest Engine v{}.{} Initialized\n", 0, 1)
 		initialization();
 	}
@@ -23,18 +23,8 @@ namespace QuestEngine::Engine {
 	}
 
 	void Engine::initialization() {
-		init_framebuffer();
 		set_active_camera(Constants::main_camera);
 	}
-
-	void Engine::init_framebuffer() {
-		// Framebuffer attachments (currently one only)
-		m_framebuffer.create_color_attachments(m_window.get_width(), m_window.get_height(), 1);
-
-		// Write to all color attachments:
-		m_framebuffer.set_all_color_attachments_to_write_to();
-	}
-
 
 	void Engine::set_active_camera(const std::string& camera_id) {
 		if (auto* camera = m_resource_manager.get_camera_pointer(camera_id)) {
@@ -48,19 +38,39 @@ namespace QuestEngine::Engine {
 
 	void Engine::gameloop() { //TODO make const
 		while (!shutdown()){
-			m_window.clear_buffer();
-			m_ubo_manager.run(*m_active_camera, m_projection_matrix);
-			m_systems_manager.run();
+			clear_buffers();
+
+			m_ubo_manager.set_ubos(*m_active_camera, m_projection_matrix);
+			m_systems_manager.update();
+
+			draw_scene();
+
 			m_window.poll_events();
-			TEMP_UI();
+			draw_user_interface();
+
 			m_window.swap_buffer();
 		}
 	}
 
-	void Engine::TEMP_UI() const {
+	void Engine::draw_scene() const{
+		// Draw scene to post-process framebuffer
+		// m_post_process_framebuffer.bind(); ========================================================================================================================================
+		m_systems_manager.draw();
+
+		// Unbind framebuffer and draw to window
+		m_post_process_framebuffer.unbind();
+		//m_post_process_framebuffer.draw(); ========================================================================================================================================
+	}
+
+	void Engine::draw_user_interface() const {
 		UserInterface::UserInterface::begin_render();
 		UserInterface::UserInterface::show_demo();
 		m_user_interface.end_render();
+	}
+
+	void Engine::clear_buffers() const {
+		m_window.clear_buffer();
+		m_post_process_framebuffer.clear_buffer();
 	}
 
 	bool Engine::shutdown() const {

@@ -23,30 +23,36 @@ namespace QuestGLCore::Framebuffer {
 		explicit Framebuffer(const int width, const int height, const int color_attachment_num)
 			:m_framebuffer_handle{ GL_FRAMEBUFFER },
 			m_renderbuffer_handle{ GL_RENDERBUFFER },
-			m_color_attachment_num{ 0 },
-			m_currently_bound{ false }{
+			m_color_attachment_num{ 0 }{
 			create_color_attachments(width, height, color_attachment_num);
 			create_renderbuffer_attachment(width, height);
 			check_for_completeness();
 			glViewport(0, 0, width, height);
 
 			// Writing to all color attachments by default
+			// This has no effect if the Framebuffer is initialized with 0
+			// attachment nums
 			set_all_color_attachments_to_write_to();
 		}
 
-		void bind() {
-			m_framebuffer_handle.bind();
-			m_currently_bound = true;
+		void bind_scene_attachment() const {
+			// By default the main scene will be used for color attachment 0;
+			// color attachment 0, tex unit 0
+			bind_color_attachment(0, 0);
 		}
 
-		void unbind() {
+		void bind() const {
+			m_framebuffer_handle.bind();
+		}
+
+		void unbind() const {
 			m_framebuffer_handle.unbind();
-			m_currently_bound = false;
 		}
 
 		void clear_buffer() const {
-			QUEST_ASSERT(m_currently_bound, "You are clearing a framebuffer that is currently not bound! You likely want your framebuffer bound before clearing it")
-			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+			bind();
+				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+			unbind();
 		}
 
 		void create_color_attachments(const int width, const int height, const int quantity) {
@@ -55,13 +61,13 @@ namespace QuestGLCore::Framebuffer {
 			}
 		}
 
-		void rescale_attachments(const int width, const int height) {
+		void rescale_attachments(const int width, const int height) const {
 			rescale_color_attachments(width, height);
 			rescale_renderbuffer_attachment(width, height);
 			glViewport(0, 0, width, height);
 		}
 
-		void set_single_color_attachment_to_write_to(const unsigned int color_attachment_num) {
+		void set_single_color_attachment_to_write_to(const unsigned int color_attachment_num) const {
 			// Output information from fragment shader into a single specified color attachment.
 			// When this is set, any previous color attachments that are being written to will no
 			// longer be written to.  Only the single specified color attachment will be used.
@@ -78,7 +84,7 @@ namespace QuestGLCore::Framebuffer {
 			}
 		}
 
-		void set_all_color_attachments_to_write_to() {
+		void set_all_color_attachments_to_write_to() const {
 			// Sets all currently existing color attachments to be used in the fragment shader.
 			// If you add a color attachment after this call, you will need to call this function
 			// again.
@@ -119,7 +125,7 @@ namespace QuestGLCore::Framebuffer {
 			++m_color_attachment_num;
 		}
 
-		void rescale_color_attachments(const int width, const int height) {
+		void rescale_color_attachments(const int width, const int height) const {
 			// Color attachments are created starting from 0 (see create color attachment).  This takes each texture handle and updates
 			// each color attachment to be resized.  We don't need to store 'm_color_attachment_num' because we store the handles
 			// in a vector, so the order starting from 0 is maintained.  E.g. <texture handle for attachment 0, texture handle for attachment 1, etc.>
@@ -140,7 +146,7 @@ namespace QuestGLCore::Framebuffer {
 
 		}
 
-		void create_renderbuffer_attachment(const int width, const int height) {
+		void create_renderbuffer_attachment(const int width, const int height) const {
 			// Depth and stencil attachments (24bit depth; 8bit stencil); Write-only 
 			const auto renderbuffer_target = m_renderbuffer_handle.get_trait().get_target();
 			const auto framebuffer_target = m_framebuffer_handle.get_trait().get_target();
@@ -160,7 +166,7 @@ namespace QuestGLCore::Framebuffer {
 			m_renderbuffer_handle.unbind();
 		}
 
-		void check_for_completeness() {
+		void check_for_completeness() const {
 			bind();
 			const GLenum framebuffer_status = glCheckFramebufferStatus(m_framebuffer_handle.get_trait().get_target());
 			if (framebuffer_status != GL_FRAMEBUFFER_COMPLETE) {
@@ -205,9 +211,6 @@ namespace QuestGLCore::Framebuffer {
 
 		FramebufferType<TextureType> m_blank_texture_creator;
 		unsigned int m_color_attachment_num;
-
-		bool m_currently_bound;
-
 	};
 
 } // namespace QuestGLCore::Framebuffer

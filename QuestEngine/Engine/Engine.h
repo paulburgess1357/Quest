@@ -25,12 +25,12 @@ namespace QuestEngine::Engine {
 	private:
 		void initialization();
 
-		void init_framebuffer();
-
 		void qc_checks() const;
 		void gameloop();
 
-		void TEMP_UI() const;
+		void clear_buffers() const;
+		void draw_scene() const;
+		void draw_user_interface() const;
 
 		[[nodiscard]] bool shutdown() const;
 
@@ -44,7 +44,7 @@ namespace QuestEngine::Engine {
 		UniformBufferObjects::UniformBufferManager m_ubo_manager;
 
 		UserInterface::UserInterface m_user_interface;
-		Framebuffer::FramebufferStandard2D m_framebuffer;
+		Framebuffer::FramebufferPostProcessStandard2D m_post_process_framebuffer;
 
 	};
 

@@ -5,4 +5,5 @@ namespace QuestEngine::Shader {
 	using ShaderProgram = QuestGLCore::Shader::ShaderProgram;
 	using ShaderEnum = QuestGLCore::Shader::ShaderEnum;
 	using ShaderProgramCreator = QuestGLCore::Shader::ShaderProgramCreator;
+	using ShaderStrings = QuestGLCore::Shader::ShaderStrings;
 } // namespace QuestEngine::Shader

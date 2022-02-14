@@ -9,7 +9,7 @@ namespace QuestEngine::UniformBufferObjects {
 
 	public:
 		explicit UniformBufferManager(UniformBufferObjects::UniformBufferObject& matrices);
-		void run(Camera::Camera& camera, Camera::ProjectionMatrix& projection_matrix) const;
+		void set_ubos(Camera::Camera& camera, Camera::ProjectionMatrix& projection_matrix) const;
 	private:
 		void set_matrices(Camera::Camera& camera, Camera::ProjectionMatrix& projection_matrix) const;
 		UniformBufferObjects::UniformBufferObject* m_matrices;
