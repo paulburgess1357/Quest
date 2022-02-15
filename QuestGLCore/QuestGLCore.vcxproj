@@ -168,6 +168,7 @@
     <ClInclude Include="Constants\Constants.h" />
     <ClInclude Include="Framebuffer\ExternalTypedefs.h" />
     <ClInclude Include="Framebuffer\Framebuffer.h" />
+    <ClInclude Include="Texture\BlankTextureEnum.h" />
     <ClInclude Include="Framebuffer\FramebufferPostProcess.h" />
     <ClInclude Include="Framebuffer\Typedefs.h" />
     <ClInclude Include="Handle\Traits\Framebuffer.h" />

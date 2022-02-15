@@ -2,7 +2,10 @@
 #include "QuestGLCore/Framebuffer/Typedefs.h"
 #include "QuestGLCore/Texture/Typedefs.h"
 #include "QuestGLCore/Texture/BlankTextureCreator.h"
+#include "QuestGLCore/Texture/BlankTextureEnum.h"
 #include "QuestUtility/Include/Logger.h"
+#include <initializer_list>
+
 
 // Framebuffer must be bound
 //   - glFramebufferTexture1D/2D/3D etc.
@@ -16,29 +19,23 @@
 
 namespace QuestGLCore::Framebuffer {
 
-	template <template<GLenum> class FramebufferType, GLenum TextureType>
+	// template <template<GLenum> class FramebufferType, GLenum TextureType>
+	template <GLenum TextureType>
 	class Framebuffer {
 
 	public:
-		explicit Framebuffer(const int width, const int height, const int color_attachment_num)
+		explicit Framebuffer(const int width, const int height, const std::initializer_list<Texture::BlankTextureEnum>& texture_types)
 			:m_framebuffer_handle{ GL_FRAMEBUFFER },
 			m_renderbuffer_handle{ GL_RENDERBUFFER },
 			m_color_attachment_num{ 0 }{
-			create_color_attachments(width, height, color_attachment_num);
+			create_texture_creators(texture_types),
+			create_color_attachments(width, height);
 			create_renderbuffer_attachment(width, height);
 			check_for_completeness();
 			glViewport(0, 0, width, height);
 
 			// Writing to all color attachments by default
-			// This has no effect if the Framebuffer is initialized with 0
-			// attachment nums
 			set_all_color_attachments_to_write_to();
-		}
-
-		void bind_scene_attachment() const {
-			// By default the main scene will be used for color attachment 0;
-			// color attachment 0, tex unit 0
-			bind_color_attachment(0, 0);
 		}
 
 		void bind() const {
@@ -57,12 +54,6 @@ namespace QuestGLCore::Framebuffer {
 
 		static void clear_buffer_no_bind() {
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-		}
-
-		void create_color_attachments(const int width, const int height, const int quantity) {
-			for (int i = 0; i < quantity; i++) {
-				create_color_attachment(width, height);
-			}
 		}
 
 		void rescale_attachments(const int width, const int height) const {
@@ -91,8 +82,6 @@ namespace QuestGLCore::Framebuffer {
 
 		void set_all_color_attachments_to_write_to() const {
 			// Sets all currently existing color attachments to be used in the fragment shader.
-			// If you add a color attachment after this call, you will need to call this function
-			// again.
 			const auto attachment_num = static_cast<unsigned int>(m_color_attachment_handles.size());
 			if(attachment_num > 0) {
 				std::vector<GLenum> all_buffers;
@@ -115,8 +104,20 @@ namespace QuestGLCore::Framebuffer {
 		}
 
 	private:
-		void create_color_attachment(const int width, const int height) {
-			auto texture_handle = m_blank_texture_creator.generate_texture(width, height);
+		void create_texture_creators(const std::initializer_list<Texture::BlankTextureEnum>& texture_types) {
+			for (const auto& texture_type : texture_types) {
+				m_texture_creators.push_back(Texture::BlankTextureFactory<TextureType>::create_blank_texture_creator(texture_type));
+			}
+		}
+
+		void create_color_attachments(const int width, const int height) {
+			for (const auto& blank_texture_creator : m_texture_creators) {
+				create_color_attachment(width, height, blank_texture_creator.get());
+			}
+		}
+
+		void create_color_attachment(const int width, const int height, const Texture::BlankTextureCreator<TextureType>* blank_texture_creator) {
+			auto texture_handle = blank_texture_creator->generate_texture(width, height);
 
 			const auto framebuffer_target = m_framebuffer_handle.get_trait().get_target();
 			// Typically glFramebufferTexture2D & GL_TEXTURE_2D
@@ -137,18 +138,17 @@ namespace QuestGLCore::Framebuffer {
 			unsigned int color_attachment_num{ 0 };
 			const auto framebuffer_target = m_framebuffer_handle.get_trait().get_target();
 
-			for (const auto& color_attachment : m_color_attachment_handles) {
+			for(size_t i = 0; i < m_color_attachment_handles.size(); i++) {
 				// Texture rescale handles its own bind()
-				m_blank_texture_creator.rescale_texture(color_attachment, width, height);
+				m_texture_creators[i]->rescale_texture(m_color_attachment_handles[i], width, height);
 				// Get texture creation function and use to update width and height
 				// Typically glFramebufferTexture2D & GL_TEXTURE_2D
 				const auto glTextureFunction = OGLResolution::OglFramebufferFunctionResolution::get_function<TextureType>();
 				bind();
-					glTextureFunction(framebuffer_target, GL_COLOR_ATTACHMENT0 + color_attachment_num, TextureType, color_attachment.get_handle(), 0);
+					glTextureFunction(framebuffer_target, GL_COLOR_ATTACHMENT0 + color_attachment_num, TextureType, m_color_attachment_handles[i].get_handle(), 0);
 				unbind();
 				++color_attachment_num;
 			}
-
 		}
 
 		void create_renderbuffer_attachment(const int width, const int height) const {
@@ -212,9 +212,9 @@ namespace QuestGLCore::Framebuffer {
 
 		FramebufferHandle m_framebuffer_handle;
 		RenderbufferHandle m_renderbuffer_handle; // Stencil & depth
-		std::vector<Texture::TextureHandle> m_color_attachment_handles; // Color
 
-		FramebufferType<TextureType> m_blank_texture_creator;
+		std::vector<Texture::TextureHandle> m_color_attachment_handles; // Color
+		std::vector<std::unique_ptr<Texture::BlankTextureCreator<TextureType>>> m_texture_creators; // Texture creators
 		unsigned int m_color_attachment_num;
 	};
 

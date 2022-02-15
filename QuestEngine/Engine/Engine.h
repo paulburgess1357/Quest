@@ -44,7 +44,7 @@ namespace QuestEngine::Engine {
 		UniformBufferObjects::UniformBufferManager m_ubo_manager;
 
 		UserInterface::UserInterface m_user_interface;
-		Framebuffer::FramebufferPostProcessStandard2D m_post_process_framebuffer;
+		Framebuffer::FramebufferPostProcess2D m_post_process_framebuffer;
 
 		// Tracking window resizes:
 		int m_window_width;
