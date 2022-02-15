@@ -46,7 +46,7 @@ namespace QuestEngine::Engine {
 
 			handle_window_resize();
 			draw_scene();
-			draw_user_interface();
+			// draw_user_interface();
 			Window::Window::poll_events();
 
 			m_window.swap_buffer();
@@ -68,7 +68,9 @@ namespace QuestEngine::Engine {
 		Framebuffer::Framebuffer2D::clear_buffer_no_bind();
 		m_systems_manager.draw();
 
-		// Unbind framebuffer and draw to window
+		// Unbind framebuffer and take stored texture data
+		// in post-process framebuffer and draw to window
+		// using post-process shader
 		m_post_process_framebuffer.unbind();
 
 		m_window.clear_buffer();
