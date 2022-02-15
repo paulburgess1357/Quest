@@ -11,6 +11,6 @@ int main() {
 
 	//shape_test.load_standard_shape();
 	// shape_test.load_indexed_shape();
-	shape_test.load_textured_indexed_shape();
+	shape_test.load_normals_texture_indexed_shape_blinn_phong();
 	engine_api.run();
 }

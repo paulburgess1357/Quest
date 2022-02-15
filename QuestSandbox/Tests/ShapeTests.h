@@ -20,6 +20,9 @@ namespace QuestSandbox::Tests {
 		// Textured Shape
 		void load_textured_indexed_shape() const;
 
+		// Shape: Position, normals, texture_coords
+		void load_normals_texture_indexed_shape_blinn_phong() const;
+
 	private:
 		QuestEngine::API::EngineAPI& m_engine_api;
 		static const std::string m_base_shader_path;

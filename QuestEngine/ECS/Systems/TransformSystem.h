@@ -8,12 +8,10 @@
 namespace QuestEngine::ECS::Systems {
 
 	struct TransformSystem {
-		static void transform(entt::registry& registry) {
+		static void transform(entt::registry& registry, const Camera::Camera& camera) {
 			rotate(registry);
 			ui_transform(registry);
-
-
-			update_model_matrix(registry); // set last
+			update_model_matrices(registry, camera); // set last
 		}
 
 		static void rotate(entt::registry& registry) {
@@ -35,12 +33,15 @@ namespace QuestEngine::ECS::Systems {
 			// Once complete, I remove that component from the entity (i.e. when the ui window is closed)
 		}
 
-		static void update_model_matrix(entt::registry& registry) {
-			registry.view<Components::StandardModelComponent, Components::TransformComponent>().each([](auto& model, auto& transform) {
+		static void update_model_matrices(entt::registry& registry, const Camera::Camera& camera) {
+			const auto view_matrix = camera.get_view_matrix();
+			registry.view<Components::StandardModelComponent, Components::TransformComponent>().each([&](auto& model, auto& transform) {
 				model.m_model->set_model_matrix(transform.m_model_matrix);
+				model.m_model->set_normal_matrix(glm::mat3(glm::transpose(glm::inverse(view_matrix * transform.m_model_matrix))));
 			});
-			registry.view<Components::IndexedModelComponent, Components::TransformComponent>().each([](auto& model, auto& transform) {
+			registry.view<Components::IndexedModelComponent, Components::TransformComponent>().each([&](auto& model, auto& transform) {
 				model.m_model->set_model_matrix(transform.m_model_matrix);
+				model.m_model->set_normal_matrix(glm::mat3(glm::transpose(glm::inverse(view_matrix * transform.m_model_matrix))));
 			});
 		}
 

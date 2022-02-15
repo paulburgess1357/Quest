@@ -42,7 +42,7 @@ namespace QuestEngine::Engine {
 	void Engine::gameloop() {
 		while (!shutdown()){
 			m_ubo_manager.set_ubos(*m_active_camera, m_projection_matrix);
-			m_systems_manager.update();
+			m_systems_manager.update(*m_active_camera);
 
 			handle_window_resize();
 			draw_scene();
@@ -68,7 +68,9 @@ namespace QuestEngine::Engine {
 		Framebuffer::Framebuffer2D::clear_buffer_no_bind();
 		m_systems_manager.draw();
 
-		// Unbind framebuffer and draw to window
+		// Unbind framebuffer and take stored texture data
+		// in post-process framebuffer and draw to window
+		// using post-process shader
 		m_post_process_framebuffer.unbind();
 
 		m_window.clear_buffer();

@@ -131,7 +131,7 @@ namespace QuestEngine::Resource {
 	void ResourceManager::load_ubo_matrices() {
 		const std::string ubo_id{ Constants::ubo_matrices };
 		UniformBufferObjects::UniformBufferObject ubo{ ubo_id };
-		ubo.allocate_buffer_memory(sizeof(glm::mat4));
+		ubo.allocate_buffer_memory(sizeof(glm::mat4) * 2);
 		load_ubo(ubo_id, ubo);
 	}
 

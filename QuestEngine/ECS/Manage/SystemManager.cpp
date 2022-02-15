@@ -13,8 +13,8 @@ namespace QuestEngine::ECS {
 		m_active_registry = &registry;
 	}
 
-	void SystemManager::update() const {
-		ECS::Systems::TransformSystem::transform(*m_active_registry);
+	void SystemManager::update(const Camera::Camera& camera) const {
+		ECS::Systems::TransformSystem::transform(*m_active_registry, camera);
 	}
 
 	void SystemManager::draw() const {
