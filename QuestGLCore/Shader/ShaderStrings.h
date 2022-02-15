@@ -27,6 +27,7 @@ namespace QuestGLCore::Shader {
 
 					"void main(){\n"
 					"    vec3 col = texture(post_process_texture, frag_tex_coords).rgb;\n"
+					"	 col = vec3(1.0 - texture(post_process_texture, frag_tex_coords));\n"
 					"    frag_color = vec4(col, 1.0);\n"
 					"}";
 		}

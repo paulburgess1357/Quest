@@ -46,7 +46,7 @@ namespace QuestEngine::Engine {
 			draw_scene();
 
 			m_window.poll_events();
-			draw_user_interface();
+			// draw_user_interface();
 
 			m_window.swap_buffer();
 		}
@@ -54,12 +54,12 @@ namespace QuestEngine::Engine {
 
 	void Engine::draw_scene() const{
 		// Draw scene to post-process framebuffer
-		// m_post_process_framebuffer.bind(); ========================================================================================================================================
+		m_post_process_framebuffer.bind();
 		m_systems_manager.draw();
 
 		// Unbind framebuffer and draw to window
 		m_post_process_framebuffer.unbind();
-		//m_post_process_framebuffer.draw(); ========================================================================================================================================
+		m_post_process_framebuffer.draw();
 	}
 
 	void Engine::draw_user_interface() const {

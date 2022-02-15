@@ -20,7 +20,7 @@ namespace QuestGLCore::Framebuffer {
 		void draw() const {
 			glDisable(GL_DEPTH_TEST);
 			m_shader_program->bind();
-			Framebuffer<FramebufferType, TextureType>::bind_scene_attachment();
+			this->bind_scene_attachment();
 			m_mesh->draw();
 			glEnable(GL_DEPTH_TEST);
 		}
