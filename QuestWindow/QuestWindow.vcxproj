@@ -163,6 +163,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Include\ExternalTypedefs.h" />
     <ClInclude Include="PCH\framework.h" />
     <ClInclude Include="Include\Window.h" />
     <ClInclude Include="Input\InputManager.h" />

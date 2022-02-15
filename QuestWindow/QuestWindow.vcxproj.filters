@@ -54,6 +54,9 @@
     <ClInclude Include="OpenGL\OGLDebugContext.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Include\ExternalTypedefs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PCH\pch.cpp">

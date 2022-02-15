@@ -2,12 +2,14 @@
 #include "ResourceManager.h"
 #include "QuestEngine/Constants/Constants.h"
 #include "QuestUtility/Logging/LogHandler.h"
+#include "QuestEngine/Using/Shader.h"
 
 namespace QuestEngine::Resource {
 
 	ResourceManager::ResourceManager() {
 		load_main_camera();
 		load_ubo_matrices();
+		load_post_process_shader();
 	}
 
 	// ======================== Shader ========================
@@ -41,6 +43,14 @@ namespace QuestEngine::Resource {
 			shader.check_uniforms_initialized();
 		}
 		QUEST_TRACE("Passed")
+	}
+
+	void ResourceManager::load_post_process_shader() {
+		const std::unordered_map<Shader::ShaderEnum, std::string> shader_map{
+			{ Shader::ShaderEnum::VERTEX, Shader::ShaderStrings::get_vertex_post_process() },
+			{ Shader::ShaderEnum::FRAGMENT, Shader::ShaderStrings::get_fragment_post_process() }
+		};
+		load_shader(Constants::post_process_shader, shader_map, false);
 	}
 
 	// ======================== Model ========================

@@ -21,3 +21,4 @@
 
 // Include
 #include "QuestWindow/Include/Window.h"
+#include "QuestWindow/Include/ExternalTypedefs.h"

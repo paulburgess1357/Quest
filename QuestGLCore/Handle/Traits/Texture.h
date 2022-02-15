@@ -32,6 +32,10 @@ namespace QuestGLCore::Traits {
 			glBindTexture(m_target, 0);
 		}
 
+		[[nodiscard]] GLenum get_target() const {
+			return m_target;
+		}
+
 	private:
 		GLenum m_target;
 

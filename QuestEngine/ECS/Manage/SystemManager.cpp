@@ -13,16 +13,11 @@ namespace QuestEngine::ECS {
 		m_active_registry = &registry;
 	}
 
-	void SystemManager::run() const {
-		update();
-		render();
-	}
-
 	void SystemManager::update() const {
 		ECS::Systems::TransformSystem::transform(*m_active_registry);
 	}
 
-	void SystemManager::render() const {
+	void SystemManager::draw() const {
 		ECS::Systems::RenderSystem::render(*m_active_registry);
 	}
 

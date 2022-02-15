@@ -25,6 +25,10 @@ namespace QuestWindow {
 			glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 			glfwWindowHint(GLFW_SAMPLES, 4);
 
+			// Aligning buffer size with framebuffer class defaults
+			glfwWindowHint(GLFW_DEPTH_BITS, 24);
+			glfwWindowHint(GLFW_STENCIL_BITS, 8);
+
 			// GLFW OpenGL Debug Context
 			InitGLFWOpenGLDebugContext()
 
@@ -49,9 +53,16 @@ namespace QuestWindow {
 			// Set OGL Settings
 			glViewport(0, 0, m_width, m_height);
 			glClearColor(0.08f, 0.08f, 0.08f, 1.0f);
+
 			glEnable(GL_DEPTH_TEST);
 			glDepthFunc(GL_LEQUAL);
-			glEnable(GL_FRAMEBUFFER_SRGB);
+
+			glEnable(GL_STENCIL_TEST);
+
+			// Gamma Correction (Disabled due to post-process
+			// shader providing it)
+			// glEnable(GL_FRAMEBUFFER_SRGB);
+
 			glEnable(GL_MULTISAMPLE);
 			glEnable(GL_CULL_FACE);
 			glEnable(GL_TEXTURE_CUBE_MAP_SEAMLESS);
@@ -79,8 +90,8 @@ namespace QuestWindow {
 		}
 
 		void OGLWindow::clear_buffer() {
-			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-			// glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+			// glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 		}
 
 	} // namespace OpenGL

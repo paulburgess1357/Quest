@@ -21,12 +21,21 @@
     <ClInclude Include="PCH\pch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ImGUIWindow\ImGuiWindow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ImguiWindow\ExternalTypedefs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="QuestUI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="PCH\pch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGUIWindow\ImGuiWindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

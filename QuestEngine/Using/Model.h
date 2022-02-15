@@ -1,9 +1,9 @@
 #pragma once
-#include "QuestGLCore/Model/Model.h"
+#include "QuestGLCore/Model/ExternalTypedefs.h"
 
 namespace QuestEngine::Model {
-	using StandardModel = QuestGLCore::Model::Model<QuestGLCore::VertexData::VertexData>;
-	using StandardMesh = QuestGLCore::Model::Mesh<QuestGLCore::VertexData::VertexData>;
-	using IndexedModel = QuestGLCore::Model::Model<QuestGLCore::VertexData::IndexedVertexData>;
-	using IndexedMesh = QuestGLCore::Model::Mesh<QuestGLCore::VertexData::IndexedVertexData>;
+	using StandardModel = QuestGLCore::Model::StandardModel;
+	using StandardMesh = QuestGLCore::Model::StandardMesh;
+	using IndexedModel = QuestGLCore::Model::IndexedModel;
+	using IndexedMesh = QuestGLCore::Model::IndexedMesh;
 } // namespace QuestEngine::Model

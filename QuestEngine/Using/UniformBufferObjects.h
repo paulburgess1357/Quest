@@ -1,5 +1,5 @@
 #pragma once
-#include "QuestGLCore/UniformBufferObjects/UniformBufferObjects.h"
+#include "QuestGLCore/UniformBufferObjects/ExternalTypedefs.h"
 
 namespace QuestEngine::UniformBufferObjects {
 	using UniformBufferObject = QuestGLCore::UniformBufferObjects::UniformBufferObject;

@@ -300,9 +300,9 @@ namespace QuestSandbox::Tests {
 
 		const auto texture_api = m_engine_api.get_texture_loader_api();
 		texture_api.load_texture2D(texture_id_in_resource, base_texture_path + "abstract_texture.jpg", QuestEngine::Texture::TextureType::Standard, false, true);
-		texture_api.load_texture2D(texture_id_in_resource, base_texture_path + "abstract_texture.jpg", QuestEngine::Texture::TextureType::Standard, false, true);
-		texture_api.load_texture2D(texture_id_in_resource, base_texture_path + "abstract_texture.jpg", QuestEngine::Texture::TextureType::Standard, false, true);
-		texture_api.load_texture2D(texture_id_in_resource, base_texture_path + "abstract_texture.jpg", QuestEngine::Texture::TextureType::Standard, false, true);
+		//texture_api.load_texture2D(texture_id_in_resource, base_texture_path + "abstract_texture.jpg", QuestEngine::Texture::TextureType::Standard, false, true);
+		//texture_api.load_texture2D(texture_id_in_resource, base_texture_path + "abstract_texture.jpg", QuestEngine::Texture::TextureType::Standard, false, true);
+		//texture_api.load_texture2D(texture_id_in_resource, base_texture_path + "abstract_texture.jpg", QuestEngine::Texture::TextureType::Standard, false, true);
 		const auto texture_ptr = resource_api.get_texture_pointer(texture_id_in_resource);
 
 		auto& mesh_vector = model_pointer->get_mesh_vector();

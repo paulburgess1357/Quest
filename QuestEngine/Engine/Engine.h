@@ -1,12 +1,14 @@
 #pragma once
 #include "QuestEngine/Using/Window.h"
+#include "QuestEngine/Using/UserInterface.h"
 #include "QuestEngine/Resource/ResourceManager.h"
 #include "QuestEngine/ECS/Manage/RegistryManager.h"
 #include "QuestEngine/ECS/Manage/SystemManager.h"
 #include "QuestEngine/UniformBufferObjects/UniformBufferManager.h"
 #include "QuestEngine/Camera/Camera.h"
 #include "QuestEngine/Camera/ProjectionMatrix.h"
-
+#include "QuestEngine/Using/UserInterface.h"
+#include "QuestEngine/Using/Framebuffer.h"
 
 namespace QuestEngine::Engine {
 
@@ -25,7 +27,12 @@ namespace QuestEngine::Engine {
 
 		void qc_checks() const;
 		void gameloop();
+
+		void draw_scene() const;
+		void draw_user_interface() const;
+
 		[[nodiscard]] bool shutdown() const;
+		void handle_window_resize();
 
 		const Window::Window m_window;
 		Camera::Camera* m_active_camera;
@@ -35,6 +42,13 @@ namespace QuestEngine::Engine {
 		ECS::RegistryManager m_registry_manager;
 		ECS::SystemManager m_systems_manager;
 		UniformBufferObjects::UniformBufferManager m_ubo_manager;
+
+		UserInterface::UserInterface m_user_interface;
+		Framebuffer::FramebufferPostProcessStandard2D m_post_process_framebuffer;
+
+		// Tracking window resizes:
+		int m_window_width;
+		int m_window_height;
 
 	};
 

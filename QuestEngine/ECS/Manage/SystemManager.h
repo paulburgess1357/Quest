@@ -7,14 +7,10 @@ namespace QuestEngine::ECS {
 
 	public:
 		explicit SystemManager(entt::registry& active_registry);
-		
 		void set_active_registry(entt::registry& registry);
-		void run() const;
-
-	private:
 		void update() const;
-		void render() const;
-
+		void draw() const;
+	private:
 		entt::registry* m_active_registry;
 	};
 

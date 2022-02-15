@@ -1,5 +1,6 @@
 #pragma once
 #include "QuestUtility/Include/Logger.h"
+#include "QuestGLCore/Constants/Constants.h"
 #include <glad/glad.h>
 
 namespace QuestGLCore::Texture {
@@ -8,7 +9,7 @@ namespace QuestGLCore::Texture {
 	public:
 		static GLint  get_internal_format(const int color_channels) {
 			// Update the below if statement when gamma correction custom framebuffer is added
-			if (glIsEnabled(GL_FRAMEBUFFER_SRGB)) {
+			if (glIsEnabled(GL_FRAMEBUFFER_SRGB) || Constants::gamma_enabled) {
 				// Texture format if working in linear space
 				return get_format_gamma_correction_enabled(color_channels);
 			}

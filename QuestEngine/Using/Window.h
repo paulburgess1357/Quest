@@ -1,9 +1,9 @@
 #pragma once
-#include "QuestWindow/Include/Window.h"
+#include "QuestWindow/Include/ExternalTypedefs.h"
 
 namespace QuestEngine::Window {
-	using Window = QuestWindow::Template::TWindow<QuestWindow::OpenGL::OGLWindow, GLFWwindow>;
-	using KeyboardInput = QuestWindow::Input::InputManager<QuestWindow::Input::Keyboard>;
-	using Keyboard = QuestWindow::Input::Keyboard;
-	using MouseInput = QuestWindow::Input::MouseManager;
+	using Window = QuestWindow::Window::Window;
+	using KeyboardInput = QuestWindow::Window::KeyboardInput;
+	using Keyboard = QuestWindow::Window::Keyboard;
+	using MouseInput = QuestWindow::Window::MouseInput;
 } // namespace QuestEngine::Window

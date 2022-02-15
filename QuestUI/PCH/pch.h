@@ -9,3 +9,7 @@
 // add headers that you want to pre-compile here
 #include <Windows.h>
 #include "framework.h"
+
+// Imgui UI:
+#include "QuestUI/ImguiWindow/ImGuiWindow.h"
+#include "QuestUI/ImguiWindow/ExternalTypedefs.h"
