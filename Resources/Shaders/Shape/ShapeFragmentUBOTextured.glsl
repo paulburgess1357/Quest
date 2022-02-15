@@ -5,7 +5,7 @@ in vec2 frag_tex_coords;
 
 // texture samplers
 uniform sampler2D shape_texture_test;
-uniform sampler2D shape_texture_test2;
+// uniform sampler2D shape_texture_test2;
 
 void main(){
     scene_colors = texture(shape_texture_test, frag_tex_coords);
