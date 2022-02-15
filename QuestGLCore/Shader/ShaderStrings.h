@@ -27,6 +27,7 @@ namespace QuestGLCore::Shader {
 
 					"void main(){\n"
 					"    vec3 output_color = texture(post_process_texture, frag_tex_coords).rgb;\n"
+					"    // output_color = 1 - output_color;\n // inversion test"
 
 					"	 // Gamma Correction \n"
 					"    output_color = pow(output_color, vec3(1.0f/2.2f));\n"

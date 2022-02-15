@@ -5,4 +5,6 @@ namespace QuestEngine::Texture {
 	using Texture = QuestGLCore::Texture::Texture;
 	using StandardTextureCreator2D = QuestGLCore::Texture::StandardTextureCreator2D;
 	using HDRTextureCreator2D = QuestGLCore::Texture::HDRTextureCreator2D;
+
+	using BlankTextureEnum = QuestGLCore::Texture::BlankTextureEnum;
 } // namespace QuestEngine::Texture

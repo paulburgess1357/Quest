@@ -1,5 +1,9 @@
 #pragma once
 #include "QuestGLCore/OpenGLTypes/OpenGLFunctionResolution.h"
+#include "QuestGLCore/Texture/BlankTextureCreator.h"
+#include "QuestGLCore/Texture/BlankTextureEnum.h"
+#include "QuestUtility/Include/Logger.h"
+#include <memory>
 #include <glad/glad.h>
 
 namespace QuestGLCore::Texture {
@@ -35,14 +39,14 @@ namespace QuestGLCore::Texture {
 		virtual void load_texture(const int width, const int height) const = 0;
 	};
 
-	// ============================== Framebuffer ==============================
+	// =========================== Blank Texture Types ===========================
 
-	// Standard Framebuffer
+	// ========== Standard ========== 
 	template<GLenum TextureType>
-	class StandardBlankFramebufferTextureCreator final : public BlankTextureCreator<TextureType> {
+	class RGBALinearBLankTextureCreator final : public BlankTextureCreator<TextureType> {
 
 	public:
-		StandardBlankFramebufferTextureCreator()
+		RGBALinearBLankTextureCreator()
 			:BlankTextureCreator<TextureType>() {
 		}
 		void set_parameters() const override {
@@ -55,13 +59,31 @@ namespace QuestGLCore::Texture {
 			glTextureFunction(TextureType, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
 		}
 	};
-
-	// HD16F Framebuffer
+	
 	template<GLenum TextureType>
-	class HD16FBlankFramebufferTextureCreator final : public BlankTextureCreator<TextureType> {
+	class RGBANearestBLankTextureCreator final : public BlankTextureCreator<TextureType> {
 
 	public:
-		HD16FBlankFramebufferTextureCreator()
+		RGBANearestBLankTextureCreator()
+			:BlankTextureCreator<TextureType>() {
+		}
+		void set_parameters() const override {
+			glTexParameteri(TextureType, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+			glTexParameteri(TextureType, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		}
+		void load_texture(const int width, const int height) const override {
+			// Typically: glTexImage2D when TextureType = GL_TEXTURE_2D
+			const auto glTextureFunction = OGLResolution::OglTextureFunctionResolution::get_function<TextureType>();
+			glTextureFunction(TextureType, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
+		}
+	};
+
+	// ============ HD16F ============
+	template<GLenum TextureType>
+	class RGBA16FLinearBlankTextureCreator final : public BlankTextureCreator<TextureType> {
+
+	public:
+		RGBA16FLinearBlankTextureCreator()
 			:BlankTextureCreator<TextureType>() {
 		}
 		void set_parameters() const override {
@@ -75,12 +97,30 @@ namespace QuestGLCore::Texture {
 		}
 	};
 
-	// HD32F Framebuffer
 	template<GLenum TextureType>
-	class HD32FBlankFramebufferTextureCreator final : public BlankTextureCreator<TextureType> {
+	class RGBA16FNearestBlankTextureCreator final : public BlankTextureCreator<TextureType> {
 
 	public:
-		HD32FBlankFramebufferTextureCreator()
+		RGBA16FNearestBlankTextureCreator()
+			:BlankTextureCreator<TextureType>() {
+		}
+		void set_parameters() const override {
+			glTexParameteri(TextureType, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+			glTexParameteri(TextureType, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		}
+		void load_texture(const int width, const int height) const override {
+			// Typically: glTexImage2D when TextureType = GL_TEXTURE_2D
+			const auto glTextureFunction = OGLResolution::OglTextureFunctionResolution::get_function<TextureType>();
+			glTextureFunction(TextureType, 0, GL_RGBA16F, width, height, 0, GL_RGBA, GL_FLOAT, nullptr);
+		}
+	};
+
+	// ============ HD32F ============
+	template<GLenum TextureType>
+	class RGBA32FLinearBlankTextureCreator final : public BlankTextureCreator<TextureType> {
+
+	public:
+		RGBA32FLinearBlankTextureCreator()
 			:BlankTextureCreator<TextureType>(){
 		}
 		void set_parameters() const override {
@@ -91,6 +131,64 @@ namespace QuestGLCore::Texture {
 			// Typically: glTexImage2D when TextureType = GL_TEXTURE_2D
 			const auto glTextureFunction = OGLResolution::OglTextureFunctionResolution::get_function<TextureType>();
 			glTextureFunction(TextureType, 0, GL_RGBA32F, width, height, 0, GL_RGBA, GL_FLOAT, nullptr);
+		}
+	};
+
+	template<GLenum TextureType>
+	class RGBA32FNearestBlankTextureCreator final : public BlankTextureCreator<TextureType> {
+
+	public:
+		RGBA32FNearestBlankTextureCreator()
+			:BlankTextureCreator<TextureType>() {
+		}
+		void set_parameters() const override {
+			glTexParameteri(TextureType, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+			glTexParameteri(TextureType, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		}
+		void load_texture(const int width, const int height) const override {
+			// Typically: glTexImage2D when TextureType = GL_TEXTURE_2D
+			const auto glTextureFunction = OGLResolution::OglTextureFunctionResolution::get_function<TextureType>();
+			glTextureFunction(TextureType, 0, GL_RGBA32F, width, height, 0, GL_RGBA, GL_FLOAT, nullptr);
+		}
+	};
+
+	template<GLenum TextureType>
+	class BlankTextureFactory {
+	public:
+		static std::unique_ptr<BlankTextureCreator<TextureType>> create_blank_texture_creator(const BlankTextureEnum blank_texture_type) {
+
+			std::unique_ptr<BlankTextureCreator<TextureType>> creator{ nullptr };
+			switch (blank_texture_type) {
+			case BlankTextureEnum::RGBA_LINEAR: {
+				creator = std::make_unique<RGBALinearBLankTextureCreator<TextureType>>();
+				break;
+			}
+			case BlankTextureEnum::RGBA_NEAREST: {
+				creator = std::make_unique<RGBANearestBLankTextureCreator<TextureType>>();
+				break;
+			}
+			case BlankTextureEnum::RGBA16F_LINEAR: {
+				creator = std::make_unique<RGBA16FLinearBlankTextureCreator<TextureType>>();
+				break;
+			}
+			case BlankTextureEnum::RGBA16F_NEAREST: {
+				creator = std::make_unique<RGBA16FNearestBlankTextureCreator<TextureType>>();
+				break;
+			}
+			case BlankTextureEnum::RGBA32F_LINEAR: {
+				creator = std::make_unique<RGBA32FLinearBlankTextureCreator<TextureType>>();
+				break;
+			}
+			case BlankTextureEnum::RGBA32F_NEAREST: {
+				creator = std::make_unique<RGBA32FNearestBlankTextureCreator<TextureType>>();
+				break;
+			}
+			default:
+				QUEST_FATAL("Invalid Blank Texture Type! There is not option in the static function 'get_texture_creator' for creating this texture creator type! Please update the switch statment!")
+				break;
+			}
+
+			return creator;
 		}
 	};
 
