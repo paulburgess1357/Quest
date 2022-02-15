@@ -26,9 +26,12 @@ namespace QuestGLCore::Shader {
 					"uniform sampler2D post_process_texture;\n"
 
 					"void main(){\n"
-					"    vec3 col = texture(post_process_texture, frag_tex_coords).rgb;\n"
-					"	 col = vec3(1.0 - texture(post_process_texture, frag_tex_coords));\n"
-					"    frag_color = vec4(col, 1.0);\n"
+					"    vec3 output_color = texture(post_process_texture, frag_tex_coords).rgb;\n"
+
+					"	 // Gamma Correction \n"
+					"    output_color = pow(output_color, vec3(1.0f/2.2f));\n"
+
+					"    frag_color = vec4(output_color, 1.0);\n"
 					"}";
 		}
 	};

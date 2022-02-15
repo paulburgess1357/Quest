@@ -65,7 +65,7 @@ namespace QuestWindow::Interface {
 		glfwSetInputMode(m_window, GLFW_STICKY_MOUSE_BUTTONS, true);
 
 		// VSync
-		glfwSwapInterval(true);
+		glfwSwapInterval(false);
 
 		// Base Callbacks
 		glfwSetKeyCallback(m_window, Input::InputManager<Input::Keyboard>::window_callback);

@@ -59,8 +59,10 @@ namespace QuestWindow {
 
 			glEnable(GL_STENCIL_TEST);
 
+			// Gamma Correction (Disabled due to post-process
+			// shader providing it)
+			// glEnable(GL_FRAMEBUFFER_SRGB);
 
-			glEnable(GL_FRAMEBUFFER_SRGB);
 			glEnable(GL_MULTISAMPLE);
 			glEnable(GL_CULL_FACE);
 			glEnable(GL_TEXTURE_CUBE_MAP_SEAMLESS);

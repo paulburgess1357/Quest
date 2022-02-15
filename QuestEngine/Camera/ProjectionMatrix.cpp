@@ -9,27 +9,19 @@ namespace QuestEngine::Camera {
 	float ProjectionMatrix::DEFAULT_ZNEAR { 0.1f };
 	float ProjectionMatrix::DEFAULT_ZFAR { 2000.0f };
 
-	ProjectionMatrix::ProjectionMatrix(const Window::Window& window)
-		:m_window{ window },
-		m_window_width{ window.get_width() },
-		m_window_height{ window.get_height() },
-		m_projection_matrix{ 1.0f }{
-		set_projection_matrix();
+	ProjectionMatrix::ProjectionMatrix(const int width, const int height)
+		:m_projection_matrix{ 1.0f }{
+		update_projection_matrix(width, height);
 	}
 
-	void ProjectionMatrix::set_projection_matrix() {
+	void ProjectionMatrix::update_projection_matrix(const int width, const int height) {
 		m_projection_matrix = glm::perspective(glm::radians(DEFAULT_FOV),
-			static_cast<float>(m_window_width) / static_cast<float>(m_window_height),
+			static_cast<float>(width) / static_cast<float>(height),
 			DEFAULT_ZNEAR, DEFAULT_ZFAR);
-			QUEST_TRACE("Setting projection matrix based on window dimensions: {}x{}", m_window_width, m_window_height)
+			QUEST_TRACE("Setting projection matrix based on window dimensions: {}x{}", width, height)
 	}
 
-	glm::mat4 ProjectionMatrix::get_projection_matrix() {
-		if (m_window.get_width() != m_window_width || m_window.get_height() != m_window_height) {
-			m_window_width = m_window.get_width();
-			m_window_height = m_window.get_height();
-			set_projection_matrix();
-		}
+	glm::mat4 ProjectionMatrix::get_projection_matrix() const {
 		return m_projection_matrix;
 	}
 

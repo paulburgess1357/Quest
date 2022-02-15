@@ -50,6 +50,8 @@ namespace QuestUI::OpenGL {
 		ImGui::NewFrame();
 
 		// Allow docking within main window:
+		// If not rendering to a texture and specifying a proper viewport area,
+		// the area will look dark (due to imgui transparent grey color over it)
 		ImGui::DockSpaceOverViewport(ImGui::GetMainViewport());
 	}
 
@@ -65,7 +67,6 @@ namespace QuestUI::OpenGL {
 
 			// Switch back to the main OpenGL context
 			glfwMakeContextCurrent(m_window);
-
 		}
 
 	}

@@ -28,11 +28,11 @@ namespace QuestEngine::Engine {
 		void qc_checks() const;
 		void gameloop();
 
-		void clear_buffers() const;
 		void draw_scene() const;
 		void draw_user_interface() const;
 
 		[[nodiscard]] bool shutdown() const;
+		void handle_window_resize();
 
 		const Window::Window m_window;
 		Camera::Camera* m_active_camera;
@@ -45,6 +45,10 @@ namespace QuestEngine::Engine {
 
 		UserInterface::UserInterface m_user_interface;
 		Framebuffer::FramebufferPostProcessStandard2D m_post_process_framebuffer;
+
+		// Tracking window resizes:
+		int m_window_width;
+		int m_window_height;
 
 	};
 

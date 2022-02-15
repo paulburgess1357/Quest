@@ -55,6 +55,10 @@ namespace QuestGLCore::Framebuffer {
 			unbind();
 		}
 
+		static void clear_buffer_no_bind() {
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+		}
+
 		void create_color_attachments(const int width, const int height, const int quantity) {
 			for (int i = 0; i < quantity; i++) {
 				create_color_attachment(width, height);
@@ -62,6 +66,7 @@ namespace QuestGLCore::Framebuffer {
 		}
 
 		void rescale_attachments(const int width, const int height) const {
+			QUEST_TRACE("Rescaling Framebuffer Attachments")
 			rescale_color_attachments(width, height);
 			rescale_renderbuffer_attachment(width, height);
 			glViewport(0, 0, width, height);
@@ -134,7 +139,7 @@ namespace QuestGLCore::Framebuffer {
 
 			for (const auto& color_attachment : m_color_attachment_handles) {
 				// Texture rescale handles its own bind()
-				m_blank_texture_creator.rescale_texture(color_attachment.get_handle(), width, height);
+				m_blank_texture_creator.rescale_texture(color_attachment, width, height);
 				// Get texture creation function and use to update width and height
 				// Typically glFramebufferTexture2D & GL_TEXTURE_2D
 				const auto glTextureFunction = OGLResolution::OglFramebufferFunctionResolution::get_function<TextureType>();
@@ -200,7 +205,7 @@ namespace QuestGLCore::Framebuffer {
 						error = "Unknown Framebuffer Error!";
 						break;
 					}
-				QUEST_FATAL("Framebuffer completeness check failed! Error: {}", error);
+				QUEST_FATAL("Framebuffer completeness check failed! Error: {}", error)
 			}
 			unbind();
 		}
