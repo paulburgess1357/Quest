@@ -6,4 +6,6 @@
 namespace QuestGLCore::Framebuffer {
 	using Framebuffer2D = Framebuffer<GL_TEXTURE_2D>;
 	using FramebufferPostProcess2D = FramebufferPostProcess<GL_TEXTURE_2D>;
+	using FramebufferPostProcessStandard2D = FramebufferPostProcessStandard<GL_TEXTURE_2D>;
+	using FramebufferGBuffer2D = FramebufferGBuffer<GL_TEXTURE_2D>;
 } // namespace QuestGLCore::Texture#pragma once

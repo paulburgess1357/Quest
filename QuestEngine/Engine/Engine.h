@@ -44,7 +44,11 @@ namespace QuestEngine::Engine {
 		UniformBufferObjects::UniformBufferManager m_ubo_manager;
 
 		UserInterface::UserInterface m_user_interface;
-		Framebuffer::FramebufferPostProcess2D m_post_process_framebuffer;
+
+		// RGBA16F_NEAREST, RGBA16F_NEAREST, RGBA_NEAREST
+		// Position,        Normals,         Color + Specular
+		Framebuffer::FramebufferGBuffer2D m_g_buffer;
+		Framebuffer::FramebufferPostProcessStandard2D m_post_process_framebuffer;
 
 		// Tracking window resizes:
 		int m_window_width;

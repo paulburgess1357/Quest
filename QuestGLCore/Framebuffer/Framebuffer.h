@@ -94,6 +94,12 @@ namespace QuestGLCore::Framebuffer {
 			}
 		}
 
+		void bind_all_color_attachments() const {
+			for (size_t i = 0; i < m_color_attachment_handles.size(); i++) {
+				bind_color_attachment(i, i);
+			}
+		}
+
 		void bind_color_attachment(const size_t attachment_num, const GLuint tex_unit) const {
 			// Bind color attachment (e.g. for working with the texture data in a post process shader)
 			// Note that this does not require the framebuffer to be bound, as we are simply extracting
@@ -101,6 +107,15 @@ namespace QuestGLCore::Framebuffer {
 			// previously bound prior to writing to this texture.
 			glActiveTexture(GL_TEXTURE0 + tex_unit);
 			m_color_attachment_handles.at(attachment_num).bind();
+		}
+
+		[[nodiscard]] size_t get_color_attachment_num() const {
+			return m_color_attachment_handles.size();
+		}
+
+	protected:
+		void attachment_num_check(const int quantity, const std::string& message_if_false) const {
+			QUEST_ASSERT(this->get_color_attachment_num() == quantity, message_if_false)
 		}
 
 	private:
