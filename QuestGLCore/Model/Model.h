@@ -18,10 +18,7 @@ namespace QuestGLCore::Model {
 		void draw() const {
 			m_shader_program->bind();
 			m_shader_program->set_uniform(QuestGLCore::Constants::model_matrix, m_model_matrix);
-
-			// Set normal matrix =================
-			// m_shader_program->set_uniform(QuestGLCore::Constants::normal_matrix, m_normal_matrix);
-			// ===================================
+			m_shader_program->set_uniform(QuestGLCore::Constants::normal_matrix, m_normal_matrix);
 
 			for(const auto& mesh : m_meshes) {
 				mesh.draw();
@@ -40,6 +37,14 @@ namespace QuestGLCore::Model {
 
 		void set_model_matrix(const glm::mat4& model_matrix) {
 			m_model_matrix = model_matrix;
+		}
+
+		[[nodiscard]] glm::mat4 get_normal_matrix() const {
+			return m_normal_matrix;
+		}
+
+		void set_normal_matrix(const glm::mat4& normal_matrix) {
+			m_normal_matrix = normal_matrix;
 		}
 
 		[[nodiscard]] std::vector<Mesh<VertexDataType>>& get_mesh_vector() {

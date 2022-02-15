@@ -42,11 +42,11 @@ namespace QuestEngine::Engine {
 	void Engine::gameloop() {
 		while (!shutdown()){
 			m_ubo_manager.set_ubos(*m_active_camera, m_projection_matrix);
-			m_systems_manager.update();
+			m_systems_manager.update(*m_active_camera);
 
 			handle_window_resize();
 			draw_scene();
-			// draw_user_interface();
+			draw_user_interface();
 			Window::Window::poll_events();
 
 			m_window.swap_buffer();

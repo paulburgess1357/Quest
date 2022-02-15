@@ -58,7 +58,7 @@ namespace QuestGLCore::Shader {
 			m_uniform_locations[uniform_name] = glGetUniformLocation(m_handle.get_handle(), uniform_name.c_str());
 			if (m_uniform_locations[uniform_name] == -1) {
 				QUEST_ERROR("Invalid uniform variable name: '" + uniform_name + "'. This variable has not been found in the current shader (GLSL Code): " + m_program_name)
-				throw UniformNotFoundException();
+				// throw UniformNotFoundException();
 			}
 		}
 		return m_uniform_locations[uniform_name];
@@ -71,7 +71,7 @@ namespace QuestGLCore::Shader {
 		// not exist in the map, it means we have not initialized the GLSL uniform
 
 		// This check is meant to be performed prior to the gameloop
-		const std::unordered_set ignore_strings = {QuestGLCore::Constants::model_matrix, QuestGLCore::Constants::normal_matrix, QuestGLCore::Constants::view_projection_matrix};
+		const std::unordered_set ignore_strings = {QuestGLCore::Constants::model_matrix, QuestGLCore::Constants::normal_matrix, QuestGLCore::Constants::view_matrix, Constants::projection_matrix};
 
 		GLint count, size;
 		GLenum type;
