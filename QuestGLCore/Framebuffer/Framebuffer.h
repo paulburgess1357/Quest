@@ -93,7 +93,7 @@ namespace QuestGLCore::Framebuffer {
 			// Sets all currently existing color attachments to be used in the fragment shader.
 			// If you add a color attachment after this call, you will need to call this function
 			// again.
-			const unsigned int attachment_num = static_cast<unsigned int>(m_color_attachment_handles.size());
+			const auto attachment_num = static_cast<unsigned int>(m_color_attachment_handles.size());
 			if(attachment_num > 0) {
 				std::vector<GLenum> all_buffers;
 				for (unsigned int i = 0; i < attachment_num; i++) {

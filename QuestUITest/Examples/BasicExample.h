@@ -3,7 +3,7 @@
 #include "QuestUI/ImguiWindow/ImGuiWindow.h"
 namespace QuestUITest::Examples {
 
-	void basic_example() {
+	inline void basic_example() {
 		const QuestWindow::OpenGL::OGLWindow window{ 1920, 1080 };
 		QuestUI::OpenGL::ImguiWindow imgui_window{window.get_window()};
 
@@ -17,7 +17,7 @@ namespace QuestUITest::Examples {
 			QuestUI::OpenGL::ImguiWindow::show_demo();
 			// =======================================
 
-			QuestUI::OpenGL::ImguiWindow::end_render();
+			imgui_window.end_render();
 
 			window.poll_events();
 			window.swap_buffer();

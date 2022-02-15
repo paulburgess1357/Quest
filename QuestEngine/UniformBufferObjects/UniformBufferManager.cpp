@@ -11,7 +11,7 @@ namespace QuestEngine::UniformBufferObjects {
 		set_matrices(camera, projection_matrix);
 	}
 
-	void UniformBufferManager::set_matrices(Camera::Camera& camera, Camera::ProjectionMatrix& projection_matrix) const {
+	void UniformBufferManager::set_matrices(Camera::Camera& camera, const Camera::ProjectionMatrix& projection_matrix) const {
 		m_matrices->send_data_to_buffer(projection_matrix.get_projection_matrix() * camera.get_view_matrix());
 	}
 

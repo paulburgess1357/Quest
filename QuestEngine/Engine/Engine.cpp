@@ -5,6 +5,11 @@
 
 namespace QuestEngine::Engine {
 
+	// Possible to flag boolean in engine when window resizes in a callback?
+	// Alternatively, is it possible to pass a pointer to the framebuffer and
+	// projection matrix into the window? If the window is resized, those get
+	// updated on the spot...
+
 	Engine::Engine(const int width, const int height)
 		:m_window{ width, height },
 		m_active_camera{ nullptr },

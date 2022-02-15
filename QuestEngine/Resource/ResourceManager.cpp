@@ -46,7 +46,7 @@ namespace QuestEngine::Resource {
 	}
 
 	void ResourceManager::load_post_process_shader() {
-		std::unordered_map<Shader::ShaderEnum, std::string> shader_map{
+		const std::unordered_map<Shader::ShaderEnum, std::string> shader_map{
 			{ Shader::ShaderEnum::VERTEX, Shader::ShaderStrings::get_vertex_post_process() },
 			{ Shader::ShaderEnum::FRAGMENT, Shader::ShaderStrings::get_fragment_post_process() }
 		};
