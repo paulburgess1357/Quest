@@ -46,6 +46,37 @@ namespace QuestGLCore::Framebuffer {
 			m_framebuffer_handle.unbind();
 		}
 
+		void bind_read() const {
+			const auto handle = m_framebuffer_handle.get_handle();
+			const auto trait = m_framebuffer_handle.get_trait();
+			trait.bind_read(handle);
+		}
+
+		void unbind_read() const {
+			const auto trait = m_framebuffer_handle.get_trait();
+			trait.unbind_read();
+		}
+
+		void bind_draw() const {
+			const auto handle = m_framebuffer_handle.get_handle();
+			const auto trait = m_framebuffer_handle.get_trait();
+			trait.bind_draw(handle);
+		}
+
+		void unbind_draw() const {
+			const auto trait = m_framebuffer_handle.get_trait();
+			trait.unbind_draw();
+		}
+
+		void blit_depth_to_default_fb(const int src_width, const int src_height, const int dest_width, const int dest_height) const {
+			// Read depth values from g-buffer
+			bind_read();
+
+			// Write depth values to window framebuffer
+			unbind_draw();
+			glBlitFramebuffer(0, 0, src_width, src_height, 0, 0, dest_width, dest_height, GL_DEPTH_BUFFER_BIT, GL_NEAREST);
+		}
+
 		void clear_buffer() const {
 			bind();
 				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);

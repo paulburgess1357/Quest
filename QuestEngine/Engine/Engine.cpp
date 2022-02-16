@@ -49,7 +49,7 @@ namespace QuestEngine::Engine {
 
 			handle_window_resize();
 			draw_scene();
-			// draw_user_interface();
+			draw_user_interface();
 			Window::Window::poll_events();
 
 			m_window.swap_buffer();
@@ -67,47 +67,37 @@ namespace QuestEngine::Engine {
 	}
 
 	void Engine::draw_scene() const {
-		// G-buffer ===========================================
-		// Draw scene to g-buffer
-		// TODO This test is ignoring the gamma correction used for the post-process shader
 
-		// Store scene to geometry buffer; Separate out positions, normals, textures, etc.
+		// ====== Deferred drawing pass ======
+		// - Store scene in geometry buffer (positions, normals, textures, etc.)
 		m_g_buffer.bind();
 		Framebuffer::Framebuffer2D::clear_buffer_no_bind();
-		m_systems_manager.draw();
+		m_systems_manager.draw_deferred();
 
-		// Unbind G-buffer and take stored texture data
-		// in G-buffer framebuffer and draw to window
-		// using g-buffer shader
+		// ======= Lighting drawing pass =======
+		// - Take g-buffer stored data and draw lighting to window framebuffer
 		m_g_buffer.unbind();
+
 		m_window.clear_buffer();
 		m_g_buffer.draw();
 
-		// TODO: Not sure if i pass this to another framebuffer, if it needs the same precision... I think it probably does.
-		// TODO 2: might need higher precision for gbuffer color texture if doing hdr later...
+		// Transfer g-buffer depth values to default fb (necessary for depth w/
+		// forward rendering pass):
+		m_g_buffer.blit_depth_to_default_fb(m_window_width, m_window_height, m_window_width, m_window_height);
+
+		// Fully unbind (prepares subsequent read/writes to default fb)
+		m_g_buffer.unbind();
+
+		// ======== Forward drawing pass =======
+		// Read/Write forward pass to window framebuffer
+		m_systems_manager.draw_forward();
 		
 
-		
-		
-		
-		// =====================================================
+		// ====== Post process drawing pass =====
+		// TODO Color will look off until this is applied! (e.g. gamma correction is NOT being added currently!!)
+		// For post process to work, I have to 'inject' it above (so i blit to post process fb instead...)
+		// All drawing would go to post-proecss fb (quad being drawn, blit, forward, etc.)  After that I would draw to main window...
 
-
-
-
-		// Post Process ===========================================
-		// Draw scene to post-process framebuffer
-		// m_post_process_framebuffer.bind();
-		// Framebuffer::Framebuffer2D::clear_buffer_no_bind();
-		// m_systems_manager.draw();
-
-		// Unbind framebuffer and take stored texture data
-		// in post-process framebuffer and draw to window
-		// using post-process shader
-		// m_post_process_framebuffer.unbind();
-		// m_window.clear_buffer();
-		// m_post_process_framebuffer.draw();
-		// ========================================================
 	}
 
 	void Engine::draw_user_interface() const {

@@ -121,7 +121,7 @@ namespace QuestSandbox::Tests {
 		QuestEngine::Model::StandardModel* model_pointer = resource_api.get_model_pointer(model_entity_id);
 
 		const QuestEngine::API::RegistryAPI registry_api = m_engine_api.get_registry_api();
-		registry_api.load_model_into_world(model_entity_id, model_pointer, { 0.0f, 3.0f, 0.0f });
+		registry_api.load_model_into_world(model_entity_id, model_pointer, { 0.0f, 3.0f, 0.0f }, true);
  
     }
     void ShapeTests::load_indexed_shape() const {
@@ -205,7 +205,7 @@ namespace QuestSandbox::Tests {
 		QuestEngine::Model::IndexedModel* model_pointer = resource_api.get_indexed_model_pointer(model_entity_id);
 
 		const QuestEngine::API::RegistryAPI registry_api = m_engine_api.get_registry_api();
-		registry_api.load_model_into_world(model_entity_id, model_pointer, { 0.0f, 1.0f, 0.0f });
+		registry_api.load_model_into_world(model_entity_id, model_pointer, { 0.0f, 1.0f, 0.0f }, true);
     }
 
 	void ShapeTests::load_textured_indexed_shape() const {
@@ -314,7 +314,7 @@ namespace QuestSandbox::Tests {
 
 		// Take loaded model and create ECS entity
 		const QuestEngine::API::RegistryAPI registry_api = m_engine_api.get_registry_api();
-		registry_api.load_model_into_world(model_entity_id, model_pointer, { 0.0f, 1.0f, 0.0f });
+		registry_api.load_model_into_world(model_entity_id, model_pointer, { 0.0f, 1.0f, 0.0f }, true);
 	}
 	void ShapeTests::load_normals_texture_indexed_shape_blinn_phong() const {
 
@@ -430,7 +430,7 @@ namespace QuestSandbox::Tests {
 
 		// Take loaded model and create ECS entity
 		const QuestEngine::API::RegistryAPI registry_api = m_engine_api.get_registry_api();
-		registry_api.load_model_into_world(model_entity_id, model_pointer, { 0.0f, 0.0f, 0.0f });
+		registry_api.load_model_into_world(model_entity_id, model_pointer, { 0.0f, 0.0f, 0.0f }, true);
 
 		// Set shader uniforms for lighting test
 		// Light is directional or positional (0.0f in 4th position indicates directional light)
@@ -446,7 +446,7 @@ namespace QuestSandbox::Tests {
 
 	void ShapeTests::g_buffer_lighting_test() const {
 		const QuestEngine::API::OpenGL::ShaderLoaderAPI shader_loader = m_engine_api.get_shader_loader_api();
-		const std::string shader_id{ "Textured Indexed Shape Using G-Buffer" };
+		std::string shader_id{ "Textured Indexed Shape Using G-Buffer" };
 		shader_loader.load_shader(shader_id, m_base_gbuffer_shader_path + "GBufferShapeVertexGeometryPass.glsl", m_base_gbuffer_shader_path + "GBufferShapeFragmentGeometryPass.glsl", true, true);
 
 		const std::vector<float> vertices = {
@@ -515,7 +515,7 @@ namespace QuestSandbox::Tests {
 		};
 
 		// Load created model into resource
-		const std::string model_entity_id{ "Test Indexed Model" };
+		std::string model_entity_id{ "Test Indexed Model" };
 		const QuestEngine::API::OpenGL::ModelLoaderAPI model_loader = m_engine_api.get_model_loader_api();
 		model_loader.load_model(model_entity_id, shader_id, { vertices }, { indices }, { 3, 3, 2 });
 
@@ -532,12 +532,12 @@ namespace QuestSandbox::Tests {
 
 		// Load texture into resource
 		const std::string base_texture_path{ "../Resources/Textures/" };
-		const std::string texture_id_in_resource{ "wood_texture" };
+		std::string texture_id_in_resource{ "wood_texture" };
 		const std::string texture_name_in_shader{ "all_textures.diffuse" };
 
 		const auto texture_api = m_engine_api.get_texture_loader_api();
 		texture_api.load_texture2D(texture_id_in_resource, base_texture_path + "wood.png", QuestEngine::Texture::TextureType::Standard, false, true);
-		const auto texture_ptr = resource_api.get_texture_pointer(texture_id_in_resource);
+		auto texture_ptr = resource_api.get_texture_pointer(texture_id_in_resource);
 
 		auto& mesh_vector = model_pointer->get_mesh_vector();
 		QuestGLCore::Shader::ShaderProgram* model_shader_program = model_pointer->get_shader_program();
@@ -552,7 +552,7 @@ namespace QuestSandbox::Tests {
 		const std::string specular_texture_id_in_shader{ "all_textures.specular" };
 
 		texture_api.load_texture2D(specular_texture_id_in_resource, base_texture_path + "container_specular_map.png", QuestEngine::Texture::TextureType::Standard, false, false);
-		const auto specular_texture_ptr = resource_api.get_texture_pointer(specular_texture_id_in_resource);
+		auto specular_texture_ptr = resource_api.get_texture_pointer(specular_texture_id_in_resource);
 		// For each mesh, register the texture
 		for (auto& model_mesh : mesh_vector) {
 			model_mesh.register_texture(specular_texture_id_in_shader, model_shader_program, specular_texture_ptr);
@@ -560,7 +560,7 @@ namespace QuestSandbox::Tests {
 
 		// Take loaded model and create ECS entity
 		const QuestEngine::API::RegistryAPI registry_api = m_engine_api.get_registry_api();
-		registry_api.load_model_into_world(model_entity_id, model_pointer, { 0.0f, 0.0f, 0.0f });
+		registry_api.load_model_into_world(model_entity_id, model_pointer, { 0.0f, 0.0f, 0.0f }, true);
 
 		// Set shader uniforms for lighting test
 		// Light is directional or positional (0.0f in 4th position indicates directional light)
@@ -591,6 +591,41 @@ namespace QuestSandbox::Tests {
 			//g_buffer_light_pass_shader_program.set_uniform("all_lights[" + std::to_string(i) + "].color", glm::vec3(rColor, gColor, bColor));
 		}
 		g_buffer_light_pass_shader_program.unbind();
+
+
+		// Testing forward pass
+		// ===================================== Forward Pass Test ===========================================
+		// If forward pass works, the rainbow cube should be behind the wooden cube
+		// Note: No model matrix is being used for the rainbow cube.  For this example no lighting was being done in the forward pass, hence, its
+		//       not needed (and the glsl code optimizes it away)
+
+		// Load forward rendering shader (standard shader)
+		shader_id =  "Textured Indexed Shape Forward Render";
+		shader_loader.load_shader(shader_id, m_base_gbuffer_shader_path + "GBufferForwardPassVertex.glsl", m_base_gbuffer_shader_path + "GBufferForwardPassFragment.glsl", true, true);
+
+		// Load created model into resource
+		model_entity_id =  "Rainbow Indexed Model";
+		model_loader.load_model(model_entity_id, shader_id, { vertices }, { indices }, { 3, 3, 2 });
+
+		// Get pointer to loaded model
+		model_pointer = resource_api.get_indexed_model_pointer(model_entity_id);
+
+		// Load texture into resource
+		texture_id_in_resource = "rainbow_texture";
+		texture_api.load_texture2D(texture_id_in_resource, base_texture_path + "rainbow.jpg", QuestEngine::Texture::TextureType::Standard, false, true);
+		texture_ptr = resource_api.get_texture_pointer(texture_id_in_resource);
+
+		auto& mesh_vector2 = model_pointer->get_mesh_vector();
+		model_shader_program = model_pointer->get_shader_program();
+
+		// For each mesh, register the texture
+		for (auto& model_mesh : mesh_vector2) {
+			model_mesh.register_texture("rainbow_texture", model_shader_program, texture_ptr);
+		}
+
+		// Take loaded model and create ECS entity
+		registry_api.load_model_into_world(model_entity_id, model_pointer, { 0.0f, 0.5f, 3.0f }, false); // true = deferred pass, false = forward pass
+
 	}
 
 

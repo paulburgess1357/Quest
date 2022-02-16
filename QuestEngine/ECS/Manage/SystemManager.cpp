@@ -17,8 +17,13 @@ namespace QuestEngine::ECS {
 		ECS::Systems::TransformSystem::transform(*m_active_registry, camera);
 	}
 
-	void SystemManager::draw() const {
-		ECS::Systems::RenderSystem::render(*m_active_registry);
+	void SystemManager::draw_deferred() const {
+		ECS::Systems::RenderSystem::render_deferred(*m_active_registry);
 	}
+
+	void SystemManager::draw_forward() const {
+		ECS::Systems::RenderSystem::render_forward(*m_active_registry);
+	}
+
 
 } // namespace QuestEngine::ECS

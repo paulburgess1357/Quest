@@ -79,7 +79,7 @@ void main(){
     }
     
     // Gamma Correction
-    frag_color = vec4(pow(lighting, vec3(1.0f/2.2f)), 1.0);    
-    // frag_color = vec4(lighting, 1.0);
+    // frag_color = vec4(pow(lighting, vec3(1.0f/2.2f)), 1.0);    
+    frag_color = vec4(lighting, 1.0);
 
 } 
