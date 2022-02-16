@@ -68,6 +68,16 @@ namespace QuestGLCore::Framebuffer {
 			trait.unbind_draw();
 		}
 
+		void blit_depth_to_existing_fb(const Framebuffer<TextureType>& framebuffer, const int src_width, const int src_height, const int dest_width, const int dest_height) const {
+			// Read depth values this fb g-buffer
+			bind_read();
+
+			// Write to existing framebuffer
+			framebuffer.bind_draw();
+
+			glBlitFramebuffer(0, 0, src_width, src_height, 0, 0, dest_width, dest_height, GL_DEPTH_BUFFER_BIT, GL_NEAREST);
+		}
+
 		void blit_depth_to_default_fb(const int src_width, const int src_height, const int dest_width, const int dest_height) const {
 			// Read depth values from g-buffer
 			bind_read();

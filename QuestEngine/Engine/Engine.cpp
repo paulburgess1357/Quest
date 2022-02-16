@@ -74,30 +74,25 @@ namespace QuestEngine::Engine {
 		Framebuffer::Framebuffer2D::clear_buffer_no_bind();
 		m_systems_manager.draw_deferred();
 
-		// ======= Lighting drawing pass =======
-		// - Take g-buffer stored data and draw lighting to window framebuffer
-		m_g_buffer.unbind();
-
-		m_window.clear_buffer();
+		// ======= Lighting drawing pass ======
+		// - Take g-buffer stored data and draw lighting to post-process framebuffer
+		m_post_process_framebuffer.bind();
+		Framebuffer::Framebuffer2D::clear_buffer_no_bind();
 		m_g_buffer.draw();
 
-		// Transfer g-buffer depth values to default fb (necessary for depth w/
-		// forward rendering pass):
-		m_g_buffer.blit_depth_to_default_fb(m_window_width, m_window_height, m_window_width, m_window_height);
-
-		// Fully unbind (prepares subsequent read/writes to default fb)
-		m_g_buffer.unbind();
+		// Transfer g-buffer depth from 'm_g_buffer' to 'm_post_process_framebuffer'
+		m_g_buffer.blit_depth_to_existing_fb(m_post_process_framebuffer, m_window_width, m_window_height, m_window_width, m_window_height);
 
 		// ======== Forward drawing pass =======
-		// Read/Write forward pass to window framebuffer
+		// Fully bind post-process framebuffer
+		m_post_process_framebuffer.bind();
 		m_systems_manager.draw_forward();
-		
 
-		// ====== Post process drawing pass =====
-		// TODO Color will look off until this is applied! (e.g. gamma correction is NOT being added currently!!)
-		// For post process to work, I have to 'inject' it above (so i blit to post process fb instead...)
-		// All drawing would go to post-proecss fb (quad being drawn, blit, forward, etc.)  After that I would draw to main window...
-
+		// ============ Post-Process ===========
+		// Draw post-process framebuffer to window
+		m_post_process_framebuffer.unbind();
+		m_window.clear_buffer();
+		m_post_process_framebuffer.draw();
 	}
 
 	void Engine::draw_user_interface() const {
