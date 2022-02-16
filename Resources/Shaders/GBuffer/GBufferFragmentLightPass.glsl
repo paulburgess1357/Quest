@@ -17,8 +17,6 @@ struct Light {
 
 const int LIGHT_QTY = 64;
 const float CONSTANT = 1.0f; // note that we don't send this to the shader, we assume it is always 1.0 (in our case)
-const float LINEAR = 0.7f;
-const float QUADRATIC = 1.8f;
 
 // ============ Global Uniforms ============
 layout (std140) uniform ubo_matrices {
@@ -33,6 +31,10 @@ in vec2 frag_tex_coords;
 // G-Buffer color attachments:
 uniform Textures all_textures;
 uniform Light all_lights[LIGHT_QTY];
+
+uniform float linear;
+uniform float quadratic;
+uniform float pointlight_max_radius;
 
 // =============== Output ==================
 // Output to the default location (i.e. the windows framebuffer)
@@ -56,26 +58,30 @@ void main(){
         vec3 light_in_world_eye = vec3(view_matrix * vec4(all_lights[i].light_position, 1.0f));
         vec3 light_direction_from_surface_to_lightsource = normalize(light_in_world_eye - vertex_position_eye);
 
-        // The value here gives us a scalar for how strong our light is (if light_dir and vertex_normals were at 90 degrees, the result would be zero): pg 80
-        float light_dir_to_normals_dot = max(dot(light_direction_from_surface_to_lightsource, vertex_normal_eye), 0.0f);
+        // Calculate distance (used for attenuation calculation).  This is also used to NOT do lighting calculations for 
+        // objects outside the light radius range:
+        float distance_to_light = length(light_in_world_eye - vertex_position_eye);        
+        if(distance_to_light < pointlight_max_radius){
+            // The value here gives us a scalar for how strong our light is (if light_dir and vertex_normals were at 90 degrees, the result would be zero): pg 80
+            float light_dir_to_normals_dot = max(dot(light_direction_from_surface_to_lightsource, vertex_normal_eye), 0.0f);
 
-        // Diffuse
-        vec3 diffuse_lighting = light_dir_to_normals_dot * diffuse_color * all_lights[i].color;
+            // Diffuse
+            vec3 diffuse_lighting = light_dir_to_normals_dot * diffuse_color * all_lights[i].color;
         
-        // Specular
-        vec3 vector_towards_viewer = normalize(-vertex_position_eye.xyz);
-        vec3 halfway_vector_btwn_lightsource_and_viewer = normalize(vector_towards_viewer + light_direction_from_surface_to_lightsource);          
-        float specular_amt = pow(max(dot(halfway_vector_btwn_lightsource_and_viewer, vertex_normal_eye), 0.0f), 16.0f);
-        vec3 specular_lighting = all_lights[i].color * specular_amt * specular_amount;
+            // Specular
+            vec3 vector_towards_viewer = normalize(-vertex_position_eye.xyz);
+            vec3 halfway_vector_btwn_lightsource_and_viewer = normalize(vector_towards_viewer + light_direction_from_surface_to_lightsource);          
+            float specular_amt = pow(max(dot(halfway_vector_btwn_lightsource_and_viewer, vertex_normal_eye), 0.0f), 16.0f);
+            vec3 specular_lighting = all_lights[i].color * specular_amt * specular_amount;
 
-        // attenuation
-        float distance_to_light = length(light_in_world_eye - vertex_position_eye);
-
-        float attenuation = 1.0 / (1.0 + LINEAR * distance_to_light + QUADRATIC * distance_to_light * distance_to_light);
-        diffuse_lighting *= attenuation;
-        specular_lighting *= attenuation;
+            // attenuation        
+            float attenuation = 1.0 / (1.0 + linear * distance_to_light + quadratic * distance_to_light * distance_to_light);
+            diffuse_lighting *= attenuation;
+            specular_lighting *= attenuation;
         
-        lighting += diffuse_lighting + specular_lighting;
+            lighting += diffuse_lighting + specular_lighting;
+        }
+
     }
     
     // Gamma Correction

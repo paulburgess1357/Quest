@@ -523,13 +523,6 @@ namespace QuestSandbox::Tests {
 		const QuestEngine::API::ResourceAPI& resource_api = m_engine_api.get_resource_api();
 		QuestEngine::Model::IndexedModel* model_pointer = resource_api.get_indexed_model_pointer(model_entity_id);
 
-		// Texture Model (
-		// In this example, we only have one mesh.  However, the following would simply texture each
-		// mesh within the model to having the same texture (or collection of textures). Normally each
-		// mesh will be loaded and the textures loaded with it (via assimp).  In this example, we are
-		// taking the already created model and setting each mesh within it to use the same textures
-		// in order to test the textures are working
-
 		// Load texture into resource
 		const std::string base_texture_path{ "../Resources/Textures/" };
 		std::string texture_id_in_resource{ "wood_texture" };
@@ -602,6 +595,24 @@ namespace QuestSandbox::Tests {
 			}
 
 		}
+
+		// Set light pass pointlight uniforms
+		constexpr float CONSTANT = 1.0f;
+		constexpr float pointlight_linear = 0.7f;
+		constexpr float pointlight_quadratic = 1.8f;
+		g_buffer_light_pass_shader_program.set_uniform("linear", pointlight_linear);
+		g_buffer_light_pass_shader_program.set_uniform("quadratic", pointlight_quadratic);
+
+		// *** Calculate light volume (max distance to display light). ***
+		// In the shader, we will discard any fragments outside this range for
+		// light calculations
+
+    	// Note: This 'max_brightness' calculation clearly isn't necessary.  However, if you had a light color that was different than white, we would need the max r/g/b value for max_brightness.
+		const float max_brightness = std::fmaxf(std::fmaxf(1.0f, 1.0f), 1.0f);
+
+		float radius = (-pointlight_linear + std::sqrt(pointlight_linear * pointlight_linear - 4 * pointlight_quadratic * (CONSTANT - (256.0f / 5.0f) * max_brightness))) / (2.0f * pointlight_quadratic);
+		g_buffer_light_pass_shader_program.set_uniform("pointlight_max_radius", radius);
+
 		g_buffer_light_pass_shader_program.unbind();
 
 
