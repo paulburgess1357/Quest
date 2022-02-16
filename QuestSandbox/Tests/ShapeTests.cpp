@@ -561,25 +561,16 @@ namespace QuestSandbox::Tests {
 		// Take loaded model and create ECS entity
 		const QuestEngine::API::RegistryAPI registry_api = m_engine_api.get_registry_api();
 
-		//// Creating a bunch:
-		//for(int i = -21; i < 21; i+=1) {
-		//	for(int j = -21; j < 21; j+=1) {
-		//		float x_pos = static_cast<float>(i);
-		//		float z_pos = static_cast<float>(j);
+		// Load ECS Entity into world::
+		constexpr int BOX_QTY = 12;
+		for (unsigned int i = 0; i < BOX_QTY; i++) {
+			// calculate slightly random offsets
+			const float xPos = static_cast<float>(((rand() % 100) / 100.0) * 6.0 - 3.0);
+			const float yPos = static_cast<float>(((rand() % 100) / 100.0) * 6.0 - 4.0);
+			const float zPos = static_cast<float>(((rand() % 100) / 100.0) * 6.0 - 3.0);
+			registry_api.load_model_into_world(model_entity_id, model_pointer, { xPos , yPos, zPos }, true); // deferred rendering
+		}
 
-		//		registry_api.load_model_into_world(model_entity_id + std::to_string(i) + std::to_string(j), model_pointer, { x_pos, 0.0f, z_pos }, true);
-		//	}
-		//}
-
-		registry_api.load_model_into_world(model_entity_id, model_pointer, { 0.0f, -1.0f, 0.0f }, true);
-		registry_api.load_model_into_world(model_entity_id, model_pointer, {0.0f, 1.0f, 0.0f}, true);
-		
-		
-
-
-
-		// Set shader uniforms for lighting test
-		// Light is directional or positional (0.0f in 4th position indicates directional light)
 
 		// ====================================== G-Buffer Post Process ======================================
 		// Load G-Buffer Light Pass Shader
@@ -590,21 +581,26 @@ namespace QuestSandbox::Tests {
 
 		g_buffer_light_pass_shader_program.bind();
 
-		// 32 Lights (hardcoded in shader)
+		// Lights (hardcoded in shader)
 		constexpr int LIGHT_QTY = 64;
 		for (unsigned int i = 0; i < LIGHT_QTY; i++){
 			// calculate slightly random offsets
 			const float xPos = static_cast<float>(((rand() % 100) / 100.0) * 6.0 - 3.0);
 			const float yPos = static_cast<float>(((rand() % 100) / 100.0) * 6.0 - 4.0);
 			const float zPos = static_cast<float>(((rand() % 100) / 100.0) * 6.0 - 3.0);
-			g_buffer_light_pass_shader_program.set_uniform("all_lights[" + std::to_string(i) + "].light_position", glm::vec3(xPos, yPos, zPos));
-			QUEST_TRACE("Light Position: {}, {}, {}", xPos, yPos, zPos)
+			g_buffer_light_pass_shader_program.set_uniform("all_lights[" + std::to_string(i) + "].light_position", glm::vec3(xPos, yPos + 2.0f, zPos));
+
 			// also calculate random color
 			const float rColor = static_cast<float>(((rand() % 100) / 200.0f) + 0.5); // between 0.5 and 1.)
 			const float gColor = static_cast<float>(((rand() % 100) / 200.0f) + 0.5); // between 0.5 and 1.)
 			const float bColor = static_cast<float>(((rand() % 100) / 200.0f) + 0.5); // between 0.5 and 1.)
 			g_buffer_light_pass_shader_program.set_uniform("all_lights[" + std::to_string(i) + "].color", glm::vec3(1.0, 1.0, 1.0)); // Setting all to white for now
-			//g_buffer_light_pass_shader_program.set_uniform("all_lights[" + std::to_string(i) + "].color", glm::vec3(rColor, gColor, bColor));
+
+			// Setting box model right below lights (limiting to just 32 models for testing light quantity):
+			if(i <= 12) {
+				registry_api.load_model_into_world(model_entity_id, model_pointer, { xPos , yPos, zPos }, true);
+			}
+
 		}
 		g_buffer_light_pass_shader_program.unbind();
 

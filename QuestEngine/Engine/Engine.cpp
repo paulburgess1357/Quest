@@ -49,7 +49,7 @@ namespace QuestEngine::Engine {
 
 			handle_window_resize();
 			draw_scene();
-			// draw_user_interface();
+			draw_user_interface();
 			Window::Window::poll_events();
 
 			m_window.swap_buffer();
