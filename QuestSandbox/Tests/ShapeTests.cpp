@@ -560,7 +560,23 @@ namespace QuestSandbox::Tests {
 
 		// Take loaded model and create ECS entity
 		const QuestEngine::API::RegistryAPI registry_api = m_engine_api.get_registry_api();
-		registry_api.load_model_into_world(model_entity_id, model_pointer, { 0.0f, 0.0f, 0.0f }, true);
+
+		//// Creating a bunch:
+		//for(int i = -21; i < 21; i+=1) {
+		//	for(int j = -21; j < 21; j+=1) {
+		//		float x_pos = static_cast<float>(i);
+		//		float z_pos = static_cast<float>(j);
+
+		//		registry_api.load_model_into_world(model_entity_id + std::to_string(i) + std::to_string(j), model_pointer, { x_pos, 0.0f, z_pos }, true);
+		//	}
+		//}
+
+		registry_api.load_model_into_world(model_entity_id, model_pointer, { 0.0f, -1.0f, 0.0f }, true);
+		registry_api.load_model_into_world(model_entity_id, model_pointer, {0.0f, 1.0f, 0.0f}, true);
+		
+		
+
+
 
 		// Set shader uniforms for lighting test
 		// Light is directional or positional (0.0f in 4th position indicates directional light)
