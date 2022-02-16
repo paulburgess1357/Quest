@@ -13,20 +13,22 @@ namespace QuestEngine::Engine {
 		m_systems_manager{ m_registry_manager.get_active_registry() },
 		m_ubo_manager{ m_resource_manager.get_ubo(Constants::ubo_matrices) },
 		m_user_interface{ m_window.get_window() },
-		m_g_buffer{ width, height, { Texture::BlankTextureEnum::RGBA16F_NEAREST, Texture::BlankTextureEnum::RGBA16F_NEAREST, Texture::BlankTextureEnum::RGBA_NEAREST }, SHADERPROGRAMHERE },
-		m_post_process_framebuffer{ width, height, { Texture::BlankTextureEnum::RGBA_LINEAR }, m_resource_manager.get_shader(Constants::post_process_shader) },
+		m_g_buffer{ width, height, { Texture::BlankTextureEnum::RGBA16F_NEAREST, Texture::BlankTextureEnum::RGBA16F_NEAREST, Texture::BlankTextureEnum::RGBA_NEAREST }},
+		m_post_process_framebuffer{ width, height, { Texture::BlankTextureEnum::RGBA_LINEAR }},
 		m_window_width{ Window::Window::get_width() },
 		m_window_height{ Window::Window::get_height() }{
 		QUEST_INFO("Quest Engine v{}.{} Initialized\n", 0, 1)
-		initialization();
 	}
 
 	void Engine::run() {
+		initialization();
 		qc_checks();
 		gameloop();
 	}
 
 	void Engine::initialization() {
+		m_g_buffer.set_shader_program(m_resource_manager.get_shader(Constants::g_buffer_light_pass));
+		m_post_process_framebuffer.set_shader_program(m_resource_manager.get_shader(Constants::post_process_shader));
 		set_active_camera(Constants::main_camera);
 	}
 
@@ -47,7 +49,7 @@ namespace QuestEngine::Engine {
 
 			handle_window_resize();
 			draw_scene();
-			draw_user_interface();
+			// draw_user_interface();
 			Window::Window::poll_events();
 
 			m_window.swap_buffer();
@@ -59,6 +61,7 @@ namespace QuestEngine::Engine {
 			m_window_width = Window::Window::get_width();
 			m_window_height = Window::Window::get_height();
 			m_post_process_framebuffer.rescale_attachments(m_window_width, m_window_height);
+			m_g_buffer.rescale_attachments(m_window_width, m_window_height);
 			m_projection_matrix.update_projection_matrix(m_window_width, m_window_height);
 		}
 	}

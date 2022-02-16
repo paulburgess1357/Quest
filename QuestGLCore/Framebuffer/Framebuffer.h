@@ -96,7 +96,7 @@ namespace QuestGLCore::Framebuffer {
 
 		void bind_all_color_attachments() const {
 			for (size_t i = 0; i < m_color_attachment_handles.size(); i++) {
-				bind_color_attachment(i, i);
+				bind_color_attachment(i, static_cast<GLuint>(i));
 			}
 		}
 
