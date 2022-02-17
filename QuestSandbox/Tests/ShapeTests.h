@@ -22,8 +22,9 @@ namespace QuestSandbox::Tests {
 
 		// Shape: Position, normals, texture_coords
 		void load_normals_texture_indexed_shape_blinn_phong() const;
-
 		void g_buffer_lighting_test() const;
+
+		void g_buffer_lighting_test_pointlight_mesh_volume() const;
 
 	private:
 		QuestEngine::API::EngineAPI& m_engine_api;

@@ -80,6 +80,29 @@ namespace QuestEngine::Engine {
 		Framebuffer::Framebuffer2D::clear_buffer_no_bind();
 		m_g_buffer.draw();
 
+		// ************** I think.... *************
+		// - Additionally, draw pointlights here?
+		// Don't draw fullscreen quad for pointlight!!!! Only for directional light.... i think.... not sure what this means for a cubemap though
+		// disable dpeth???
+		// draw pointlights
+		// ----- do i need depth information from g-buffer to discard fragments here still?
+		// enable depth??
+		// Note: I'd like a lighting stage:
+
+		// draw pointlights to its own buffer
+		// draw directional light to its own buffer
+
+		// e.g.
+		//m_pointlight_buffer.bind()... etc
+		//m_pointlight_buffer.draw();
+
+
+		//m_directionallight_buffer.bind()... etc.
+		//m_directionallight_buffer.draw();
+		
+
+
+
 		// Transfer g-buffer depth from 'm_g_buffer' to 'm_post_process_framebuffer'
 		m_g_buffer.blit_depth_to_existing_fb(m_post_process_framebuffer, m_window_width, m_window_height, m_window_width, m_window_height);
 

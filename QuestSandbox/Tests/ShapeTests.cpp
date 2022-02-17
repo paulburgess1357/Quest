@@ -3,6 +3,8 @@
 #include "QuestEngine/API/OpenGL/ShaderLoaderAPI.h"
 #include "QuestEngine/API/OpenGL/ModelLoaderAPI.h"
 #include "QuestEngine/API/Neutral/Constants.h"
+#include "QuestEngine/API/OpenGL/PointLightLoaderAPI.h"
+#include "QuestEngine/API/Neutral/Constants.h"
 
 namespace QuestSandbox::Tests {
 	
@@ -29,7 +31,7 @@ namespace QuestSandbox::Tests {
         };
 
         const QuestEngine::API::OpenGL::ModelLoaderAPI model_loader = m_engine_api.get_model_loader_api();
-        model_loader.load_model("Test Model", shader_id, { vertices }, { 3 });
+        model_loader.load_model<GL_TRIANGLES>("Test Model", shader_id, { vertices }, { 3 });
 
 	}
     void ShapeTests::load_indexed_triangle() const {
@@ -51,7 +53,7 @@ namespace QuestSandbox::Tests {
         };
 
 		const QuestEngine::API::OpenGL::ModelLoaderAPI model_loader = m_engine_api.get_model_loader_api();
-        model_loader.load_model("Test Model", shader_id, { vertices }, { indices }, { 3 });
+        model_loader.load_model<GL_TRIANGLES>("Test Model", shader_id, { vertices }, { indices }, { 3 });
     }
 
     // ======================== Shape ========================
@@ -114,7 +116,7 @@ namespace QuestSandbox::Tests {
 		// Load created model into resource
 		const std::string model_entity_id{ "Test Model" };
 		const QuestEngine::API::OpenGL::ModelLoaderAPI model_loader = m_engine_api.get_model_loader_api();
-		model_loader.load_model(model_entity_id, shader_id, { vertices }, { 3 });
+		model_loader.load_model<GL_TRIANGLES>(model_entity_id, shader_id, { vertices }, { 3 });
 
 		// Take loaded model and create ECS entity
 		const QuestEngine::API::ResourceAPI& resource_api = m_engine_api.get_resource_api();
@@ -198,7 +200,7 @@ namespace QuestSandbox::Tests {
 		// Load created model into resource
 		const std::string model_entity_id{ "Test Indexed Model" };
 		const QuestEngine::API::OpenGL::ModelLoaderAPI model_loader = m_engine_api.get_model_loader_api();
-		model_loader.load_model(model_entity_id, shader_id, { vertices }, { indices }, { 3 });
+		model_loader.load_model<GL_TRIANGLES>(model_entity_id, shader_id, { vertices }, { indices }, { 3 });
 
 		// Take loaded model and create ECS entity
 		const QuestEngine::API::ResourceAPI& resource_api = m_engine_api.get_resource_api();
@@ -282,7 +284,7 @@ namespace QuestSandbox::Tests {
 		// Load created model into resource
 		const std::string model_entity_id{ "Test Indexed Model" };
 		const QuestEngine::API::OpenGL::ModelLoaderAPI model_loader = m_engine_api.get_model_loader_api();
-		model_loader.load_model(model_entity_id, shader_id, { vertices }, { indices }, { 3, 2 });
+		model_loader.load_model<GL_TRIANGLES>(model_entity_id, shader_id, { vertices }, { indices }, { 3, 2 });
 
 		// Get pointer to loaded model
 		const QuestEngine::API::ResourceAPI& resource_api = m_engine_api.get_resource_api();
@@ -390,7 +392,7 @@ namespace QuestSandbox::Tests {
 		// Load created model into resource
 		const std::string model_entity_id{ "Test Indexed Model" };
 		const QuestEngine::API::OpenGL::ModelLoaderAPI model_loader = m_engine_api.get_model_loader_api();
-		model_loader.load_model(model_entity_id, shader_id, { vertices }, { indices }, { 3, 3, 2 });
+		model_loader.load_model<GL_TRIANGLES>(model_entity_id, shader_id, { vertices }, { indices }, { 3, 3, 2 });
 
 		// Get pointer to loaded model
 		const QuestEngine::API::ResourceAPI& resource_api = m_engine_api.get_resource_api();
@@ -517,7 +519,7 @@ namespace QuestSandbox::Tests {
 		// Load created model into resource
 		std::string model_entity_id{ "Test Indexed Model" };
 		const QuestEngine::API::OpenGL::ModelLoaderAPI model_loader = m_engine_api.get_model_loader_api();
-		model_loader.load_model(model_entity_id, shader_id, { vertices }, { indices }, { 3, 3, 2 });
+		model_loader.load_model<GL_TRIANGLES>(model_entity_id, shader_id, { vertices }, { indices }, { 3, 3, 2 });
 
 		// Get pointer to loaded model
 		const QuestEngine::API::ResourceAPI& resource_api = m_engine_api.get_resource_api();
@@ -628,7 +630,7 @@ namespace QuestSandbox::Tests {
 
 		// Load created model into resource
 		model_entity_id =  "Rainbow Indexed Model";
-		model_loader.load_model(model_entity_id, shader_id, { vertices }, { indices }, { 3, 3, 2 });
+		model_loader.load_model<GL_TRIANGLES>(model_entity_id, shader_id, { vertices }, { indices }, { 3, 3, 2 });
 
 		// Get pointer to loaded model
 		model_pointer = resource_api.get_indexed_model_pointer(model_entity_id);
@@ -650,6 +652,223 @@ namespace QuestSandbox::Tests {
 		registry_api.load_model_into_world(model_entity_id, model_pointer, { 0.0f, 0.5f, 3.0f }, false); // true = deferred pass, false = forward pass
 
 	}
+	void ShapeTests::g_buffer_lighting_test_pointlight_mesh_volume() const {
+
+
+		// Load test textured cube
+		const QuestEngine::API::OpenGL::ShaderLoaderAPI shader_loader = m_engine_api.get_shader_loader_api();
+		std::string shader_id{ "Textured Indexed Shape Using G-Buffer" };
+		shader_loader.load_shader(shader_id, m_base_gbuffer_shader_path + "GBufferShapeVertexGeometryPass.glsl", m_base_gbuffer_shader_path + "GBufferShapeFragmentGeometryPass.glsl", true, true);
+
+		const std::vector<float> vertices = {
+			// Vertices               // Normals		     // Textures
+			// back face
+			 0.5f, -0.5f, -0.5f,        0.0f,  0.0f, -1.0f,     0.0f, 0.0f, // bottom left	
+			-0.5f, -0.5f, -0.5f,        0.0f,  0.0f, -1.0f,     1.0f, 0.0f, // bottom right
+			-0.5f,  0.5f, -0.5f,        0.0f,  0.0f, -1.0f,     1.0f, 1.0f, // top right
+			 0.5f,  0.5f, -0.5f,        0.0f,  0.0f, -1.0f,     0.0f, 1.0f, // top left
+
+			// front face
+			-0.5f, -0.5f,  0.5f,		0.0f,  0.0f, 1.0f,     0.0f, 0.0f, // bottom left
+			 0.5f, -0.5f,  0.5f,		0.0f,  0.0f, 1.0f,     1.0f, 0.0f, // bottom right
+			 0.5f,  0.5f,  0.5f,		0.0f,  0.0f, 1.0f,     1.0f, 1.0f, // top right
+			-0.5f,  0.5f,  0.5f,		0.0f,  0.0f, 1.0f,     0.0f, 1.0f, // top left
+
+			// left face
+			-0.5f, -0.5f, -0.5f,		-1.0f,  0.0f,  0.0f,     0.0f, 0.0f, // bottom left
+			-0.5f, -0.5f,  0.5f,		-1.0f,  0.0f,  0.0f,     1.0f, 0.0f, // bottom right
+			-0.5f,  0.5f,  0.5f,		-1.0f,  0.0f,  0.0f,     1.0f, 1.0f, // top right
+			-0.5f,  0.5f, -0.5f,		-1.0f,  0.0f,  0.0f,     0.0f, 1.0f, // top left	   
+
+			// right face
+			 0.5f, -0.5f,  0.5f,		1.0f,  0.0f,  0.0f,     0.0f, 0.0f, // bottom left
+			 0.5f, -0.5f, -0.5f,		1.0f,  0.0f,  0.0f,     1.0f, 0.0f, // bottom right
+			 0.5f,  0.5f, -0.5f,		1.0f,  0.0f,  0.0f,     1.0f, 1.0f, // top right	
+			 0.5f,  0.5f,  0.5f,		1.0f,  0.0f,  0.0f,     0.0f, 1.0f, // top left
+
+			// bottom face
+			-0.5f, -0.5f, -0.5f,		0.0f, -1.0f,  0.0f,     0.0f, 0.0f, // bottom left
+			 0.5f, -0.5f, -0.5f,		0.0f, -1.0f,  0.0f,     1.0f, 0.0f, // bottom right
+			 0.5f, -0.5f,  0.5f,		0.0f, -1.0f,  0.0f,     1.0f, 1.0f, // top right
+			-0.5f, -0.5f,  0.5f,		0.0f, -1.0f,  0.0f,     0.0f, 1.0f, // top left
+
+			// top face
+			-0.5f,  0.5f,  0.5f,		0.0f,  1.0f,  0.0f,     0.0f, 0.0f, // bottom left
+			 0.5f,  0.5f,  0.5f,		0.0f,  1.0f,  0.0f,     1.0f, 0.0f, // bottom right
+			 0.5f,  0.5f, -0.5f,		0.0f,  1.0f,  0.0f,     1.0f, 1.0f, // top right
+			-0.5f,  0.5f, -0.5f,		0.0f,  1.0f,  0.0f,     0.0f, 1.0f, // top left
+		};
+
+		const std::vector<unsigned int> indices = {
+			// back face
+			0, 1, 2,
+			2, 3, 0,
+
+			// front face
+			4, 5, 6,
+			6, 7, 4,
+
+			// left face
+			8, 9, 10,
+			10, 11, 8,
+
+			// right face
+			12, 13, 14,
+			14, 15, 12,
+
+			// bottom face
+			16, 17, 18,
+			18, 19, 16,
+
+			// top face
+			20, 21, 22,
+			22, 23, 20
+		};
+
+		// Load created model into resource
+		std::string model_entity_id{ "Test Indexed Model" };
+		const QuestEngine::API::OpenGL::ModelLoaderAPI model_loader = m_engine_api.get_model_loader_api();
+		model_loader.load_model<GL_TRIANGLES>(model_entity_id, shader_id, { vertices }, { indices }, { 3, 3, 2 });
+
+		// Get pointer to loaded model
+		const QuestEngine::API::ResourceAPI& resource_api = m_engine_api.get_resource_api();
+		QuestEngine::Model::IndexedModel* model_pointer = resource_api.get_indexed_model_pointer(model_entity_id);
+
+		// Load texture into resource
+		const std::string base_texture_path{ "../Resources/Textures/" };
+		std::string texture_id_in_resource{ "wood_texture" };
+		const std::string texture_name_in_shader{ "all_textures.diffuse" };
+
+		const auto texture_api = m_engine_api.get_texture_loader_api();
+		texture_api.load_texture2D(texture_id_in_resource, base_texture_path + "wood.png", QuestEngine::Texture::TextureType::Standard, false, true);
+		auto texture_ptr = resource_api.get_texture_pointer(texture_id_in_resource);
+
+		auto& mesh_vector = model_pointer->get_mesh_vector();
+		QuestGLCore::Shader::ShaderProgram* model_shader_program = model_pointer->get_shader_program();
+
+		// For each mesh, register the texture
+		for (auto& model_mesh : mesh_vector) {
+			model_mesh.register_texture(texture_name_in_shader, model_shader_program, texture_ptr);
+		}
+
+		// Load specular texture
+		const std::string specular_texture_id_in_resource{ "specular_texture" };
+		const std::string specular_texture_id_in_shader{ "all_textures.specular" };
+
+		texture_api.load_texture2D(specular_texture_id_in_resource, base_texture_path + "container_specular_map.png", QuestEngine::Texture::TextureType::Standard, false, false);
+		auto specular_texture_ptr = resource_api.get_texture_pointer(specular_texture_id_in_resource);
+		// For each mesh, register the texture
+		for (auto& model_mesh : mesh_vector) {
+			model_mesh.register_texture(specular_texture_id_in_shader, model_shader_program, specular_texture_ptr);
+		}
+
+		// Take loaded model and create ECS entity
+		const QuestEngine::API::RegistryAPI registry_api = m_engine_api.get_registry_api();
+
+		// Load ECS Entity into world::
+		constexpr int BOX_QTY = 12;
+		for (unsigned int i = 0; i < BOX_QTY; i++) {
+			// calculate slightly random offsets
+			const float xPos = static_cast<float>(((rand() % 100) / 100.0) * 6.0 - 3.0);
+			const float yPos = static_cast<float>(((rand() % 100) / 100.0) * 6.0 - 4.0);
+			const float zPos = static_cast<float>(((rand() % 100) / 100.0) * 6.0 - 3.0);
+			registry_api.load_model_into_world(model_entity_id, model_pointer, { xPos , yPos, zPos }, true); // deferred rendering
+		}
+
+		// ==================================================================================================================================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		// Load pointlight mesh
+		QuestEngine::API::OpenGL::PointLightLoader pointlight_loader(10);
+		pointlight_loader.load_pointlight_mesh(m_engine_api);
+
+		// Load pointlight into registry
+		//const QuestEngine::API::RegistryAPI registry_api = m_engine_api.get_registry_api();
+		//const QuestEngine::API::ResourceAPI& resource_api = m_engine_api.get_resource_api();
+		model_pointer = resource_api.get_indexed_model_pointer(QuestEngine::Constants::pointlight_model);
+
+
+
+
+
+
+		// ====================================== G-Buffer Post Process ======================================
+		// TODO: update lighting shader to not calculate pointlight based on shader uniforms (make a new text and shader program name): e.g. GBufferVertexLight_VOLUME_Pass, GBufferFRAGMENTLight_VOLUME_Pass
+		// TODO: This new shader won't calcuation pointlight in the shader or based on unifrom values.  Rather, pointlight will be based on the created Pointlight mesh.  SOMEHOW distance is taken into acount for hte light to get less strong as you move away....
+		// TODO for light distance, you would normally scale it by the light volume radius (that we calculated: see 'pointlight_max_radius' below)
+		// TODO: somehow blend fragment values
+
+		// *** Sphere radius must equal the size of the light volume radius!!!! probably need scale transformation system.... ***
+		// *** Spheres are rendered in the DEFFERRED LIGHTING STAGE VIA BLENDING>>> ****
+
+		// Load G-Buffer Light Pass Shader
+		const std::string light_pass_shader_id{ QuestEngine::Constants::g_buffer_light_pass };
+		//const QuestEngine::API::OpenGL::ShaderLoaderAPI shader_loader = m_engine_api.get_shader_loader_api();
+		shader_loader.load_shader(light_pass_shader_id, m_base_gbuffer_shader_path + "GBufferVertexLightPass.glsl", m_base_gbuffer_shader_path + "GBufferFragmentLightPass.glsl", true, true);
+
+		QuestGLCore::Shader::ShaderProgram& g_buffer_light_pass_shader_program = resource_api.get_shader(light_pass_shader_id);
+
+		g_buffer_light_pass_shader_program.bind();
+
+		// Lights (hardcoded in shader)
+		constexpr int LIGHT_QTY = 12;
+		for (unsigned int i = 0; i < LIGHT_QTY; i++) {
+			// calculate slightly random offsets
+			const float xPos = static_cast<float>(((rand() % 100) / 100.0) * 6.0 - 3.0);
+			const float yPos = static_cast<float>(((rand() % 100) / 100.0) * 6.0 - 4.0);
+			const float zPos = static_cast<float>(((rand() % 100) / 100.0) * 6.0 - 3.0);
+			g_buffer_light_pass_shader_program.set_uniform("all_lights[" + std::to_string(i) + "].light_position", glm::vec3(xPos, yPos + 2.0f, zPos));
+
+			// also calculate random color
+			const float rColor = static_cast<float>(((rand() % 100) / 200.0f) + 0.5); // between 0.5 and 1.)
+			const float gColor = static_cast<float>(((rand() % 100) / 200.0f) + 0.5); // between 0.5 and 1.)
+			const float bColor = static_cast<float>(((rand() % 100) / 200.0f) + 0.5); // between 0.5 and 1.)
+			g_buffer_light_pass_shader_program.set_uniform("all_lights[" + std::to_string(i) + "].color", glm::vec3(1.0, 1.0, 1.0)); // Setting all to white for now
+
+			// Load mesh pointlight to wherever a light source originates
+			registry_api.load_model_into_world("pointlight_" + std::to_string(i), model_pointer, { xPos , yPos, zPos }, true); // deferred rendering
+
+		}
+
+		// Set light pass pointlight uniforms
+		constexpr float CONSTANT = 1.0f;
+		constexpr float pointlight_linear = 0.7f;
+		constexpr float pointlight_quadratic = 1.8f;
+		g_buffer_light_pass_shader_program.set_uniform("linear", pointlight_linear);
+		g_buffer_light_pass_shader_program.set_uniform("quadratic", pointlight_quadratic);
+
+		// *** Calculate light volume (max distance to display light). ***
+		// In the shader, we will discard any fragments outside this range for
+		// light calculations
+
+		// Note: This 'max_brightness' calculation clearly isn't necessary.  However, if you had a light color that was different than white, we would need the max r/g/b value for max_brightness.
+		const float max_brightness = std::fmaxf(std::fmaxf(1.0f, 1.0f), 1.0f);
+
+		float radius = (-pointlight_linear + std::sqrt(pointlight_linear * pointlight_linear - 4 * pointlight_quadratic * (CONSTANT - (256.0f / 5.0f) * max_brightness))) / (2.0f * pointlight_quadratic);
+		g_buffer_light_pass_shader_program.set_uniform("pointlight_max_radius", radius);
+
+		g_buffer_light_pass_shader_program.unbind();
+
+	}
+
 
 
 

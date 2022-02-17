@@ -120,6 +120,9 @@
     <ClInclude Include="ECS\Components\RenderComponents.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="API\OpenGL\PointLightLoaderAPI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PCH\pch.cpp">
@@ -162,6 +165,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="API\OpenGL\TextureLoaderAPI.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="API\OpenGL\PointLightLoaderAPI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
