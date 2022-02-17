@@ -11,8 +11,10 @@ namespace QuestSandbox::Tests {
 		explicit ShapeTests(QuestEngine::API::EngineAPI& engine_api);
 		void g_buffer_lighting_test_pointlight_mesh_volume();
 
+		void g_buffer_lighting_pointlight_volume();
+
 	private:
-		void load_dual_textured_cube_into_world(const glm::vec3& world_position, const std::string& vertex_shader, const std::string& fragment_shader, const bool deferred);
+		void load_dual_textured_cube_into_world(const glm::vec3& world_position, const std::string& vertex_shader, const std::string& fragment_shader, const QuestEngine::ECS::RenderPass render_pass);
 
 		QuestEngine::API::EngineAPI& m_engine_api;
 		static const std::string m_base_shader_path;

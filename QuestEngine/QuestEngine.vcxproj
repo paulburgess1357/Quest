@@ -182,6 +182,7 @@
     <ClInclude Include="ECS\Components\RotateComponent.h" />
     <ClInclude Include="ECS\Components\TransformComponent.h" />
     <ClInclude Include="ECS\Manage\RegistryManager.h" />
+    <ClInclude Include="ECS\Manage\RegistryManagerExecptions.h" />
     <ClInclude Include="ECS\Manage\SystemManager.h" />
     <ClInclude Include="ECS\Systems\RenderSystem.h" />
     <ClInclude Include="ECS\Systems\TransformSystem.h" />

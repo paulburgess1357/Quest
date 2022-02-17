@@ -25,5 +25,9 @@ namespace QuestEngine::ECS {
 		ECS::Systems::RenderSystem::render_forward(*m_active_registry);
 	}
 
+	void SystemManager::draw_pointlight() const {
+		ECS::Systems::RenderSystem::render_pointlight(*m_active_registry);
+	}
+
 
 } // namespace QuestEngine::ECS

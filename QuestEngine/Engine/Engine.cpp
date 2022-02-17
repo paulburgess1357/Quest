@@ -27,8 +27,8 @@ namespace QuestEngine::Engine {
 	}
 
 	void Engine::initialization() {
-		m_g_buffer.set_shader_program(m_resource_manager.get_shader(Constants::g_buffer_light_pass));
-		m_post_process_framebuffer.set_shader_program(m_resource_manager.get_shader(Constants::post_process_shader));
+		m_g_buffer.set_shader_program(m_resource_manager.get_shader(Constants::g_buffer_light_pass)); // "g_buffer_light_pass"
+		m_post_process_framebuffer.set_shader_program(m_resource_manager.get_shader(Constants::post_process_shader)); // "post_process_shader"
 		set_active_camera(Constants::main_camera);
 	}
 
@@ -73,6 +73,7 @@ namespace QuestEngine::Engine {
 		m_g_buffer.bind();
 		Framebuffer::Framebuffer2D::clear_buffer_no_bind();
 		m_systems_manager.draw_deferred();
+		//m_systems_manager.draw_pointlight();
 
 		// ======= Lighting drawing pass ======
 		// - Take g-buffer stored data and draw lighting to post-process framebuffer

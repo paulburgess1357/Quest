@@ -12,6 +12,7 @@ namespace QuestEngine::ECS {
 		void update(const Camera::Camera& camera) const;
 		void draw_deferred() const;
 		void draw_forward() const;
+		void draw_pointlight() const;
 	private:
 		entt::registry* m_active_registry;
 	};

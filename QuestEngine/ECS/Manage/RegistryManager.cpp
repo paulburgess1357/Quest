@@ -1,10 +1,12 @@
 #include "pch.h"
 #include "RegistryManager.h"
-#include "QuestUtility/Include/Logger.h"
+#include "QuestEngine/ECS/Manage/RegistryManagerExecptions.h"
 #include "QuestEngine/ECS/Components/ModelComponent.h"
 #include "QuestEngine/ECS/Components/RenderComponents.h"
 #include "QuestEngine/ECS/Components/TransformComponent.h"
 #include "QuestEngine/ECS/Components/RotateComponent.h"
+
+#include "QuestUtility/Include/Logger.h"
 
 namespace QuestEngine::ECS {
 
@@ -12,34 +14,42 @@ namespace QuestEngine::ECS {
 		return m_active_registry;
 	}
 
-	void RegistryManager::load_model_into_world(const std::string& entity_id, Model::StandardModel* model, const glm::vec3& world_position, const bool deferred_render_pass) {
+	void RegistryManager::load_model_into_world(const std::string& entity_id, Model::StandardModel* model, const glm::vec3& world_position, const RenderPass render_pass) {
 		const entt::entity entity = m_active_registry.create();
 		m_active_registry.emplace<ECS::Components::StandardModelComponent>(entity, model);
 		m_active_registry.emplace<ECS::Components::TransformComponent>(entity, world_position);
-		m_active_registry.emplace<ECS::Components::RotateComponent>(entity);
-
-		if(deferred_render_pass) {
-			m_active_registry.emplace<ECS::Components::RenderDeferredComponent>(entity);
-		} else {
-			m_active_registry.emplace<ECS::Components::RenderForwardComponent>(entity);
-		}
-
+		load_entity_render_pass(entity, render_pass);
 		store_entity_in_active_entity_map(entity_id, entity);
 	}
 
-	void RegistryManager::load_model_into_world(const std::string& entity_id, Model::IndexedModel* model, const glm::vec3& world_position, const bool deferred_render_pass) {
+	void RegistryManager::load_model_into_world(const std::string& entity_id, Model::IndexedModel* model, const glm::vec3& world_position, const RenderPass render_pass) {
 		const entt::entity entity = m_active_registry.create();
 		m_active_registry.emplace<ECS::Components::IndexedModelComponent>(entity, model);
 		m_active_registry.emplace<ECS::Components::TransformComponent>(entity, world_position);
-		m_active_registry.emplace<ECS::Components::RotateComponent>(entity);
 		store_entity_in_active_entity_map(entity_id, entity);
+		load_entity_render_pass(entity, render_pass);
+	}
 
-		if (deferred_render_pass) {
-			m_active_registry.emplace<ECS::Components::RenderDeferredComponent>(entity);
-		} else {
-			m_active_registry.emplace<ECS::Components::RenderForwardComponent>(entity);
-		}
-
+	void RegistryManager::load_entity_render_pass(const entt::entity& entity, const RenderPass render_pass) {
+		switch(render_pass) {
+			case RenderPass::Deferred: {
+				m_active_registry.emplace<ECS::Components::RotateComponent>(entity);
+				m_active_registry.emplace<ECS::Components::RenderDeferredComponent>(entity);
+				break;
+			}
+			case RenderPass::Pointlight: {
+				m_active_registry.emplace<ECS::Components::RenderPointlightComponent>(entity);
+				break;
+			}
+			case RenderPass::Forward: {
+				m_active_registry.emplace<ECS::Components::RotateComponent>(entity);
+				m_active_registry.emplace<ECS::Components::RenderForwardComponent>(entity);
+				break;
+			}
+			default:  // NOLINT(clang-diagnostic-covered-switch-default)
+				QUEST_ERROR("Loaded entity render_pass (e.g. deferred, forward, etc.) does not exist in the load_entity_render_pass function!")
+				throw EntityLoadRenderPassException();
+			}
 	}
 
 	void RegistryManager::store_entity_in_active_entity_map(const std::string& entity_id, const entt::entity& entity) {

@@ -45,7 +45,8 @@ namespace QuestEngine::ECS::Systems {
 			});
 		}
 
-		// Pointlight rendering
+		// ========== Pointlight rendering ==========
+
 		static void render_pointlight(const entt::registry& registry) {
 
 			// TODO make this actually work with shader lighting variables... e.g. location, uniforms, moving lights around, etc.
@@ -54,13 +55,19 @@ namespace QuestEngine::ECS::Systems {
 			registry.view<Components::StandardModelComponent, Components::TransformComponent, Components::RenderPointlightComponent>().each([](auto& model, auto& transform, auto& pointlight) {
 				auto* shader_program = model.m_model->get_shader_program();
 				shader_program->bind();
-				// set_model_uniform_matrices(shader_program, transform.m_model_matrix, transform.m_normal_matrix);
+
+				//TODO Only the model matrix is necessary for pointlights
+				set_model_uniform_matrices(shader_program, transform.m_model_matrix, transform.m_normal_matrix);
+
 				model.m_model->draw();
 			});
 			registry.view<Components::IndexedModelComponent, Components::TransformComponent, Components::RenderPointlightComponent>().each([](auto& model, auto& transform, auto& pointlight) {
 				auto* shader_program = model.m_model->get_shader_program();
 				shader_program->bind();
-				// set_model_uniform_matrices(shader_program, transform.m_model_matrix, transform.m_normal_matrix);
+
+				//TODO Only the model matrix is necessary for pointlights
+				set_model_uniform_matrices(shader_program, transform.m_model_matrix, transform.m_normal_matrix);
+
 				model.m_model->draw();
 			});
 		}

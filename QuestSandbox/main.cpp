@@ -8,7 +8,9 @@
 int main() {
     QuestEngine::API::EngineAPI engine_api;
 	QuestSandbox::Tests::ShapeTests shape_test { engine_api };
-	shape_test.g_buffer_lighting_test_pointlight_mesh_volume();
+
+	//shape_test.g_buffer_lighting_test_pointlight_mesh_volume();
+	shape_test.g_buffer_lighting_pointlight_volume();
 
 	engine_api.run();
 }
