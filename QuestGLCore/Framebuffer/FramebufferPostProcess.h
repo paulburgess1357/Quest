@@ -95,13 +95,32 @@ namespace QuestGLCore::Framebuffer {
 			this->attachment_num_check(3, "The expected quantity of color attachments for this G-Buffer is 3! If you don't need 3, please update or specialize the class: FramebufferGBuffer.  Note that 'init_shader_uniforms' will have to be updated to accomodate more textures!  Remember to update both the geometry pass fragment shader AND the light pass fragment shader");
 		}
 
-		void draw() const {
+		void draw_lighting_pass_to_quad() const {
 			glDisable(GL_DEPTH_TEST); // TODO ==================================== Correct??
 			this->m_shader_program->bind();
 			// Bind all color attachments
 			this->bind_all_color_attachments();
 			this->m_mesh->draw();
 			glEnable(GL_DEPTH_TEST); // TODO ==================================== Correct??
+		}
+
+		void draw_lighting_pass_to_pointlights_start() const {
+
+			// pointlight light shader program...
+			this->m_shader_program->bind();
+
+			glDisable(GL_DEPTH_TEST);
+			glEnable(GL_BLEND);
+			glBlendEquation(GL_FUNC_ADD);
+			glBlendFunc(GL_ONE, GL_ONE);
+		}
+
+		void draw_lighting_pass_to_pointlights_end() const {
+			glEnable(GL_DEPTH_TEST);
+		}
+
+		void bind_shader_program_TEMP_PUBLIC() const {
+			this->m_shader_program->bind();
 		}
 
 	private:

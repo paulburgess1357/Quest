@@ -27,7 +27,7 @@ namespace QuestEngine::Engine {
 	}
 
 	void Engine::initialization() {
-		m_g_buffer.set_shader_program(m_resource_manager.get_shader(Constants::g_buffer_light_pass)); // "g_buffer_light_pass"
+		m_g_buffer.set_shader_program(m_resource_manager.get_shader(QuestEngine::Constants::g_buffer_light_pass)); // "g_buffer_light_pass"
 		m_post_process_framebuffer.set_shader_program(m_resource_manager.get_shader(Constants::post_process_shader)); // "post_process_shader"
 		set_active_camera(Constants::main_camera);
 	}
@@ -73,34 +73,29 @@ namespace QuestEngine::Engine {
 		m_g_buffer.bind();
 		Framebuffer::Framebuffer2D::clear_buffer_no_bind();
 		m_systems_manager.draw_deferred();
-		//m_systems_manager.draw_pointlight();
+		// m_systems_manager.draw_pointlight();
 
 		// ======= Lighting drawing pass ======
 		// - Take g-buffer stored data and draw lighting to post-process framebuffer
 		m_post_process_framebuffer.bind();
 		Framebuffer::Framebuffer2D::clear_buffer_no_bind();
-		m_g_buffer.draw();
-
-		// ************** I think.... *************
-		// - Additionally, draw pointlights here?
-		// Don't draw fullscreen quad for pointlight!!!! Only for directional light.... i think.... not sure what this means for a cubemap though
-		// disable dpeth???
-		// draw pointlights
-		// ----- do i need depth information from g-buffer to discard fragments here still?
-		// enable depth??
-		// Note: I'd like a lighting stage:
-
-		// draw pointlights to its own buffer
-		// draw directional light to its own buffer
-
-		// e.g.
-		//m_pointlight_buffer.bind()... etc
-		//m_pointlight_buffer.draw();
+		// m_g_buffer.draw_lighting_pass_to_quad();// -> Re-enable this to draw to quad instead of pointlights (also update the vertex shader program its using to NOT be the pointlight version)
 
 
-		//m_directionallight_buffer.bind()... etc.
-		//m_directionallight_buffer.draw();
+		// PB Testing Changes ======================================================
+		// This is being drawn to the post-process framebuffer quad (shown above).
+		m_g_buffer.draw_lighting_pass_to_pointlights_start();
+		m_g_buffer.bind_all_color_attachments();
+		m_systems_manager.draw_pointlight();
+
+		// m_g_buffer.bind_shader_program_TEMP_PUBLIC();
+		// bind shader program
+
 		
+		 // pointlights need to be updated to use correct shader....
+
+		m_g_buffer.draw_lighting_pass_to_pointlights_end();
+		// ==========================================================================
 
 
 

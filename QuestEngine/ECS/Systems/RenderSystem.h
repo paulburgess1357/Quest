@@ -54,7 +54,7 @@ namespace QuestEngine::ECS::Systems {
 
 			registry.view<Components::StandardModelComponent, Components::TransformComponent, Components::RenderPointlightComponent>().each([](auto& model, auto& transform, auto& pointlight) {
 				auto* shader_program = model.m_model->get_shader_program();
-				shader_program->bind();
+				// shader_program->bind(); //TODO find better way than turning off bind here (bind is happening from the framebuffer currently)...
 
 				//TODO Only the model matrix is necessary for pointlights
 				set_model_uniform_matrices(shader_program, transform.m_model_matrix, transform.m_normal_matrix);
@@ -63,7 +63,7 @@ namespace QuestEngine::ECS::Systems {
 			});
 			registry.view<Components::IndexedModelComponent, Components::TransformComponent, Components::RenderPointlightComponent>().each([](auto& model, auto& transform, auto& pointlight) {
 				auto* shader_program = model.m_model->get_shader_program();
-				shader_program->bind();
+				// shader_program->bind(); TODO find better way than turning off bind here (bind is happening from the framebuffer currently)...
 
 				//TODO Only the model matrix is necessary for pointlights
 				set_model_uniform_matrices(shader_program, transform.m_model_matrix, transform.m_normal_matrix);

@@ -41,7 +41,10 @@ uniform float pointlight_max_radius;
 out vec4 frag_color; 
 
 // ================== Main =================
-void main(){             
+void main(){      
+
+    vec2 frag_tex_coords = gl_FragCoord.xy/textureSize(all_textures.position, 0);
+
     // Access data from G-Buffer textures
     // Note that its eye space because we did the eye space transformation in the 'GBufferShapeVertexGeometryPass' shader
     vec3 vertex_position_eye = texture(all_textures.position, frag_tex_coords).rgb;

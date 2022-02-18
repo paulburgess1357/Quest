@@ -125,9 +125,13 @@ namespace QuestSandbox::Tests {
 
 
 		// ========== Load G-Buffer Light Pass Shader ==========
+		// **** Note the loading of the LightingPassVertex_POINTLIGHT version
+		// **** Fragment shader is the same ***
+
+
 		const std::string light_pass_shader_id{ QuestEngine::Constants::g_buffer_light_pass };
 		const QuestEngine::API::OpenGL::ShaderLoaderAPI shader_loader = m_engine_api.get_shader_loader_api();
-		shader_loader.load_shader(light_pass_shader_id, m_base_shader_path + "GBuffer/GBufferVertexLightPass.glsl", m_base_shader_path + "GBuffer/GBufferFragmentLightPass.glsl", true, true); // from_file: true; link_ubo_matrices: true
+		shader_loader.load_shader(light_pass_shader_id, m_base_shader_path + "GBuffer/GBufferVertexLightPass_POINTLIGHT.glsl", m_base_shader_path + "GBuffer/GBufferFragmentLightPass.glsl", true, true); // from_file: true; link_ubo_matrices: true
 
 		const QuestEngine::API::ResourceAPI& resource_api = m_engine_api.get_resource_api();
 		QuestGLCore::Shader::ShaderProgram& g_buffer_light_pass_shader_program = resource_api.get_shader(light_pass_shader_id);

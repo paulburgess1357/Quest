@@ -9,10 +9,22 @@ namespace QuestEngine::API::OpenGL {
 		generate_sphere(segments);
 	}
 
+	// TODO MY POINTLIGHT SHADER PROGRAM IS INCORRECT.  iN THE ENGINE, I AM USING THE SHADER MEANT FOR DEFERRED OBJECTS ONLY (THEY WRITE
+	// todo TO TEXTURE ATTACHMENTS).  i UNBIND THE G-BUFFER.  I THEN BIND THE POST-PROCESS FRAMEBUFFER.  WHEN I RENDER THE POINTLIGHTS,
+	// TODO, I AM USING A SHADER THAT WRITES TO 3 TEXTURES, BUT, THE FRAMEBUFFER DOESN'T EXPECT THOSE TEXTURES TO BE WRITTEN TO.
+	// TODO I THINK I JUST NEED TO UPDATE THE POINTLIGHT SHADER TO BE SOMETHING MORE NORMAL. BOTH THE LAYOUT AND THE ACTUAL CODE IN MAIN.
+
 	void PointLightLoader::load_pointlight_mesh(QuestEngine::API::EngineAPI& engine_api) const {
 		const QuestEngine::API::OpenGL::ShaderLoaderAPI shader_loader = engine_api.get_shader_loader_api();
-		const std::string shader_id{ Constants::pointlight_shader };
-		shader_loader.load_shader(shader_id, "../Resources/Shaders/GBuffer/GBufferShapeVertexGeometryPassNoTexture.glsl", "../Resources/Shaders/GBuffer/GBufferShapeFragmentGeometryPassNoTexture.glsl", true, true);
+		const std::string shader_id{ Constants::g_buffer_light_pass }; // Constants::pointlight_shader
+
+		// if you want to load into deferred pipeline...
+		// shader_loader.load_shader(shader_id, "../Resources/Shaders/GBuffer/GBufferShapeVertexGeometryPassNoTexture.glsl", "../Resources/Shaders/GBuffer/GBufferShapeFragmentGeometryPassNoTexture.glsl", true, true);
+
+		// shader for light pass geometry
+		// this draws the light stuff....
+		// shader_loader.load_shader(shader_id, "../Resources/Shaders/GBuffer/GBufferVertexLightPass_POINTLIGHT.glsl", "../Resources/Shaders/GBuffer/GBufferFragmentLightPass.glsl", true, true);
+
 
 		// Load pointlight into resource
 		const std::string model_entity_id{ Constants::pointlight_model };
