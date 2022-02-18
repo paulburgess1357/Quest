@@ -10,9 +10,6 @@ namespace QuestEngine::ECS {
 		explicit SystemManager(entt::registry& active_registry);
 		void set_active_registry(entt::registry& registry);
 		void update(const Camera::Camera& camera) const;
-		void draw_deferred() const;
-		void draw_forward() const;
-		void draw_pointlight() const;
 	private:
 		entt::registry* m_active_registry;
 	};

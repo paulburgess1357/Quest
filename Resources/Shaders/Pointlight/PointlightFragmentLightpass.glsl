@@ -17,6 +17,7 @@ struct Light {
 
 const int LIGHT_QTY = 12;
 const float CONSTANT = 1.0f; // note that we don't send this to the shader, we assume it is always 1.0 (in our case)
+const float POINTLIGHT_MAX_RADIUS = 5.09f;
 
 // ============ Global Uniforms ============
 layout (std140) uniform ubo_matrices {
@@ -55,27 +56,6 @@ void main(){
     // Ambient (hard coded for now)
     vec3 lighting = diffuse_color * 0.1;
 
-        // I THINK instead of this loop, I do this...:
-        // Write your lighting spheres to their own texture attachment in the normal g-buffer shader (prior to this)
-        // In this shader, get the texture for the above (e.g. call it pointlight texture)
-        // Instead of the loop below, I combine the colors of the pointlight texture (which is just sphere volumes that are while) with the below, and somehow use the equation
-        // I dont understnad how to sacle the spheres color.  Do i fade it out to black in its original texture render? Or do I somehow do that in this shader?
-
-        // Perhaps I need the z buffer information here as well? Soo maybe its this:
-        // 1) Write depth infomrtion to texture in g-buffer
-        // 2) access that depth information in the lighting pass...
-        // 3) Use that to determine how to render light volumes?
-        // 4) if a light volume is rendered, figure out how the blending comes into play........... ???
-        // 5) as part of 4, how do the equations below work>? No loop and the equation is based on distance to light source?
-
-        // nooooooooooo
-
-        // perhaps this
-        // when drawing to lighting shader:
-        // disable depth (i think)'
-        // draw light spheres
-        // this filters down the lighting shader to just pixels impacted by these spheres???
-
     for(int i = 0; i < LIGHT_QTY; ++i){
 
         // Convert light to eye space
@@ -86,7 +66,7 @@ void main(){
         // objects outside the light radius range:
         float distance_to_light = length(light_in_world_eye - vertex_position_eye);             
 
-        //if(distance_to_light < pointlight_max_radius){
+         if(distance_to_light < POINTLIGHT_MAX_RADIUS){
             // The value here gives us a scalar for how strong our light is (if light_dir and vertex_normals were at 90 degrees, the result would be zero): pg 80
             float light_dir_to_normals_dot = max(dot(light_direction_from_surface_to_lightsource, vertex_normal_eye), 0.0f);
 
@@ -104,13 +84,10 @@ void main(){
             diffuse_lighting *= attenuation;
             specular_lighting *= attenuation;
         
-            lighting += diffuse_lighting + specular_lighting;
-        //}
-
+            lighting += diffuse_lighting + specular_lighting;        
+         }
     }
     
     // Gamma Correction
-    // frag_color = vec4(pow(lighting, vec3(1.0f/2.2f)), 1.0);    
     frag_color = vec4(lighting, 1.0);
-
 } 

@@ -1,9 +1,11 @@
 #pragma once
 #include "QuestGLCore/Framebuffer/Typedefs.h"
+#include "QuestGLCore/Framebuffer/FramebufferEnum.h"
 #include "QuestGLCore/Texture/Typedefs.h"
 #include "QuestGLCore/Texture/BlankTextureCreator.h"
 #include "QuestGLCore/Texture/BlankTextureEnum.h"
 #include "QuestUtility/Include/Logger.h"
+#include "QuestGLCore/OpenGLTypes/OpenGLEnumResolution.h"
 #include <initializer_list>
 
 
@@ -27,15 +29,21 @@ namespace QuestGLCore::Framebuffer {
 		explicit Framebuffer(const int width, const int height, const std::initializer_list<Texture::BlankTextureEnum>& texture_types)
 			:m_framebuffer_handle{ GL_FRAMEBUFFER },
 			m_renderbuffer_handle{ GL_RENDERBUFFER },
-			m_color_attachment_num{ 0 }{
+			m_color_attachment_num{ 0 },
+			m_width{ width },
+			m_height{ height }{
 			create_texture_creators(texture_types),
-			create_color_attachments(width, height);
-			create_renderbuffer_attachment(width, height);
+			create_color_attachments();
+			create_renderbuffer_attachment();
 			check_for_completeness();
-			glViewport(0, 0, width, height);
+			glViewport(0, 0, m_width, m_height);
 
 			// Writing to all color attachments by default
 			set_all_color_attachments_to_write_to();
+		}
+
+		static void clear_all_buffers() {
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 		}
 
 		void bind() const {
@@ -68,39 +76,33 @@ namespace QuestGLCore::Framebuffer {
 			trait.unbind_draw();
 		}
 
-		void blit_depth_to_existing_fb(const Framebuffer<TextureType>& framebuffer, const int src_width, const int src_height, const int dest_width, const int dest_height) const {
+		void copy_to_framebuffer(const Framebuffer<TextureType>& dest_framebuffer, const FramebufferBlitEnum blit_enum) const {
 			// Read depth values this fb g-buffer
 			bind_read();
 
 			// Write to existing framebuffer
-			framebuffer.bind_draw();
+			dest_framebuffer.bind_draw();
 
-			glBlitFramebuffer(0, 0, src_width, src_height, 0, 0, dest_width, dest_height, GL_DEPTH_BUFFER_BIT, GL_NEAREST);
+			const auto buffer_type = OGLResolution::FramebufferBlitResolution::get_bitfield(blit_enum);
+			glBlitFramebuffer(0, 0, m_width, m_height, 0, 0, dest_framebuffer.m_width, dest_framebuffer.m_height, buffer_type, GL_NEAREST);
 		}
 
-		void blit_depth_to_default_fb(const int src_width, const int src_height, const int dest_width, const int dest_height) const {
+		void copy_to_default_framebuffer(const int dest_width, const int dest_height, const FramebufferBlitEnum blit_enum) const {
 			// Read depth values from g-buffer
 			bind_read();
 
 			// Write depth values to window framebuffer
 			unbind_draw();
-			glBlitFramebuffer(0, 0, src_width, src_height, 0, 0, dest_width, dest_height, GL_DEPTH_BUFFER_BIT, GL_NEAREST);
+			const auto buffer_type = OGLResolution::FramebufferBlitResolution::get_bitfield(blit_enum);
+			glBlitFramebuffer(0, 0, m_width, m_height, 0, 0, dest_width, dest_height, buffer_type, GL_NEAREST);
 		}
 
-		void clear_buffer() const {
-			bind();
-				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-			unbind();
-		}
-
-		static void clear_buffer_no_bind() {
-			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-		}
-
-		void rescale_attachments(const int width, const int height) const {
+		void rescale_attachments(const int width, const int height) {
 			QUEST_TRACE("Rescaling Framebuffer Attachments")
-			rescale_color_attachments(width, height);
-			rescale_renderbuffer_attachment(width, height);
+			m_width = width;
+			m_height = height;
+			rescale_color_attachments();
+			rescale_renderbuffer_attachment();
 			glViewport(0, 0, width, height);
 		}
 
@@ -166,9 +168,9 @@ namespace QuestGLCore::Framebuffer {
 			}
 		}
 
-		void create_color_attachments(const int width, const int height) {
+		void create_color_attachments() {
 			for (const auto& blank_texture_creator : m_texture_creators) {
-				create_color_attachment(width, height, blank_texture_creator.get());
+				create_color_attachment(m_width, m_height, blank_texture_creator.get());
 			}
 		}
 
@@ -187,7 +189,7 @@ namespace QuestGLCore::Framebuffer {
 			++m_color_attachment_num;
 		}
 
-		void rescale_color_attachments(const int width, const int height) const {
+		void rescale_color_attachments() const {
 			// Color attachments are created starting from 0 (see create color attachment).  This takes each texture handle and updates
 			// each color attachment to be resized.  We don't need to store 'm_color_attachment_num' because we store the handles
 			// in a vector, so the order starting from 0 is maintained.  E.g. <texture handle for attachment 0, texture handle for attachment 1, etc.>
@@ -196,7 +198,7 @@ namespace QuestGLCore::Framebuffer {
 
 			for(size_t i = 0; i < m_color_attachment_handles.size(); i++) {
 				// Texture rescale handles its own bind()
-				m_texture_creators[i]->rescale_texture(m_color_attachment_handles[i], width, height);
+				m_texture_creators[i]->rescale_texture(m_color_attachment_handles[i], m_width, m_height);
 				// Get texture creation function and use to update width and height
 				// Typically glFramebufferTexture2D & GL_TEXTURE_2D
 				const auto glTextureFunction = OGLResolution::OglFramebufferFunctionResolution::get_function<TextureType>();
@@ -207,13 +209,13 @@ namespace QuestGLCore::Framebuffer {
 			}
 		}
 
-		void create_renderbuffer_attachment(const int width, const int height) const {
+		void create_renderbuffer_attachment() const {
 			// Depth and stencil attachments (24bit depth; 8bit stencil); Write-only 
 			const auto renderbuffer_target = m_renderbuffer_handle.get_trait().get_target();
 			const auto framebuffer_target = m_framebuffer_handle.get_trait().get_target();
 
 			m_renderbuffer_handle.bind();
-				glRenderbufferStorage(renderbuffer_target, GL_DEPTH24_STENCIL8, width, height);
+				glRenderbufferStorage(renderbuffer_target, GL_DEPTH24_STENCIL8, m_width, m_height);
 			m_renderbuffer_handle.unbind();
 
 			bind();
@@ -221,9 +223,9 @@ namespace QuestGLCore::Framebuffer {
 			unbind();
 		}
 
-		void rescale_renderbuffer_attachment(const int width, const int height) const {
+		void rescale_renderbuffer_attachment() const {
 			m_renderbuffer_handle.bind();
-				glRenderbufferStorage(m_renderbuffer_handle.get_trait().get_target(), GL_DEPTH24_STENCIL8, width, height);
+				glRenderbufferStorage(m_renderbuffer_handle.get_trait().get_target(), GL_DEPTH24_STENCIL8, m_width, m_height);
 			m_renderbuffer_handle.unbind();
 		}
 
@@ -272,6 +274,9 @@ namespace QuestGLCore::Framebuffer {
 		std::vector<Texture::TextureHandle> m_color_attachment_handles; // Color
 		std::vector<std::unique_ptr<Texture::BlankTextureCreator<TextureType>>> m_texture_creators; // Texture creators
 		unsigned int m_color_attachment_num;
+
+		int m_width;
+		int m_height;
 	};
 
 } // namespace QuestGLCore::Framebuffer

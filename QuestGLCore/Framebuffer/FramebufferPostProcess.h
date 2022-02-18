@@ -70,6 +70,10 @@ namespace QuestGLCore::Framebuffer {
 			this->m_mesh->draw();
 			//glEnable(GL_DEPTH_TEST);
 		}
+
+		void draw_quad() const {
+			this->m_mesh->draw();
+		}
 	private:
 		void init_shader_uniforms() const override {
 			this->m_shader_program->bind();

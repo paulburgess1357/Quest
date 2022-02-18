@@ -10,7 +10,7 @@ int main() {
 	QuestSandbox::Tests::ShapeTests shape_test { engine_api };
 
 	//shape_test.g_buffer_lighting_test_pointlight_mesh_volume();
-	shape_test.g_buffer_lighting_pointlight_volume();
+	shape_test.pointlight_lightvolume_test();
 
 	engine_api.run();
 }

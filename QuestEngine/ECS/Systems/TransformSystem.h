@@ -11,8 +11,6 @@ namespace QuestEngine::ECS::Systems {
 
 			// All model matrix transformations
 			rotate(registry);
-
-
 			ui_transform(registry);
 
 
@@ -22,7 +20,7 @@ namespace QuestEngine::ECS::Systems {
 		}
 
 		static void rotate(entt::registry& registry) {
-			registry.view<Components::TransformComponent, Components::RotateComponent>().each([](auto& transform, auto& rotate) {
+			registry.view<Components::ModelMatrixComponent, Components::RotateComponent>().each([](auto& transform, auto& rotate) {
 				transform.m_model_matrix = glm::rotate(transform.m_model_matrix, rotate.m_rate, rotate.m_axis);
 			});
 		}
@@ -42,8 +40,8 @@ namespace QuestEngine::ECS::Systems {
 
 		static void update_normal_matrices(entt::registry& registry, const Camera::Camera& camera) {
 			const auto view_matrix = camera.get_view_matrix();
-			registry.view<Components::TransformComponent>().each([&](auto& transform) {
-				transform.m_normal_matrix = glm::mat3(glm::transpose(glm::inverse(view_matrix * transform.m_model_matrix)));
+			registry.view<Components::ModelMatrixComponent, Components::NormalMatrixComponent>().each([&](auto& model_matrix, auto& normal_matrix) {
+				normal_matrix.m_normal_matrix = glm::mat3(glm::transpose(glm::inverse(view_matrix * model_matrix.m_model_matrix)));
 			});
 		}
 

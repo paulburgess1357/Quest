@@ -23,6 +23,7 @@
 #include "QuestEngine/Using/Texture.h"
 #include "QuestEngine/Using/UniformBufferObjects.h"
 #include "QuestEngine/Using/Framebuffer.h"
+#include "QuestEngine/Using/LightState.h"
 
 // ECS
 #include "QuestEngine/ECS/Components/TransformComponent.h"
@@ -50,6 +51,9 @@
 
 // Texture
 #include "QuestEngine/Texture/TextureType.h"
+
+// Render
+#include "QuestEngine/Render/RenderPassManager.h"
 
 // Misc
 #include "QuestEngine/Constants/Constants.h"

@@ -1,7 +1,7 @@
 #version 330 core
 layout (location = 0) in vec3 vertex_position;
-layout (location = 1) in vec3 vertex_normal;
-layout (location = 2) in vec2 tex_coords;
+//layout (location = 1) in vec3 vertex_normal;
+//layout (location = 2) in vec2 tex_coords;
 
 // ============ Global Uniforms ============
 layout (std140) uniform ubo_matrices {
@@ -11,7 +11,6 @@ layout (std140) uniform ubo_matrices {
 
 // ============ Shader Uniforms ============
 uniform mat4 model_matrix;
-uniform mat3 normal_matrix;
 
 // =============== Output ==================
 // out vec2 frag_tex_coords;

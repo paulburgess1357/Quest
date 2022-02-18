@@ -60,7 +60,7 @@
     <ClInclude Include="VertexData\VertexDataElement.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="OpenGLTypes\OglTypeResolution.h">
+    <ClInclude Include="OpenGLTypes\OpenGLTypeResolution.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Model\Model.h">
@@ -126,13 +126,22 @@
     <ClInclude Include="Framebuffer\FramebufferPostProcess.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Shader\ShaderStrings.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Texture\BlankTextureEnum.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="LightState\ExternalTypedefs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Framebuffer\FramebufferEnum.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OpenGLTypes\OpenGLEnumResolution.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OpenGLTypes\OpenGLTypeResoultionException.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Model\MeshQuad.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -6,4 +6,5 @@ namespace QuestEngine::Model {
 	using StandardMesh = QuestGLCore::Model::StandardMesh;
 	using IndexedModel = QuestGLCore::Model::IndexedModel;
 	using IndexedMesh = QuestGLCore::Model::IndexedMesh;
+	using IndexedMeshQuad = QuestGLCore::Model::IndexedMeshQuad;
 } // namespace QuestEngine::Model

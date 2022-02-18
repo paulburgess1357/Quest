@@ -129,7 +129,7 @@
     <ClInclude Include="Using\LightState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Draw\FBDrawManager.h">
+    <ClInclude Include="Render\RenderPassManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -179,7 +179,7 @@
     <ClCompile Include="API\OpenGL\PointLightLoaderAPI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Draw\FBDrawManager.cpp">
+    <ClCompile Include="Render\RenderPassManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -6,4 +6,5 @@ namespace QuestEngine::Framebuffer {
 	using FramebufferPostProcess2D = QuestGLCore::Framebuffer::FramebufferPostProcess2D;
 	using FramebufferPostProcessStandard2D = QuestGLCore::Framebuffer::FramebufferPostProcessStandard2D;
 	using FramebufferGBuffer2D = QuestGLCore::Framebuffer::FramebufferGBuffer2D;
+	using FramebufferBlitEnum = QuestGLCore::Framebuffer::FramebufferBlitEnum;
 } // namespace QuestEngine::Framebuffer

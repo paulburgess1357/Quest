@@ -12,6 +12,7 @@ namespace QuestGLCore::LightState {
 
 	void LightState::light_pass_end() {
 		glEnable(GL_DEPTH_TEST);
+		glDisable(GL_BLEND);
 	}
 
 
