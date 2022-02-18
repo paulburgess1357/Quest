@@ -168,6 +168,7 @@
     <ClInclude Include="Constants\Constants.h" />
     <ClInclude Include="Framebuffer\ExternalTypedefs.h" />
     <ClInclude Include="Framebuffer\Framebuffer.h" />
+    <ClInclude Include="LightState\ExternalTypedefs.h" />
     <ClInclude Include="Texture\BlankTextureEnum.h" />
     <ClInclude Include="Framebuffer\FramebufferPostProcess.h" />
     <ClInclude Include="Framebuffer\Typedefs.h" />
@@ -206,6 +207,7 @@
     <ClInclude Include="VertexData\VertexDataElement.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="LightState\LightState.cpp" />
     <ClCompile Include="PCH\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

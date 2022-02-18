@@ -187,6 +187,7 @@
     <ClInclude Include="ECS\Systems\RenderSystem.h" />
     <ClInclude Include="ECS\Systems\TransformSystem.h" />
     <ClInclude Include="Engine\Engine.h" />
+    <ClInclude Include="Draw\FBDrawManager.h" />
     <ClInclude Include="PCH\framework.h" />
     <ClInclude Include="PCH\pch.h" />
     <ClInclude Include="Resource\ResourceManager.h" />
@@ -194,6 +195,7 @@
     <ClInclude Include="UniformBufferObjects\UniformBufferManager.h" />
     <ClInclude Include="Using\API.h" />
     <ClInclude Include="Using\Framebuffer.h" />
+    <ClInclude Include="Using\LightState.h" />
     <ClInclude Include="Using\Model.h" />
     <ClInclude Include="Using\Resource.h" />
     <ClInclude Include="Resource\TResource.h" />
@@ -216,6 +218,7 @@
     <ClCompile Include="ECS\Manage\RegistryManager.cpp" />
     <ClCompile Include="ECS\Manage\SystemManager.cpp" />
     <ClCompile Include="Engine\Engine.cpp" />
+    <ClCompile Include="Draw\FBDrawManager.cpp" />
     <ClCompile Include="PCH\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

@@ -59,8 +59,8 @@ namespace QuestGLCore::Framebuffer {
 			this->attachment_num_check(1, "The standard post processing framebuffer can only have a single texture attachment! If more are desired, create a specilized class or update the existing stand post-processing framebuffer!  This framebuffer is primarily meant for something like gamma correction or hdr.");
 		}
 
-		void draw() const {
-			glDisable(GL_DEPTH_TEST);
+		void render_to_quad() const {
+			//glDisable(GL_DEPTH_TEST);
 			this->m_shader_program->bind();
 
 			// First color attachment should be all draw data
@@ -68,7 +68,7 @@ namespace QuestGLCore::Framebuffer {
 			this->bind_color_attachment(0, 0);
 
 			this->m_mesh->draw();
-			glEnable(GL_DEPTH_TEST);
+			//glEnable(GL_DEPTH_TEST);
 		}
 	private:
 		void init_shader_uniforms() const override {

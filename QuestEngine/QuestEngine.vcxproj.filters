@@ -126,6 +126,12 @@
     <ClInclude Include="ECS\Manage\RegistryManagerExecptions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Using\LightState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Draw\FBDrawManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PCH\pch.cpp">
@@ -171,6 +177,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="API\OpenGL\PointLightLoaderAPI.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Draw\FBDrawManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
