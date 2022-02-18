@@ -109,12 +109,12 @@ namespace QuestSandbox::Tests {
 		// LightPass Shader: GBufferVertexLightPass
 		// PostProcess Quad (string): Gamma correction
 
-		constexpr int LIGHT_AND_BOX_QTY = 12;
+		// constexpr int LIGHT_AND_BOX_QTY = 12;
 		const QuestEngine::API::RegistryAPI registry_api = m_engine_api.get_registry_api();
 
 		// ========== Load test textured cube into resource ==========
 		// Load Textured Cube ECS Entity into world::
-		constexpr int BOX_QTY = LIGHT_AND_BOX_QTY;
+		constexpr int BOX_QTY = 12;
 		for (unsigned int i = 0; i < BOX_QTY; i++) {
 
 			const auto xPos = static_cast<float>(((rand() % 100) / 100.0) * 6.0 - 3.0);
@@ -149,13 +149,14 @@ namespace QuestSandbox::Tests {
 		g_buffer_light_pass_shader_program.bind();
 
 		// Lights (hardcoded in shader)
-		constexpr int LIGHT_QTY = LIGHT_AND_BOX_QTY;
+		constexpr int LIGHT_QTY = 64;
 		for (unsigned int i = 0; i < LIGHT_QTY; i++) {
 
 			// calculate slightly random offsets
 			const auto xPos = static_cast<float>(((rand() % 100) / 100.0) * 6.0 - 3.0);
 			const auto yPos = static_cast<float>(((rand() % 100) / 100.0) * 6.0 - 4.0);
 			const auto zPos = static_cast<float>(((rand() % 100) / 100.0) * 6.0 - 3.0);
+			QUEST_TRACE("{}, {}, {}", xPos, yPos, zPos);
 			g_buffer_light_pass_shader_program.set_uniform("all_lights[" + std::to_string(i) + "].light_position", glm::vec3(xPos, yPos, zPos));
 
 			// also calculate random color

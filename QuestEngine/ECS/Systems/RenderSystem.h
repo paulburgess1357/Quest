@@ -5,6 +5,7 @@
 #include "QuestGLCore/Shader/ShaderProgram.h"
 #include "QuestGLCore/Constants/Constants.h"
 #include <entt/entt.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
 namespace QuestEngine::ECS::Systems {
 
@@ -46,8 +47,8 @@ namespace QuestEngine::ECS::Systems {
 		}
 
 		// ========== Pointlight rendering ==========
-
-		static void render_pointlight(const entt::registry& registry) {
+		// todo when scale is removed make the registry input const entt::registry& registry
+		static void render_pointlight(entt::registry& registry) {
 
 			// TODO make this actually work with shader lighting variables... e.g. location, uniforms, moving lights around, etc.
 			// TODO: light volumes must move with pointlights!
@@ -56,8 +57,13 @@ namespace QuestEngine::ECS::Systems {
 				auto* shader_program = model.m_model->get_shader_program();
 				// shader_program->bind(); //TODO find better way than turning off bind here (bind is happening from the framebuffer currently)...
 
+				// ***************************** testings resizing: ***************************** 
+				auto scaled_result = glm::scale(transform.m_model_matrix, glm::vec3(1.0));
+
+				// ********************************************************************************
+
 				//TODO Only the model matrix is necessary for pointlights
-				set_model_uniform_matrices(shader_program, transform.m_model_matrix, transform.m_normal_matrix);
+				set_model_uniform_matrices(shader_program, scaled_result, transform.m_normal_matrix);
 
 				model.m_model->draw();
 			});
@@ -65,8 +71,13 @@ namespace QuestEngine::ECS::Systems {
 				auto* shader_program = model.m_model->get_shader_program();
 				// shader_program->bind(); TODO find better way than turning off bind here (bind is happening from the framebuffer currently)...
 
+
+				// ***************************** testings resizing: ***************************** 
+				auto scaled_result = glm::scale(transform.m_model_matrix, glm::vec3(1.0));
+				// ********************************************************************************
+
 				//TODO Only the model matrix is necessary for pointlights
-				set_model_uniform_matrices(shader_program, transform.m_model_matrix, transform.m_normal_matrix);
+				set_model_uniform_matrices(shader_program, scaled_result, transform.m_normal_matrix);
 
 				model.m_model->draw();
 			});

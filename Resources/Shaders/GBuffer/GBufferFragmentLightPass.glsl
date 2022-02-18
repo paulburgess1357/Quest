@@ -15,7 +15,7 @@ struct Light {
     vec3 color;
 };
 
-const int LIGHT_QTY = 12;
+const int LIGHT_QTY = 64;
 const float CONSTANT = 1.0f; // note that we don't send this to the shader, we assume it is always 1.0 (in our case)
 
 // ============ Global Uniforms ============
@@ -86,7 +86,7 @@ void main(){
         // objects outside the light radius range:
         float distance_to_light = length(light_in_world_eye - vertex_position_eye);             
 
-        if(distance_to_light < pointlight_max_radius){
+        //if(distance_to_light < pointlight_max_radius){
             // The value here gives us a scalar for how strong our light is (if light_dir and vertex_normals were at 90 degrees, the result would be zero): pg 80
             float light_dir_to_normals_dot = max(dot(light_direction_from_surface_to_lightsource, vertex_normal_eye), 0.0f);
 
@@ -105,7 +105,7 @@ void main(){
             specular_lighting *= attenuation;
         
             lighting += diffuse_lighting + specular_lighting;
-        }
+        //}
 
     }
     
