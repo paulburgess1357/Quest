@@ -68,21 +68,29 @@ namespace QuestEngine::Engine {
 
 	void Engine::draw_scene() const {
 
-		// ====== Deferred drawing pass ======
-		// - Store scene in geometry buffer (positions, normals, textures, etc.)
-		m_g_buffer.bind();
+
+		// --------------------------------------------------------------------------------------
+		// ====== Deferred drawing pass ======                                                  |
+		// - Store scene in geometry buffer (positions, normals, textures, etc.)                |      
+		m_g_buffer.bind();//                                                                    | ----> Draw geometry/textures/normals to G-Buffer attachments 															   
+		Framebuffer::Framebuffer2D::clear_buffer_no_bind(); //                                  |                           
+		m_systems_manager.draw_deferred(); //                                                   |
+		// --------------------------------------------------------------------------------------
+
+
+		// --------------------------------------------------------------------------------------
+		// ======= Lighting drawing pass ======                                                 |
+		// - Take g-buffer stored data and draw lighting to post-process framebuffer            |
+		m_post_process_framebuffer.bind(); //                                                   | ----> Render G-Buffer attachments onto pointlight volume spheres to post-process framebuffer
 		Framebuffer::Framebuffer2D::clear_buffer_no_bind();
-		m_systems_manager.draw_deferred();
-		// m_systems_manager.draw_pointlight();
+		//                                                                                      |
+		// m_lighting_manager.init_light_pass_settings() // ogl functions                       |
+		// m_lighting_manager.bind_pointlight_shader() // G-Buffer light pass                   |
+		// m_lighting_manager.bind_all_fb_attachments(m_gbuffer)                                |
+		// m_systems_manager.draw_pointlights();                                                |
+		// m_lighting_manager.end_light_pass_settings()                                         |
 
-		// ======= Lighting drawing pass ======
-		// - Take g-buffer stored data and draw lighting to post-process framebuffer
-		m_post_process_framebuffer.bind();
-		Framebuffer::Framebuffer2D::clear_buffer_no_bind();
-		// m_g_buffer.draw_lighting_pass_to_quad();// -> Re-enable this to draw to quad instead of pointlights (also update the vertex shader program its using to NOT be the pointlight version)
-
-
-		// PB Testing Changes ======================================================
+		// PB Testing Changes ======================================================  
 		// This is being drawn to the post-process framebuffer quad (shown above).
 		m_g_buffer.draw_lighting_pass_to_pointlights_start();
 		m_g_buffer.bind_all_color_attachments();
@@ -91,27 +99,33 @@ namespace QuestEngine::Engine {
 		// m_g_buffer.bind_shader_program_TEMP_PUBLIC();
 		// bind shader program
 
-		
+
 		 // pointlights need to be updated to use correct shader....
 
 		m_g_buffer.draw_lighting_pass_to_pointlights_end();
 		// ==========================================================================
 
+		// --------------------------------------------------------------------------------------
+
+		
+		// ---------------------------------------------------------------------------------------------------------------------------------------
+		// Transfer g-buffer depth from 'm_g_buffer' to 'm_post_process_framebuffer'                                                              | 
+		m_g_buffer.blit_depth_to_existing_fb(m_post_process_framebuffer, m_window_width, m_window_height, m_window_width, m_window_height); //    |
+		//                                                                                                                                        |
+		// ======== Forward drawing pass =======                                                                                                  | -----> Apply any forward rendering to post-process framebuffer
+		// Fully bind post-process framebuffer                                                                                                    |
+		m_post_process_framebuffer.bind(); //                                                                                                     |
+		m_systems_manager.draw_forward(); //                                                                                                      | 
+		// ---------------------------------------------------------------------------------------------------------------------------------------
 
 
-		// Transfer g-buffer depth from 'm_g_buffer' to 'm_post_process_framebuffer'
-		m_g_buffer.blit_depth_to_existing_fb(m_post_process_framebuffer, m_window_width, m_window_height, m_window_width, m_window_height);
-
-		// ======== Forward drawing pass =======
-		// Fully bind post-process framebuffer
-		m_post_process_framebuffer.bind();
-		m_systems_manager.draw_forward();
-
-		// ============ Post-Process ===========
-		// Draw post-process framebuffer to window
-		m_post_process_framebuffer.unbind();
-		m_window.clear_buffer();
-		m_post_process_framebuffer.draw();
+		// ---------------------------------------------------------------------------------------------------------------------------------------
+		// ============ Post-Process ===========                                                                                                 |
+		// Draw post-process framebuffer to window                                                                                               |
+		m_post_process_framebuffer.unbind(); //                                                                                                  | ----> Apply any post processing effects (gamma, hdr, bloom, etc.)
+		m_window.clear_buffer(); //                                                                                                              |
+		m_post_process_framebuffer.draw(); //                                                                                                    |
+		// ---------------------------------------------------------------------------------------------------------------------------------------
 	}
 
 	void Engine::draw_user_interface() const {

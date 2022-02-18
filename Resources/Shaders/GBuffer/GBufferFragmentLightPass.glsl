@@ -15,7 +15,7 @@ struct Light {
     vec3 color;
 };
 
-const int LIGHT_QTY = 64;
+const int LIGHT_QTY = 12;
 const float CONSTANT = 1.0f; // note that we don't send this to the shader, we assume it is always 1.0 (in our case)
 
 // ============ Global Uniforms ============

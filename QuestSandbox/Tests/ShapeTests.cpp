@@ -149,7 +149,7 @@ namespace QuestSandbox::Tests {
 		g_buffer_light_pass_shader_program.bind();
 
 		// Lights (hardcoded in shader)
-		constexpr int LIGHT_QTY = 64;
+		constexpr int LIGHT_QTY = 12;
 		for (unsigned int i = 0; i < LIGHT_QTY; i++) {
 
 			// calculate slightly random offsets
