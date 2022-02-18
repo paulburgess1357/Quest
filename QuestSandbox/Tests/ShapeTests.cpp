@@ -27,23 +27,33 @@ namespace QuestSandbox::Tests {
 			const auto zPos = static_cast<float>(((rand() % 100) / 100.0) * 6.0 - 3.0);
 
 			const std::string entity_id = "Textured_Cube" + std::to_string(i);
-			load_dual_textured_cube_into_world(entity_id, { xPos , yPos, zPos }, m_base_shader_path + "/GBuffer/GBufferShapeVertexGeometryPass.glsl", m_base_shader_path + "/GBuffer/GBufferShapeFragmentGeometryPass.glsl", QuestEngine::ECS::RenderPass::Deferred);
+			load_dual_textured_cube_into_world(entity_id, { xPos , yPos, zPos }, m_base_shader_path + "/GBuffer/GBufferShapeVertexGeometryPassDualTextured.glsl", m_base_shader_path + "/GBuffer/GBufferShapeFragmentGeometryPassDualTextured.glsl", QuestEngine::ECS::RenderPass::Deferred);
 		}
-
 
 		// ========== Load pointlight mesh into resource ==========
 		const QuestEngine::API::ResourceAPI& resource_api = m_engine_api.get_resource_api();
-		const QuestEngine::API::OpenGL::PointLightLoader pointlight_loader(10);
-		pointlight_loader.load_pointlight_mesh(m_engine_api, QuestEngine::ECS::RenderPass::Pointlight); // Position Only
+		const QuestEngine::API::OpenGL::ShaderLoaderAPI shader_loader = m_engine_api.get_shader_loader_api();
+
+		// Create sphere loader
+		const QuestEngine::API::OpenGL::SphereLoader sphere_loader(1.0, 4, 4, true);
+
+		// Load pointlight into resource (for lightpass; Shader is pre-loaded by engine)
+		sphere_loader.load_sphere_into_resource(m_engine_api, QuestEngine::Constants::pointlight_model, QuestEngine::Constants::pointlight_shader, true);
+
+    	// Load sphere visualization shader into resource (currently not default loaded)
+		shader_loader.load_shader(QuestEngine::Constants::visualize_pointlight_model_shader, m_base_shader_path + "/GBuffer/GBufferShapeVertexGeometryPassSingleTextured.glsl", m_base_shader_path + "/GBuffer/GBufferShapeFragmentGeometryPassSingleTextured.glsl", true, true); // from file: true; load_ubo_matrices: true
+
+    	// Now load visualization model into resource (only necessary to see your pointlight mesh:
+		sphere_loader.load_default_textured_sphere_into_resource(m_engine_api, QuestEngine::Constants::visualize_pointlight_model, QuestEngine::Constants::visualize_pointlight_model_shader);
+
+		// Set uniforms:
 		const auto pointlight_model_ptr = resource_api.get_indexed_model_pointer(QuestEngine::Constants::pointlight_model);
-
-		// Getting pointlight to actually render
-		pointlight_loader.load_pointlight_mesh(m_engine_api, QuestEngine::ECS::RenderPass::Forward); // Position/Normals/TexCoords Only
-		const auto pointlight_TEMP_model_ptr = resource_api.get_indexed_model_pointer("temp_pointlight_forward_shader");
-
+		const auto pointlight_visualization_model_ptr = resource_api.get_indexed_model_pointer(QuestEngine::Constants::visualize_pointlight_model);
 
 		// ================= Set lighting pass uniforms ==================
 		auto& pointlight_shader = resource_api.get_shader(QuestEngine::Constants::pointlight_shader);
+		auto& pointlight_visualization_shader = resource_api.get_shader(QuestEngine::Constants::visualize_pointlight_model_shader);
+
 		pointlight_shader.bind();
 
 			constexpr float CONSTANT = 1.0f;
@@ -63,7 +73,7 @@ namespace QuestSandbox::Tests {
 
 			// ======== Load pointlight mesh into the same location as the all_lights.light_position uniform =========
 			// Lights (hardcoded in shader)
-			constexpr int LIGHT_QTY = 12;
+			constexpr int LIGHT_QTY = 3;
 			const QuestEngine::API::RegistryAPI registry_api = m_engine_api.get_registry_api();
 			for (unsigned int i = 0; i < LIGHT_QTY; i++) {
 
@@ -85,10 +95,16 @@ namespace QuestSandbox::Tests {
 
 				// TO visualize pointlights
 				// Load as deferred (in addition to the above)
-				// registry_api.load_model_into_world("pointlight_" + std::to_string(i), pointlight_TEMP_model_ptr, { xPos , yPos, zPos }, QuestEngine::ECS::RenderPass::Forward); // Could be deferred or forward to make them show up; Deferred will have scene lighting.
+				registry_api.load_model_into_world("pointlight_" + std::to_string(i), pointlight_visualization_model_ptr, { xPos , yPos, zPos }, QuestEngine::ECS::RenderPass::Deferred); // Could be deferred or forward to make them show up; Deferred will have scene lighting.
 			}
 
 		pointlight_shader.unbind();
+
+		pointlight_visualization_shader.bind();
+		pointlight_visualization_shader.set_uniform(QuestEngine::Constants::default_diffuse_shader_name, 0);
+		pointlight_visualization_shader.unbind();
+
+		
 
 	}
 

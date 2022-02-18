@@ -48,6 +48,7 @@ namespace QuestEngine::Resource {
 	private:
 		void load_main_camera();
 		void load_ubo_matrices();
+		void load_default_texture();
 
 		ShaderResource m_shader_resource;
 		StandardModelResource m_standard_model_resource;

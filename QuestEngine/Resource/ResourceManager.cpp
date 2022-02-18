@@ -4,11 +4,13 @@
 #include "QuestUtility/Logging/LogHandler.h"
 #include "QuestEngine/Using/Shader.h"
 
+
 namespace QuestEngine::Resource {
 
 	ResourceManager::ResourceManager() {
 		load_main_camera();
 		load_ubo_matrices();
+		load_default_texture();
 	}
 
 	// ======================== Shader ========================
@@ -140,5 +142,13 @@ namespace QuestEngine::Resource {
 	Texture::Texture* ResourceManager::get_texture_ptr(const std::string& texture_id) {
 		return m_texture_resource.get_pointer(texture_id);
 	}
+
+	void ResourceManager::load_default_texture() {
+		const QuestUtility::ImageLoading::StandardImageLoaderFromFile image_loader{ "../Resources/Textures/default_texture.png", false };
+		const Texture::StandardTextureCreator2D texture_creator{ image_loader, true };
+		Texture::Texture texture{ texture_creator.generate_texture() };
+		load_texture2D(Constants::default_texture, texture);
+	}
+
 
 } // namespace QuestEngine::Resource

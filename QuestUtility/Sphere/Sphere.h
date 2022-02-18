@@ -48,6 +48,7 @@ public:
     const float* getNormals() const { return normals.data(); }
     const float* getTexCoords() const { return texCoords.data(); }
     const unsigned int* getIndices() const { return indices.data(); }
+
     const unsigned int* getLineIndices() const { return lineIndices.data(); }
 
     // for interleaved vertices: V/N/T
@@ -56,10 +57,22 @@ public:
     int getInterleavedStride() const { return interleavedStride; }   // should be 32 bytes
     const float* getInterleavedVertices() const { return interleavedVertices.data(); }
 
-    // draw in VertexArray mode
-    void draw() const;                                  // draw surface
-    void drawLines(const float lineColor[4]) const;     // draw lines only
-    void drawWithLines(const float lineColor[4]) const; // draw surface and lines
+    std::vector<float> getInterleavedVerticesVector() const {
+        return interleavedVertices;
+    }
+
+    std::vector<unsigned int> getIndiciesVector() const {
+        return indices;
+    }
+
+    std::vector<float> getVerticesVector() const {
+        return vertices;
+    }
+
+    //// draw in VertexArray mode
+    //void draw() const;                                  // draw surface
+    //void drawLines(const float lineColor[4]) const;     // draw lines only
+    //void drawWithLines(const float lineColor[4]) const; // draw surface and lines
 
     // debug
     void printSelf() const;
