@@ -8,7 +8,6 @@
 #include "QuestGLCore/OpenGLTypes/OpenGLEnumResolution.h"
 #include <initializer_list>
 
-
 // Framebuffer must be bound
 //   - glFramebufferTexture1D/2D/3D etc.
 //   - glFramebufferRenderbuffer
@@ -18,6 +17,12 @@
 
 // Texture must be bound
 //   - glTexImage1D/2D/3D etc.
+
+// If adding more textures to the g-buffer:
+// 1) Update the geometry pass fragment shader (i.e. the 'layout (location = 2) out vec4 g_colors_spec;' additions
+// 2) Update the light pass shader to accept the newly bound texture type (Textures struct)
+// 3) Update the Resource Preloader shaders to set the new tex unit uniform
+// 5) Update the g-buffer variable instantiation in RenderPassManager to have the new texture type in its initializer list
 
 namespace QuestGLCore::Framebuffer {
 
@@ -40,6 +45,9 @@ namespace QuestGLCore::Framebuffer {
 
 			// Writing to all color attachments by default
 			set_all_color_attachments_to_write_to();
+
+			// Black is necessary when creating G-Buffer
+			glClearColor(0.00f, 0.00f, 0.00f, 1.0f);
 		}
 
 		static void clear_all_buffers() {
@@ -154,11 +162,6 @@ namespace QuestGLCore::Framebuffer {
 
 		[[nodiscard]] size_t get_color_attachment_num() const {
 			return m_color_attachment_handles.size();
-		}
-
-	protected:
-		void attachment_num_check(const int quantity, const std::string& message_if_false) const {
-			QUEST_ASSERT(this->get_color_attachment_num() == quantity, message_if_false)
 		}
 
 	private:

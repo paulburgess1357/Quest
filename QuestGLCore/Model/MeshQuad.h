@@ -12,6 +12,7 @@ namespace QuestGLCore::Model {
 		void draw() const {
 			m_mesh->draw();
 		}
+
 	private:
 		void init_quad() {
 			const std::vector<unsigned int> indices = {

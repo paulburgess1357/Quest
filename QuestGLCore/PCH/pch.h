@@ -54,5 +54,4 @@
 #include "QuestGLCore/Framebuffer/Framebuffer.h"
 #include "QuestGLCore/Framebuffer/Typedefs.h"
 #include "QuestGLCore/Framebuffer/ExternalTypedefs.h"
-#include "QuestGLCore/Framebuffer/FramebufferPostProcess.h"
 #include "QuestGLCore/Framebuffer/FramebufferEnum.h"

@@ -123,9 +123,6 @@
     <ClInclude Include="UniformBufferObjects\ExternalTypedefs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Framebuffer\FramebufferPostProcess.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Texture\BlankTextureEnum.h">
       <Filter>Header Files</Filter>
     </ClInclude>

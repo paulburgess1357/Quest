@@ -26,11 +26,11 @@ namespace QuestEngine::Render {
 
 		// RGBA16F_NEAREST, RGBA16F_NEAREST, RGBA_NEAREST
 		// Position,        Normals,         Color + Specular
-		Framebuffer::FramebufferGBuffer2D m_g_buffer;
+		Framebuffer::Framebuffer2D m_g_buffer;
 
-		// RGBA_LINEAR
+		// RGBA16F_NEAREST
 		// Scene colors
-		Framebuffer::FramebufferPostProcessStandard2D m_post_process_framebuffer;
+		Framebuffer::Framebuffer2D m_post_process_framebuffer;
 
 		Shader::ShaderProgram* m_pointlight_shader;
 		Shader::ShaderProgram* m_postprocess_shader;

@@ -7,7 +7,6 @@
 #include "QuestEngine/API/OpenGL/ShaderLoaderAPI.h"
 #include "QuestEngine/API/OpenGL/ModelLoaderAPI.h"
 #include "QuestEngine/API/Neutral/Constants.h"
-#include "QuestEngine/API/OpenGL/SphereLoaderAPI.h"
 #include "QuestEngine/API/Neutral/Constants.h"
 
 namespace QuestSandbox::Tests {
@@ -34,66 +33,60 @@ namespace QuestSandbox::Tests {
 			load_dual_textured_cube_into_world(entity_id, { xPos , yPos, zPos }, m_base_shader_path + "/GBuffer/GBufferShapeVertexGeometryPassDualTextured.glsl", m_base_shader_path + "/GBuffer/GBufferShapeFragmentGeometryPassDualTextured.glsl", QuestEngine::ECS::RenderPass::Deferred);
 		}
 
-		// ========== Load pointlight mesh into resource ==========
-		const QuestEngine::API::ResourceAPI& resource_api = m_engine_api.get_resource_api();
-
-		// Set uniforms:
-		const auto pointlight_model_ptr = resource_api.get_indexed_model_pointer(QuestEngine::Constants::pointlight_model);
-		const auto pointlight_visualization_model_ptr = resource_api.get_indexed_model_pointer(QuestEngine::Constants::visualize_pointlight_model);
-
 		// ================= Set lighting pass uniforms ==================
+		const QuestEngine::API::ResourceAPI& resource_api = m_engine_api.get_resource_api();
 		auto& pointlight_shader = resource_api.get_shader(QuestEngine::Constants::pointlight_shader);
-		// auto& pointlight_visualization_shader = resource_api.get_shader(QuestEngine::Constants::visualize_pointlight_shader);
 
 		pointlight_shader.bind();
 
 			constexpr float CONSTANT = 1.0f; // 1.0
 			constexpr float pointlight_linear = 0.7f; // 0.7
 			constexpr float pointlight_quadratic = 1.8f; // 1.8
+			constexpr auto light_color = glm::vec3{ 0.1f, 0.1f, 0.1f };
 
 			pointlight_shader.set_uniform("linear", pointlight_linear);
 			pointlight_shader.set_uniform("quadratic", pointlight_quadratic);
+			pointlight_shader.set_uniform("light_color", light_color);
 
+			// Radius calculation below: Currently its not being used as it doesn't seem to quite capture all the light (it cuts it off)
 			// Light Volume Calculation (for radius; normally should impact mesh size but currently not using it)
 			// *** Calculate light volume (max distance to display light). ***
-			// Note: This 'max_brightness' calculation clearly isn't necessary.  However, if you had a light color that was different than white, we would need the max r/g/b value for max_brightness.
-			
-			constexpr glm::vec3 light_color = glm::vec3{ 0.1f, 0.1f, 0.1f };
-			// constexpr glm::vec3 light_color = glm::vec3{ 1.00f, 1.00f, 1.00f };
 			const float max_brightness = std::fmaxf(std::fmaxf(light_color.x, light_color.y), light_color.z);
 			const float radius = (-pointlight_linear + std::sqrt(pointlight_linear * pointlight_linear - 4 * pointlight_quadratic * (CONSTANT - (256.0f / 5.0f) * max_brightness))) / (2.0f * pointlight_quadratic);
 
-			QUEST_INFO("--------------------------- RADIUS TEST:: {}", radius)
-			pointlight_shader.set_uniform("pointlight_max_radius", radius);
+			QUEST_INFO("CALCULATED RADIUS TEST: {} ; (Not being used currently due to issues with formula)", radius)
+			constexpr float pointlight_radius = 5.09f;
+			pointlight_shader.set_uniform("pointlight_max_radius", pointlight_radius);
 
-			// ======== Load pointlight mesh into the same location as the all_lights.light_position uniform =========
-			// Lights (hardcoded in shader)
+			// ================= Load pointlights into world ==================
+			// Both pointlight volumes and visualize pointlights are being loaded
+			// Light qty (hardcoded in shader)
 			constexpr int LIGHT_QTY = 5;
-			const QuestEngine::API::RegistryAPI registry_api = m_engine_api.get_registry_api();
+
+			// Model pointers necessary to load objects into world
+			const auto pointlight_model_ptr = resource_api.get_indexed_model_pointer(QuestEngine::Constants::pointlight_model);
+			const auto pointlight_visualization_model_ptr = resource_api.get_indexed_model_pointer(QuestEngine::Constants::visualize_pointlight_model);
+
+    		const QuestEngine::API::RegistryAPI registry_api = m_engine_api.get_registry_api();
 			for (unsigned int i = 0; i < LIGHT_QTY; i++) {
 
-				// calculate slightly random offsets
+				// Calculate slightly random offsets
 				const auto xPos = static_cast<float>((rand() % 100) / 100.0 * 6.0 - 3.0);
 				const auto yPos = static_cast<float>((rand() % 100) / 100.0 * 6.0 - 4.0);
 				const auto zPos = static_cast<float>((rand() % 100 / 100.0) * 6.0 - 3.0);
 				// QUEST_TRACE("{}, {}, {}", xPos, yPos, zPos);
 				pointlight_shader.set_uniform("all_lights[" + std::to_string(i) + "].light_position", glm::vec3(xPos, yPos, zPos));
 
-				// also calculate random color
-				//const auto rColor = static_cast<float>(rand() % 100 / 200.0f + 0.5); // between 0.5 and 1.)
-				//const auto gColor = static_cast<float>(rand() % 100 / 200.0f + 0.5); // between 0.5 and 1.)
-				//const auto bColor = static_cast<float>(rand() % 100 / 200.0f + 0.5); // between 0.5 and 1.)
-				pointlight_shader.set_uniform("all_lights[" + std::to_string(i) + "].color", light_color); // Setting all to white for now
-
 				// Load mesh pointlight to wherever a light source originates
 				// pointlight rendering; scaling to be the same as 'radius'
-				// Note: The above equation doesn't seem to get the correct radius (as it can be negative).  I am hardcoding for this test.
-				constexpr float HARDCODE_RADIUS_TEST = 6.0f;
-				registry_api.load_model_into_world("pointlight_" + std::to_string(i), pointlight_model_ptr, { xPos , yPos, zPos }, QuestEngine::ECS::RenderPass::Pointlight, HARDCODE_RADIUS_TEST);
+				// Not currently doing the above due to calculation of 'radius' not quite being correct
+				registry_api.load_model_into_world("pointlight_" + std::to_string(i), pointlight_model_ptr, { xPos , yPos, zPos }, QuestEngine::ECS::RenderPass::Pointlight, pointlight_radius);
 
-				// TO visualize pointlights
+				// To visualize pointlights
 				// Load as deferred (in addition to the above)
-				registry_api.load_model_into_world("pointlight_" + std::to_string(i), pointlight_visualization_model_ptr, { xPos , yPos, zPos }, QuestEngine::ECS::RenderPass::Forward,  0.2f); // Could be deferred or forward to make them show up; Deferred will have scene lighting; Scaling to be tiny as we just need to visualize it
+				// Could be deferred or forward to make them show up; Deferred will have scene lighting
+				// Scaling to be tiny as we just need to visualize it
+				registry_api.load_model_into_world("visual_pointlight_" + std::to_string(i), pointlight_visualization_model_ptr, { xPos , yPos, zPos }, QuestEngine::ECS::RenderPass::Forward,  0.2f); 
 			}
 
 		pointlight_shader.unbind();
@@ -104,7 +97,7 @@ namespace QuestSandbox::Tests {
 		const std::string model_entity_id{ "Textured Indexed Shape Model Entity" };
 		if (!textured_cube_in_resource) {
 			const QuestEngine::API::OpenGL::ShaderLoaderAPI shader_loader = m_engine_api.get_shader_loader_api();
-			const std::string shader_id{ vertex_shader + "_" + fragment_shader };
+			const std::string shader_id{ "dual_textured_testing_cube_shader"};
 			shader_loader.load_shader(shader_id, vertex_shader, fragment_shader, true, true); // from file: true; load_ubo_matrices: true
 
 			const std::vector<float> vertices = {

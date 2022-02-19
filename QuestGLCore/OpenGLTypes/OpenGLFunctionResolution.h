@@ -1,9 +1,6 @@
 #pragma once
 #include <glad/glad.h>
 
-// Source for this idea:
-// https://www.youtube.com/watch?v=BBSrEdhPM6s @1hr
-
 namespace QuestGLCore::OGLResolution {
 
 	//enum class OglDimensions {

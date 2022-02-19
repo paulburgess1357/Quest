@@ -171,7 +171,6 @@
     <ClInclude Include="API\Neutral\ResourceAPI.h" />
     <ClInclude Include="API\OpenGL\ModelLoaderAPI.h" />
     <ClInclude Include="API\OpenGL\ModelLoaderExceptions.h" />
-    <ClInclude Include="API\OpenGL\SphereLoaderAPI.h" />
     <ClInclude Include="API\OpenGL\ShaderLoaderAPI.h" />
     <ClInclude Include="API\OpenGL\TextureLoaderAPI.h" />
     <ClInclude Include="Camera\Camera.h" />
@@ -210,7 +209,6 @@
     <ClCompile Include="API\Neutral\EngineAPI.cpp" />
     <ClCompile Include="API\Neutral\RegistryAPI.cpp" />
     <ClCompile Include="API\Neutral\ResourceAPI.cpp" />
-    <ClCompile Include="API\OpenGL\SphereLoaderAPI.cpp" />
     <ClCompile Include="API\OpenGL\ShaderLoaderAPI.cpp" />
     <ClCompile Include="API\OpenGL\TextureLoaderAPI.cpp" />
     <ClCompile Include="Camera\Camera.cpp" />
