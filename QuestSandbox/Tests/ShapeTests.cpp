@@ -50,6 +50,7 @@ namespace QuestSandbox::Tests {
 			constexpr float CONSTANT = 1.0f; // 1.0
 			constexpr float pointlight_linear = 0.7f; // 0.7
 			constexpr float pointlight_quadratic = 1.8f; // 1.8
+
 			pointlight_shader.set_uniform("linear", pointlight_linear);
 			pointlight_shader.set_uniform("quadratic", pointlight_quadratic);
 
@@ -57,7 +58,7 @@ namespace QuestSandbox::Tests {
 			// *** Calculate light volume (max distance to display light). ***
 			// Note: This 'max_brightness' calculation clearly isn't necessary.  However, if you had a light color that was different than white, we would need the max r/g/b value for max_brightness.
 			
-			constexpr glm::vec3 light_color = glm::vec3{ 0.01f, 0.01f, 0.01f };
+			constexpr glm::vec3 light_color = glm::vec3{ 0.1f, 0.1f, 0.1f };
 			// constexpr glm::vec3 light_color = glm::vec3{ 1.00f, 1.00f, 1.00f };
 			const float max_brightness = std::fmaxf(std::fmaxf(light_color.x, light_color.y), light_color.z);
 			const float radius = (-pointlight_linear + std::sqrt(pointlight_linear * pointlight_linear - 4 * pointlight_quadratic * (CONSTANT - (256.0f / 5.0f) * max_brightness))) / (2.0f * pointlight_quadratic);
@@ -85,21 +86,17 @@ namespace QuestSandbox::Tests {
 				pointlight_shader.set_uniform("all_lights[" + std::to_string(i) + "].color", light_color); // Setting all to white for now
 
 				// Load mesh pointlight to wherever a light source originates
-				registry_api.load_model_into_world("pointlight_" + std::to_string(i), pointlight_model_ptr, { xPos , yPos, zPos }, QuestEngine::ECS::RenderPass::Pointlight); // pointlight rendering
+				// pointlight rendering; scaling to be the same as 'radius'
+				// Note: The above equation doesn't seem to get the correct radius (as it can be negative).  I am hardcoding for this test.
+				constexpr float HARDCODE_RADIUS_TEST = 6.0f;
+				registry_api.load_model_into_world("pointlight_" + std::to_string(i), pointlight_model_ptr, { xPos , yPos, zPos }, QuestEngine::ECS::RenderPass::Pointlight, HARDCODE_RADIUS_TEST);
 
 				// TO visualize pointlights
 				// Load as deferred (in addition to the above)
-				registry_api.load_model_into_world("pointlight_" + std::to_string(i), pointlight_visualization_model_ptr, { xPos , yPos, zPos }, QuestEngine::ECS::RenderPass::Forward); // Could be deferred or forward to make them show up; Deferred will have scene lighting.
+				registry_api.load_model_into_world("pointlight_" + std::to_string(i), pointlight_visualization_model_ptr, { xPos , yPos, zPos }, QuestEngine::ECS::RenderPass::Forward,  0.2f); // Could be deferred or forward to make them show up; Deferred will have scene lighting; Scaling to be tiny as we just need to visualize it
 			}
 
 		pointlight_shader.unbind();
-
-		//pointlight_visualization_shader.bind();
-		//pointlight_visualization_shader.set_uniform(QuestEngine::Constants::default_diffuse_shader_name, 0);
-		//pointlight_visualization_shader.unbind();
-
-		
-
 	}
 
 	void ShapeTests::load_dual_textured_cube_into_world(const std::string& entity_id, const glm::vec3& world_position, const std::string& vertex_shader, const std::string& fragment_shader, const QuestEngine::ECS::RenderPass render_pass) {
@@ -222,7 +219,7 @@ namespace QuestSandbox::Tests {
 
 		// Take loaded model and create ECS entity
 		const QuestEngine::API::RegistryAPI registry_api = m_engine_api.get_registry_api();
-		registry_api.load_model_into_world(entity_id, model_pointer, world_position, render_pass);
+		registry_api.load_model_into_world(entity_id, model_pointer, world_position, render_pass, 1.0f);
 	}
 
 } // namespace QuestSandbox::Tests

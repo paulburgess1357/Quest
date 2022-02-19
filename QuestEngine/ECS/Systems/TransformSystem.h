@@ -20,8 +20,8 @@ namespace QuestEngine::ECS::Systems {
 		}
 
 		static void rotate(entt::registry& registry) {
-			registry.view<Components::ModelMatrixComponent, Components::RotateComponent>().each([](auto& transform, auto& rotate) {
-				transform.m_model_matrix = glm::rotate(transform.m_model_matrix, rotate.m_rate, rotate.m_axis);
+			registry.view<Components::ModelMatrixComponent, Components::RotateComponent>().each([](auto& model_matrix, auto& rotate) {
+				model_matrix.m_model_matrix = glm::rotate(model_matrix.m_model_matrix, rotate.m_rate, rotate.m_axis);
 			});
 		}
 

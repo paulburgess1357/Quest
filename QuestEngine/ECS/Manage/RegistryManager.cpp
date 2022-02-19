@@ -5,8 +5,8 @@
 #include "QuestEngine/ECS/Components/RenderComponents.h"
 #include "QuestEngine/ECS/Components/TransformComponent.h"
 #include "QuestEngine/ECS/Components/RotateComponent.h"
-
 #include "QuestUtility/Include/Logger.h"
+#include <glm/gtc/matrix_transform.hpp>
 
 namespace QuestEngine::ECS {
 
@@ -14,18 +14,28 @@ namespace QuestEngine::ECS {
 		return m_active_registry;
 	}
 
-	void RegistryManager::load_model_into_world(const std::string& entity_id, Model::StandardModel* model, const glm::vec3& world_position, const RenderPass render_pass) {
+	void RegistryManager::load_model_into_world(const std::string& entity_id, Model::StandardModel* model, const glm::vec3& world_position, const RenderPass render_pass, const float scale) {
 		const entt::entity entity = m_active_registry.create();
 		m_active_registry.emplace<ECS::Components::StandardModelComponent>(entity, model);
-		m_active_registry.emplace<ECS::Components::ModelMatrixComponent>(entity, world_position);
+
+		// Scale
+		Components::ModelMatrixComponent model_matrix{ world_position };
+		model_matrix.m_model_matrix = glm::scale(model_matrix.m_model_matrix, glm::vec3{ scale });
+		m_active_registry.emplace<ECS::Components::ModelMatrixComponent>(entity, model_matrix);
+
 		load_entity_render_pass(entity, render_pass);
 		store_entity_in_active_entity_map(entity_id, entity);
 	}
 
-	void RegistryManager::load_model_into_world(const std::string& entity_id, Model::IndexedModel* model, const glm::vec3& world_position, const RenderPass render_pass) {
+	void RegistryManager::load_model_into_world(const std::string& entity_id, Model::IndexedModel* model, const glm::vec3& world_position, const RenderPass render_pass, const float scale) {
 		const entt::entity entity = m_active_registry.create();
 		m_active_registry.emplace<ECS::Components::IndexedModelComponent>(entity, model);
-		m_active_registry.emplace<ECS::Components::ModelMatrixComponent>(entity, world_position);
+
+		// Scale
+		Components::ModelMatrixComponent model_matrix{ world_position };
+		model_matrix.m_model_matrix = glm::scale(model_matrix.m_model_matrix, glm::vec3{ scale });
+		m_active_registry.emplace<ECS::Components::ModelMatrixComponent>(entity, model_matrix);
+
 		store_entity_in_active_entity_map(entity_id, entity);
 		load_entity_render_pass(entity, render_pass);
 	}

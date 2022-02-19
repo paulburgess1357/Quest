@@ -38,6 +38,7 @@ namespace QuestEngine::Render {
 		Framebuffer::Framebuffer2D::clear_all_buffers();
 
 		QuestEngine::State::LightState::light_pass_start();
+		
 		ECS::Systems::RenderSystem::render_pointlight(*m_active_registry, m_pointlight_shader, m_g_buffer);
 		QuestEngine::State::LightState::light_pass_end();
 	}

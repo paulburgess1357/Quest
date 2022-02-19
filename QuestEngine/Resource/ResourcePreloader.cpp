@@ -39,8 +39,14 @@ namespace QuestEngine::Resource {
 	}
 
 	void ResourcePreloader::load_visualize_pointlight_shader(ResourceManager& resource_manager){
+		// Forward Pass Shaders
 		const std::string vertex = QuestUtility::String::FileToString::load("../Resources/Shaders/ForwardPass/ForwardPassVertexTextured.glsl");
 		const std::string fragment = QuestUtility::String::FileToString::load("../Resources/Shaders/ForwardPass/ForwardPassFragmentTextured.glsl");
+
+		// Deferred Pass Shaders
+		// const std::string vertex = QuestUtility::String::FileToString::load("../Resources/Shaders/GBuffer/GBufferShapeVertexGeometryPassSingleTextured.glsl");
+		// const std::string fragment = QuestUtility::String::FileToString::load("../Resources/Shaders/GBuffer/GBufferShapeFragmentGeometryPassSingleTextured.glsl");
+
 		const std::unordered_map<Shader::ShaderEnum, std::string> shader_map{
 			{ Shader::ShaderEnum::VERTEX, vertex },
 			{ Shader::ShaderEnum::FRAGMENT, fragment }
@@ -80,7 +86,7 @@ namespace QuestEngine::Resource {
 	// ======================== Model ========================
 
 	void ResourcePreloader::load_pointlight_model(ResourceManager& resource_manager){
-		const Sphere sphere_creator{ 1.07f, 30, 30, true };
+		const Sphere sphere_creator{ 1.0f, 30, 30, false }; // Radius = 1.0
 
 		// ======== Standard Pointlight Model ========
 		// Sphere with position information only (used for pointlights)
@@ -90,7 +96,7 @@ namespace QuestEngine::Resource {
 	}
 
 	void ResourcePreloader::load_pointlight_visual_model(ResourceManager& resource_manager){
-		const Sphere sphere_creator{ 0.3f, 15, 15, true };
+		const Sphere sphere_creator{ 1.0f, 30, 30, false }; // Radius = 1.0
 
 		// ======== Textured Pointlight Model ========
 		// Sphere with position, normals, and texture coords (used to help visualize where pointlights are located)
