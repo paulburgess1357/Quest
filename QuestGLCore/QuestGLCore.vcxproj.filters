@@ -144,6 +144,15 @@
     <ClInclude Include="Model\MeshQuad.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Model\ModelCreator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Model\ModelExceptions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Model\ModelEnums.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="QuestGLCore.cpp">
@@ -165,6 +174,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="LightState\LightState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Model\ModelCreator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

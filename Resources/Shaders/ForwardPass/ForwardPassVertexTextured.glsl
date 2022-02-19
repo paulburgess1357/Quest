@@ -9,7 +9,7 @@ layout (std140) uniform ubo_matrices {
 };
 
 uniform mat4 model_matrix;
-uniform mat4 normal_matrix; // Unused for this test
+// uniform mat4 normal_matrix;
 
 out vec2 frag_tex_coords;
 

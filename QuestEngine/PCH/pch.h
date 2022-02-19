@@ -9,6 +9,7 @@
 // Resource
 #include "QuestEngine/Resource/TResource.h"
 #include "QuestEngine/Resource/ResourceManager.h"
+#include "QuestEngine/Resource/ResourcePreloader.h"
 
 // Camera
 #include "QuestEngine/Camera/ProjectionMatrix.h"

@@ -2,6 +2,9 @@
 #include "Engine.h"
 #include "QuestUtility/Include/Logger.h"
 #include "QuestEngine/Constants/Constants.h"
+#include "QuestEngine/Resource/ResourcePreloader.h"
+
+// TODO Face Culling is TURNED OFF!
 
 namespace QuestEngine::Engine {
 
@@ -10,21 +13,24 @@ namespace QuestEngine::Engine {
 		m_active_camera{ nullptr },
 		m_projection_matrix { width, height },
 		m_systems_manager{ m_registry_manager.get_active_registry() },
-		m_ubo_manager{ m_resource_manager.get_ubo(Constants::ubo_matrices) },
-		m_render_pass_manager{ width, height, m_registry_manager.get_active_registry(), m_resource_manager },
+		m_render_pass_manager{ width, height, m_registry_manager.get_active_registry() },
 		m_user_interface{ m_window.get_window() },
 		m_window_width{ width },
 		m_window_height{ height }{
+		initialization();
 		QUEST_INFO("Quest Engine v{}.{} Initialized\n", 0, 1)
 	}
 
 	void Engine::run() {
-		initialization();
 		qc_checks();
 		gameloop();
 	}
 
 	void Engine::initialization() {
+		Resource::ResourcePreloader::preload_resources(m_resource_manager);
+		m_ubo_manager.set_matrices_ubo(m_resource_manager.get_ubo(Constants::ubo_matrices));
+		m_render_pass_manager.set_pointlight_shader(m_resource_manager.get_shader(Constants::pointlight_shader));
+		m_render_pass_manager.set_postprocess_shader(m_resource_manager.get_shader(Constants::post_process_shader));
 		set_active_camera(Constants::main_camera);
 	}
 

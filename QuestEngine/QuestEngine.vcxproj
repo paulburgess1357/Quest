@@ -171,7 +171,7 @@
     <ClInclude Include="API\Neutral\ResourceAPI.h" />
     <ClInclude Include="API\OpenGL\ModelLoaderAPI.h" />
     <ClInclude Include="API\OpenGL\ModelLoaderExceptions.h" />
-    <ClInclude Include="API\OpenGL\PointLightLoaderAPI.h" />
+    <ClInclude Include="API\OpenGL\SphereLoaderAPI.h" />
     <ClInclude Include="API\OpenGL\ShaderLoaderAPI.h" />
     <ClInclude Include="API\OpenGL\TextureLoaderAPI.h" />
     <ClInclude Include="Camera\Camera.h" />
@@ -191,6 +191,7 @@
     <ClInclude Include="PCH\framework.h" />
     <ClInclude Include="PCH\pch.h" />
     <ClInclude Include="Resource\ResourceManager.h" />
+    <ClInclude Include="Resource\ResourcePreloader.h" />
     <ClInclude Include="Texture\TextureType.h" />
     <ClInclude Include="UniformBufferObjects\UniformBufferManager.h" />
     <ClInclude Include="Using\API.h" />
@@ -209,8 +210,7 @@
     <ClCompile Include="API\Neutral\EngineAPI.cpp" />
     <ClCompile Include="API\Neutral\RegistryAPI.cpp" />
     <ClCompile Include="API\Neutral\ResourceAPI.cpp" />
-    <ClCompile Include="API\OpenGL\ModelLoaderAPI.cpp" />
-    <ClCompile Include="API\OpenGL\PointLightLoaderAPI.cpp" />
+    <ClCompile Include="API\OpenGL\SphereLoaderAPI.cpp" />
     <ClCompile Include="API\OpenGL\ShaderLoaderAPI.cpp" />
     <ClCompile Include="API\OpenGL\TextureLoaderAPI.cpp" />
     <ClCompile Include="Camera\Camera.cpp" />
@@ -226,6 +226,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Resource\ResourceManager.cpp" />
+    <ClCompile Include="Resource\ResourcePreloader.cpp" />
     <ClCompile Include="UniformBufferObjects\UniformBufferManager.cpp" />
   </ItemGroup>
   <ItemGroup>

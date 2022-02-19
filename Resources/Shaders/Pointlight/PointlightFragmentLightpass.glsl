@@ -15,7 +15,7 @@ struct Light {
     vec3 color;
 };
 
-const int LIGHT_QTY = 3;
+const int LIGHT_QTY = 5;
 const float CONSTANT = 1.0f; // note that we don't send this to the shader, we assume it is always 1.0 (in our case)
 const float POINTLIGHT_MAX_RADIUS = 5.09f;
 
@@ -54,8 +54,9 @@ void main(){
     float specular_amount = texture(all_textures.color_spec, frag_tex_coords).a;
     
     // Ambient (hard coded for now)
-    vec3 lighting = diffuse_color * 0.1;
-
+    // vec3 lighting = diffuse_color * 0.1;
+	//vec3 lighting = diffuse_color;// * 0.0; // ambient light and blending overlap makes the light appear brighter evenf or areas without pointlight impact.  Move this somewhere else!!
+    vec3 lighting = vec3(0.0f, 0.0f, 0.0f);
     for(int i = 0; i < LIGHT_QTY; ++i){
 
         // Convert light to eye space

@@ -7,4 +7,6 @@ namespace QuestEngine::Model {
 	using IndexedModel = QuestGLCore::Model::IndexedModel;
 	using IndexedMesh = QuestGLCore::Model::IndexedMesh;
 	using IndexedMeshQuad = QuestGLCore::Model::IndexedMeshQuad;
+	using ModelCreator = QuestGLCore::Model::ModelCreator;
+	using ModelDrawMode = QuestGLCore::Model::ModelDrawMode;
 } // namespace QuestEngine::Model

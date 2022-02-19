@@ -4,14 +4,7 @@
 #include "QuestUtility/Logging/LogHandler.h"
 #include "QuestEngine/Using/Shader.h"
 
-
 namespace QuestEngine::Resource {
-
-	ResourceManager::ResourceManager() {
-		load_main_camera();
-		load_ubo_matrices();
-		load_default_texture();
-	}
 
 	// ======================== Shader ========================
 	Shader::ShaderProgram& ResourceManager::get_shader(const std::string& shader_id) {
@@ -81,11 +74,7 @@ namespace QuestEngine::Resource {
 		m_indexed_model_resource.load(model_id, model);
 	}
 
-
 	// ==================== Camera ====================
-	void ResourceManager::load_main_camera() {
-		load_camera(Constants::main_camera, { 0.0f, 0.0f, -6.0f }, { 0.0f, 0.0f, 0.0f });
-	}
 
 	Camera::Camera& ResourceManager::get_camera(const std::string& camera_id) {
 		return m_camera_resource[camera_id];
@@ -102,7 +91,6 @@ namespace QuestEngine::Resource {
 	void ResourceManager::load_camera(const std::string& camera_id, const Camera::Camera& camera) {
 		m_camera_resource.load(camera_id, camera);
 	}
-
 
 	// ==================== UBO ====================
 	UniformBufferObjects::UniformBufferObject& ResourceManager::get_ubo(const std::string& ubo_id) {
@@ -121,13 +109,6 @@ namespace QuestEngine::Resource {
 		m_ubo_resource.load(ubo_id, ubo);
 	}
 
-	void ResourceManager::load_ubo_matrices() {
-		const std::string ubo_id{ Constants::ubo_matrices };
-		UniformBufferObjects::UniformBufferObject ubo{ ubo_id };
-		ubo.allocate_buffer_memory(sizeof(glm::mat4) * 2);
-		load_ubo(ubo_id, ubo);
-	}
-
 	// ==================== Texture ====================
 
 	void ResourceManager::load_texture2D(const std::string& texture_id, Texture::Texture& texture) {
@@ -142,13 +123,5 @@ namespace QuestEngine::Resource {
 	Texture::Texture* ResourceManager::get_texture_ptr(const std::string& texture_id) {
 		return m_texture_resource.get_pointer(texture_id);
 	}
-
-	void ResourceManager::load_default_texture() {
-		const QuestUtility::ImageLoading::StandardImageLoaderFromFile image_loader{ "../Resources/Textures/default_texture.png", false };
-		const Texture::StandardTextureCreator2D texture_creator{ image_loader, true };
-		Texture::Texture texture{ texture_creator.generate_texture() };
-		load_texture2D(Constants::default_texture, texture);
-	}
-
 
 } // namespace QuestEngine::Resource
