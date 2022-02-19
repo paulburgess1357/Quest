@@ -7,7 +7,6 @@
 #include "QuestEngine/UniformBufferObjects/UniformBufferManager.h"
 #include "QuestEngine/Camera/Camera.h"
 #include "QuestEngine/Camera/ProjectionMatrix.h"
-#include "QuestEngine/Using/UserInterface.h"
 #include "QuestEngine/Render/RenderPassManager.h"
 
 namespace QuestEngine::Engine {
@@ -27,11 +26,9 @@ namespace QuestEngine::Engine {
 
 		void qc_checks() const;
 		void gameloop();
-
-		void render_user_interface() const;
+		void handle_window_resize();
 
 		[[nodiscard]] bool shutdown() const;
-		void handle_window_resize();
 
 		const Window::Window m_window;
 		Camera::Camera* m_active_camera;
@@ -42,8 +39,6 @@ namespace QuestEngine::Engine {
 		ECS::SystemManager m_systems_manager;
 		UniformBufferObjects::UniformBufferManager m_ubo_manager;
 		Render::RenderPassManager m_render_pass_manager;
-
-		UserInterface::UserInterface m_user_interface;
 
 		// Tracking window resizes:
 		int m_window_width;

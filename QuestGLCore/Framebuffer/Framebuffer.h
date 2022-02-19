@@ -6,6 +6,7 @@
 #include "QuestGLCore/Texture/BlankTextureEnum.h"
 #include "QuestUtility/Include/Logger.h"
 #include "QuestGLCore/OpenGLTypes/OpenGLEnumResolution.h"
+#include "QuestGLCore/Handle/Typedefs.h"
 #include <initializer_list>
 
 // Framebuffer must be bound
@@ -111,7 +112,7 @@ namespace QuestGLCore::Framebuffer {
 			m_height = height;
 			rescale_color_attachments();
 			rescale_renderbuffer_attachment();
-			glViewport(0, 0, width, height);
+			glViewport(0, 0, m_width, m_height);
 		}
 
 		void set_single_color_attachment_to_write_to(const unsigned int color_attachment_num) const {
@@ -158,6 +159,11 @@ namespace QuestGLCore::Framebuffer {
 			// previously bound prior to writing to this texture.
 			glActiveTexture(GL_TEXTURE0 + tex_unit);
 			m_color_attachment_handles.at(attachment_num).bind();
+		}
+
+		[[nodiscard]] Typedefs::GLHandle get_color_attachment_raw_handle(const size_t attachment_num) const {
+			// Raw handle used for pulling texture into other libraries such as ImGui
+			return m_color_attachment_handles.at(attachment_num).get_handle();
 		}
 
 		[[nodiscard]] size_t get_color_attachment_num() const {

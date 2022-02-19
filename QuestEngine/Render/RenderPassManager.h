@@ -2,6 +2,8 @@
 #include "QuestEngine/Using/Framebuffer.h"
 #include "QuestEngine/Using/Shader.h"
 #include "QuestEngine/Using/Model.h"
+#include "QuestEngine/Using/Window.h"
+#include "QuestEngine/Using/UserInterface.h"
 #include <entt/entt.hpp>
 
 namespace QuestEngine::Render {
@@ -9,8 +11,8 @@ namespace QuestEngine::Render {
 	class RenderPassManager {
 
 	public:
-		RenderPassManager(const int width, const int height, entt::registry& active_registry);
-		void render() const;
+		RenderPassManager(const Window::Window& window, entt::registry& active_registry);
+		void render();
 		void set_active_registry(entt::registry& registry);
 		void resize_attachments(const int width, const int height);
 
@@ -21,8 +23,19 @@ namespace QuestEngine::Render {
 		void deferred_pass() const;
 		void light_pass() const;
 		void forward_pass() const;
+
 		void default_framebuffer_pass() const;
+		void imgui_viewport_pass() const;
+
 		void draw_post_process() const;
+		void draw_user_interface(void* handle) const;
+
+		void handle_window_resize();
+
+		// Tracking window resizes:
+		const Window::Window& m_window;
+		int m_window_width;
+		int m_window_height;
 
 		// RGBA16F_NEAREST, RGBA16F_NEAREST, RGBA_NEAREST
 		// Position,        Normals,         Color + Specular
@@ -37,6 +50,9 @@ namespace QuestEngine::Render {
 
 		Model::IndexedMeshQuad m_quad;
 		entt::registry* m_active_registry;
+
+		UserInterface::UserInterface m_user_interface;
+
 	};
 
 

@@ -5,20 +5,45 @@
 
 namespace QuestEngine::Render {
 
-	RenderPassManager::RenderPassManager(const int width, const int height, entt::registry& active_registry)
-		:m_g_buffer{ width, height, { Texture::BlankTextureEnum::RGBA16F_NEAREST, Texture::BlankTextureEnum::RGBA16F_NEAREST, Texture::BlankTextureEnum::RGBA_NEAREST } },
-		m_post_process_framebuffer{ width, height, { Texture::BlankTextureEnum::RGBA16F_LINEAR } },
+	//TODO 1) attachment resize should match imgui texture size
+	// TODO2) the initlaization below should match (e.g. 500x500)
+	//3) The handle_window_resize() should possibly be handle imgui viewport resize; not sure what happens if i expand the window itself but am still in an imgui viewport
+	//4) when not showing us, i need to render to default framebuffer
+	//5) i dont like that i have two 'handle window resize' functions (engine and here)
+
+	//TODO the sizes for initlaization should be based on the viewport, NOT the window size i thinK!!!
+
+	RenderPassManager::RenderPassManager(const Window::Window& window, entt::registry& active_registry)
+		:m_window{ window },	
+		m_window_width{ window.get_width() },
+		m_window_height{ window.get_height() },	
+		m_g_buffer{ m_window_width, m_window_height, { Texture::BlankTextureEnum::RGBA16F_NEAREST, Texture::BlankTextureEnum::RGBA16F_NEAREST, Texture::BlankTextureEnum::RGBA_NEAREST } },
+		m_post_process_framebuffer{ m_window_width, m_window_height, { Texture::BlankTextureEnum::RGBA16F_LINEAR } },
 		m_pointlight_shader{ nullptr },
 		m_postprocess_shader{ nullptr },
-		m_active_registry{ &active_registry }{
+		m_active_registry{ &active_registry },
+		m_user_interface{ window.get_window()}{
 	}
 
-	void RenderPassManager::render() const {
+	void RenderPassManager::render() {
+		handle_window_resize(); // TODO maybet his should be handle_viewport_resize() since its based on imgui???
 		deferred_pass();
 		light_pass();
 		forward_pass();
-		default_framebuffer_pass();
+
+		// default_framebuffer_pass();
+		imgui_viewport_pass();
 	}
+
+	void RenderPassManager::handle_window_resize() {
+		if (Window::Window::get_width() != m_window_width || Window::Window::get_height() != m_window_height) {
+			m_window_width = Window::Window::get_width();
+			m_window_height = Window::Window::get_height();
+			resize_attachments(m_window_width, m_window_height);
+		}
+		// m_projection_matrix.update_projection_matrix(m_window_width, m_window_height);
+	}
+
 
 	void RenderPassManager::deferred_pass() const {
 		// Draw geometry/textures/normals to G-Buffer attachments
@@ -38,7 +63,6 @@ namespace QuestEngine::Render {
 		Framebuffer::Framebuffer2D::clear_all_buffers();
 
 		QuestEngine::State::LightState::light_pass_start();
-		
 		ECS::Systems::RenderSystem::render_pointlight(*m_active_registry, m_pointlight_shader, m_g_buffer);
 		QuestEngine::State::LightState::light_pass_end();
 	}
@@ -69,10 +93,26 @@ namespace QuestEngine::Render {
 		draw_post_process();
 	}
 
+	void RenderPassManager::imgui_viewport_pass() const {
+		// Draw Target: Imgui Viewport (passing texture attachment handle)
+		//TODO unbind and clear buffer needed here??
+		m_post_process_framebuffer.unbind();
+		Framebuffer::Framebuffer2D::clear_all_buffers();
+
+		// Take post process color attachment texture handle and pass to Imgui
+		draw_user_interface(reinterpret_cast<void*>(m_post_process_framebuffer.get_color_attachment_raw_handle(0)));
+	}
+
 	void RenderPassManager::draw_post_process() const {
 		m_postprocess_shader->bind();
 		m_post_process_framebuffer.bind_all_color_attachments();
 		m_quad.draw();
+	}
+
+	void RenderPassManager::draw_user_interface(void* handle) const {
+		UserInterface::UserInterface::begin_render();
+		UserInterface::UserInterface::show_viewport(handle);
+		m_user_interface.end_render();
 	}
 
 	void RenderPassManager::set_pointlight_shader(Shader::ShaderProgram& shader_program) {

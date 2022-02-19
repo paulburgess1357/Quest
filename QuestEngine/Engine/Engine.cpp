@@ -13,8 +13,7 @@ namespace QuestEngine::Engine {
 		m_active_camera{ nullptr },
 		m_projection_matrix { width, height },
 		m_systems_manager{ m_registry_manager.get_active_registry() },
-		m_render_pass_manager{ width, height, m_registry_manager.get_active_registry() },
-		m_user_interface{ m_window.get_window() },
+		m_render_pass_manager{ m_window, m_registry_manager.get_active_registry() },
 		m_window_width{ width },
 		m_window_height{ height }{
 		initialization();
@@ -51,7 +50,6 @@ namespace QuestEngine::Engine {
 
 			handle_window_resize();
 			m_render_pass_manager.render();
-			// render_user_interface();
 
 			Window::Window::poll_events();
 			m_window.swap_buffer();
@@ -62,15 +60,9 @@ namespace QuestEngine::Engine {
 		if (Window::Window::get_width() != m_window_width || Window::Window::get_height() != m_window_height) {
 			m_window_width = Window::Window::get_width();
 			m_window_height = Window::Window::get_height();
-			m_render_pass_manager.resize_attachments(m_window_width, m_window_height);
+			//m_render_pass_manager.resize_attachments(m_window_width, m_window_height);
 			m_projection_matrix.update_projection_matrix(m_window_width, m_window_height);
 		}
-	}
-
-	void Engine::render_user_interface() const {
-		UserInterface::UserInterface::begin_render();
-		UserInterface::UserInterface::show_demo();
-		m_user_interface.end_render();
 	}
 
 	bool Engine::shutdown() const {

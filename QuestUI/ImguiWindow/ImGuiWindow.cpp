@@ -75,6 +75,14 @@ namespace QuestUI::OpenGL {
 		ImGui::ShowDemoWindow();
 	}
 
+	void ImguiWindow::show_viewport(void* handle) {
+		if(ImGui::Begin("GameView")) {
+			ImGui::Image(handle, { 500, 500 });
+		}
+
+		ImGui::End();
+	}
+
 	//bool ImguiWindow::ui_using_inputs() {
 	//	return ui_using_mouse() || ui_using_keyboard();
 	//}
