@@ -7,7 +7,7 @@
 
 namespace QuestGLCore::OGLResolution {
 
-	class OglTypeResolution {
+	class OpenGLTypeResolution {
 	public:
 		template<typename T>
 		static GLenum get_type() {

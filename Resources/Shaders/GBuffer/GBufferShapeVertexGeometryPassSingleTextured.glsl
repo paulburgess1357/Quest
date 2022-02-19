@@ -26,5 +26,6 @@ void main(){
     frag_tex_coords = tex_coords;
 
     // Convert vertex position to clip space for fragment shader
-    gl_Position = projection_matrix * view_matrix * model_matrix * vec4(vertex_position, 1.0);    
+    gl_Position = projection_matrix * view_matrix * model_matrix * vec4(vertex_position, 1.0);
+    
 }

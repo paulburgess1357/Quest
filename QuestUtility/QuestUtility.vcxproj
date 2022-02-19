@@ -175,6 +175,7 @@
     <ClInclude Include="Include\Logger.h" />
     <ClInclude Include="Logging\LogMacros.h" />
     <ClInclude Include="PCH\pch.h" />
+    <ClInclude Include="Sphere\Sphere.h" />
     <ClInclude Include="String\FileToString.h" />
   </ItemGroup>
   <ItemGroup>
@@ -186,6 +187,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Sphere\Sphere.cpp" />
     <ClCompile Include="String\FileToString.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

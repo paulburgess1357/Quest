@@ -54,9 +54,6 @@
     <ClInclude Include="API\OpenGL\ModelLoaderAPI.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="API\OpenGL\ShaderLoaderAPI.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="API\OpenGL\ModelLoaderExceptions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -120,10 +117,19 @@
     <ClInclude Include="ECS\Components\RenderComponents.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="API\OpenGL\PointLightLoaderAPI.h">
+    <ClInclude Include="ECS\Manage\RegistryManagerExecptions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ECS\Manage\RegistryManagerExecptions.h">
+    <ClInclude Include="Using\LightState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\RenderPassManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource\ResourcePreloader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="API\OpenGL\ShaderLoaderAPI.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -144,9 +150,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Camera\ProjectionMatrix.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="API\OpenGL\ModelLoaderAPI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="API\OpenGL\ShaderLoaderAPI.cpp">
@@ -170,7 +173,10 @@
     <ClCompile Include="API\OpenGL\TextureLoaderAPI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="API\OpenGL\PointLightLoaderAPI.cpp">
+    <ClCompile Include="Render\RenderPassManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Resource\ResourcePreloader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

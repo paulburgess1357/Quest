@@ -155,15 +155,16 @@
     <ClCompile Include="Tests\ShapeTests.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="Tests\ShapeTests.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="QuestSandbox.rc" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\QuestEngine\QuestEngine.vcxproj">
       <Project>{0d650df4-d2b6-41e5-8360-63d59687410a}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\QuestGLCore\QuestGLCore.vcxproj">
-      <Project>{66c11a4f-4221-47a9-9fda-69e4d68ee098}</Project>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Tests\ShapeTests.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -171,7 +171,6 @@
     <ClInclude Include="API\Neutral\ResourceAPI.h" />
     <ClInclude Include="API\OpenGL\ModelLoaderAPI.h" />
     <ClInclude Include="API\OpenGL\ModelLoaderExceptions.h" />
-    <ClInclude Include="API\OpenGL\PointLightLoaderAPI.h" />
     <ClInclude Include="API\OpenGL\ShaderLoaderAPI.h" />
     <ClInclude Include="API\OpenGL\TextureLoaderAPI.h" />
     <ClInclude Include="Camera\Camera.h" />
@@ -187,13 +186,16 @@
     <ClInclude Include="ECS\Systems\RenderSystem.h" />
     <ClInclude Include="ECS\Systems\TransformSystem.h" />
     <ClInclude Include="Engine\Engine.h" />
+    <ClInclude Include="Render\RenderPassManager.h" />
     <ClInclude Include="PCH\framework.h" />
     <ClInclude Include="PCH\pch.h" />
     <ClInclude Include="Resource\ResourceManager.h" />
+    <ClInclude Include="Resource\ResourcePreloader.h" />
     <ClInclude Include="Texture\TextureType.h" />
     <ClInclude Include="UniformBufferObjects\UniformBufferManager.h" />
     <ClInclude Include="Using\API.h" />
     <ClInclude Include="Using\Framebuffer.h" />
+    <ClInclude Include="Using\LightState.h" />
     <ClInclude Include="Using\Model.h" />
     <ClInclude Include="Using\Resource.h" />
     <ClInclude Include="Resource\TResource.h" />
@@ -207,8 +209,6 @@
     <ClCompile Include="API\Neutral\EngineAPI.cpp" />
     <ClCompile Include="API\Neutral\RegistryAPI.cpp" />
     <ClCompile Include="API\Neutral\ResourceAPI.cpp" />
-    <ClCompile Include="API\OpenGL\ModelLoaderAPI.cpp" />
-    <ClCompile Include="API\OpenGL\PointLightLoaderAPI.cpp" />
     <ClCompile Include="API\OpenGL\ShaderLoaderAPI.cpp" />
     <ClCompile Include="API\OpenGL\TextureLoaderAPI.cpp" />
     <ClCompile Include="Camera\Camera.cpp" />
@@ -216,6 +216,7 @@
     <ClCompile Include="ECS\Manage\RegistryManager.cpp" />
     <ClCompile Include="ECS\Manage\SystemManager.cpp" />
     <ClCompile Include="Engine\Engine.cpp" />
+    <ClCompile Include="Render\RenderPassManager.cpp" />
     <ClCompile Include="PCH\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -223,6 +224,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Resource\ResourceManager.cpp" />
+    <ClCompile Include="Resource\ResourcePreloader.cpp" />
     <ClCompile Include="UniformBufferObjects\UniformBufferManager.cpp" />
   </ItemGroup>
   <ItemGroup>

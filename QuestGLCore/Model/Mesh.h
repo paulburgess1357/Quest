@@ -16,7 +16,6 @@ namespace QuestGLCore::Model {
 
 		void draw() const {
 			// Bind materials
-			// Bind textures
 			m_tex_unit_tracker.bind();
 			m_vertex_data.draw();
 			// Unbind materials

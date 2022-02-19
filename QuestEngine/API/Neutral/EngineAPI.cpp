@@ -9,7 +9,8 @@ namespace QuestEngine::API {
 		m_registry_api{ m_engine.get() },
 		m_model_loader_api{ m_engine.get() },
 		m_shader_loader_api{ m_engine.get() },
-		m_texture_loader_api{ m_engine.get() }{
+		m_texture_loader_api{ m_engine.get() }
+	{
 
 	}
 
