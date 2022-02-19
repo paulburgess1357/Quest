@@ -3,7 +3,7 @@
 #include "QuestGLCore/Handle/Template/HandleTemplate.h"
 #include "QuestGLCore/Handle/Traits/Vao.h"
 #include "QuestGLCore/Handle/Traits/Buffer.h"
-#include "QuestGLCore/OpenGLTypes/OglTypeResolution.h"
+#include "QuestGLCore/OpenGLTypes/OpenGLTypeResolution.h"
 #include <glad/glad.h>
 #include <numeric>
 
@@ -51,7 +51,7 @@ namespace QuestGLCore::VertexData {
 			const int column_num = std::accumulate(vertex_description.begin(), vertex_description.end(), 0);
 			const auto stride = static_cast<Typedefs::GLSize>(column_num * sizeof(T));
 			unsigned int offset = 0;
-			const GLenum gl_type = OGLResolution::OglTypeResolution::get_type<T>();
+			const GLenum gl_type = OGLResolution::OpenGLTypeResolution::get_type<T>();
 
 			for (int i = 0; i < static_cast<int>(vertex_description.size()); i++) {
 				glVertexAttribPointer(i, vertex_description.at(i), gl_type, GL_FALSE, stride, (void*)(offset * sizeof(T)));

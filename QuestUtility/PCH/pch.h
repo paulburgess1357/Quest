@@ -17,3 +17,6 @@
 #include "QuestUtility/ImageLoading/HDRImageLoader.h"
 #include "QuestUtility/ImageLoading/ImageExceptions.h"
 #include "QuestUtility/ImageLoading/STBI.h"
+
+// Sphere
+#include "QuestUtility/Sphere/Sphere.h"

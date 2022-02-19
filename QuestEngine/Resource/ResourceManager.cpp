@@ -6,12 +6,6 @@
 
 namespace QuestEngine::Resource {
 
-	ResourceManager::ResourceManager() {
-		load_main_camera();
-		load_ubo_matrices();
-		load_post_process_shader();
-	}
-
 	// ======================== Shader ========================
 	Shader::ShaderProgram& ResourceManager::get_shader(const std::string& shader_id) {
 		return m_shader_resource[shader_id];
@@ -43,14 +37,6 @@ namespace QuestEngine::Resource {
 			shader.check_uniforms_initialized();
 		}
 		QUEST_TRACE("Passed")
-	}
-
-	void ResourceManager::load_post_process_shader() {
-		const std::unordered_map<Shader::ShaderEnum, std::string> shader_map{
-			{ Shader::ShaderEnum::VERTEX, Shader::ShaderStrings::get_vertex_post_process() },
-			{ Shader::ShaderEnum::FRAGMENT, Shader::ShaderStrings::get_fragment_post_process() }
-		};
-		load_shader(Constants::post_process_shader, shader_map, false);
 	}
 
 	// ======================== Model ========================
@@ -88,11 +74,7 @@ namespace QuestEngine::Resource {
 		m_indexed_model_resource.load(model_id, model);
 	}
 
-
 	// ==================== Camera ====================
-	void ResourceManager::load_main_camera() {
-		load_camera(Constants::main_camera, { 0.0f, 0.0f, -6.0f }, { 0.0f, 0.0f, 0.0f });
-	}
 
 	Camera::Camera& ResourceManager::get_camera(const std::string& camera_id) {
 		return m_camera_resource[camera_id];
@@ -110,7 +92,6 @@ namespace QuestEngine::Resource {
 		m_camera_resource.load(camera_id, camera);
 	}
 
-
 	// ==================== UBO ====================
 	UniformBufferObjects::UniformBufferObject& ResourceManager::get_ubo(const std::string& ubo_id) {
 		return m_ubo_resource[ubo_id];
@@ -126,13 +107,6 @@ namespace QuestEngine::Resource {
 
 	void ResourceManager::load_ubo(const std::string& ubo_id, UniformBufferObjects::UniformBufferObject& ubo) {
 		m_ubo_resource.load(ubo_id, ubo);
-	}
-
-	void ResourceManager::load_ubo_matrices() {
-		const std::string ubo_id{ Constants::ubo_matrices };
-		UniformBufferObjects::UniformBufferObject ubo{ ubo_id };
-		ubo.allocate_buffer_memory(sizeof(glm::mat4) * 2);
-		load_ubo(ubo_id, ubo);
 	}
 
 	// ==================== Texture ====================

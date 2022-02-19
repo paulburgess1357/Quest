@@ -4,7 +4,10 @@
 #include "framework.h"
 
 // OglTypes
-#include "QuestGLCore/OpenGLTypes/OglTypeResolution.h"
+#include "QuestGLCore/OpenGLTypes/OpenGLTypeResolution.h"
+#include "QuestGLCore/OpenGLTypes/OpenGLEnumResolution.h"
+#include "QuestGLCore/OpenGLTypes/OpenGLFunctionResolution.h"
+#include "QuestGLCore/OpenGLTypes/OpenGLTypeResoultionException.h"
 
 // Handle
 #include "QuestGLCore/Handle/Template/HandleTemplate.h"
@@ -20,7 +23,6 @@
 #include "QuestGLCore/Shader/ShaderEnum.h"
 #include "QuestGLCore/Shader/Typedefs.h"
 #include "QuestGLCore/Shader/ExternalTypedefs.h"
-#include "QuestGLCore/Shader/ShaderStrings.h"
 
 // Vertex Data
 #include "QuestGLCore/VertexData/VertexData.h"
@@ -29,6 +31,7 @@
 // Model
 #include "QuestGLCore/Model/Model.h"
 #include "QuestGLCore/Model/Mesh.h"
+#include "QuestGLCore/Model/MeshQuad.h"
 #include "QuestGLCore/Model/ExternalTypedefs.h"
 
 // UBO
@@ -38,6 +41,7 @@
 
 // Misc
 #include "QuestGLCore/Constants/Constants.h"
+#include "QuestGLCore/LightState/LightState.h"
 
 // Texture
 #include "QuestGLCore/Texture/TextureCreator.h"
@@ -50,4 +54,4 @@
 #include "QuestGLCore/Framebuffer/Framebuffer.h"
 #include "QuestGLCore/Framebuffer/Typedefs.h"
 #include "QuestGLCore/Framebuffer/ExternalTypedefs.h"
-#include "QuestGLCore/Framebuffer/FramebufferPostProcess.h"
+#include "QuestGLCore/Framebuffer/FramebufferEnum.h"

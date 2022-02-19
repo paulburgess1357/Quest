@@ -168,8 +168,15 @@
     <ClInclude Include="Constants\Constants.h" />
     <ClInclude Include="Framebuffer\ExternalTypedefs.h" />
     <ClInclude Include="Framebuffer\Framebuffer.h" />
+    <ClInclude Include="Framebuffer\FramebufferEnum.h" />
+    <ClInclude Include="LightState\ExternalTypedefs.h" />
+    <ClInclude Include="Model\MeshQuad.h" />
+    <ClInclude Include="Model\ModelCreator.h" />
+    <ClInclude Include="Model\ModelEnums.h" />
+    <ClInclude Include="Model\ModelExceptions.h" />
+    <ClInclude Include="OpenGLTypes\OpenGLEnumResolution.h" />
+    <ClInclude Include="OpenGLTypes\OpenGLTypeResoultionException.h" />
     <ClInclude Include="Texture\BlankTextureEnum.h" />
-    <ClInclude Include="Framebuffer\FramebufferPostProcess.h" />
     <ClInclude Include="Framebuffer\Typedefs.h" />
     <ClInclude Include="Handle\Traits\Framebuffer.h" />
     <ClInclude Include="Handle\Traits\Renderbuffer.h" />
@@ -183,13 +190,12 @@
     <ClInclude Include="Handle\Traits\Vao.h" />
     <ClInclude Include="Model\Mesh.h" />
     <ClInclude Include="Model\Model.h" />
-    <ClInclude Include="OpenGLTypes\OglTypeResolution.h" />
+    <ClInclude Include="OpenGLTypes\OpenGLTypeResolution.h" />
     <ClInclude Include="PCH\pch.h" />
     <ClInclude Include="Shader\ExternalTypedefs.h" />
     <ClInclude Include="Shader\ShaderProgramCreator.h" />
     <ClInclude Include="Shader\ShaderProgram.h" />
     <ClInclude Include="Shader\ShaderExceptions.h" />
-    <ClInclude Include="Shader\ShaderStrings.h" />
     <ClInclude Include="Shader\Typedefs.h" />
     <ClInclude Include="Shader\ShaderEnum.h" />
     <ClInclude Include="Handle\Typedefs.h" />
@@ -206,6 +212,8 @@
     <ClInclude Include="VertexData\VertexDataElement.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="LightState\LightState.cpp" />
+    <ClCompile Include="Model\ModelCreator.cpp" />
     <ClCompile Include="PCH\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

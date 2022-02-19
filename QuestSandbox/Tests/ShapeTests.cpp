@@ -1,448 +1,218 @@
 // ReSharper disable CppClangTidyClangDiagnosticExitTimeDestructors
+// ReSharper disable CppClangTidyConcurrencyMtUnsafe
+// ReSharper disable CppClangTidyBugproneNarrowingConversions
+// ReSharper disable CppClangTidyClangDiagnosticDoublePromotion
+
 #include "ShapeTests.h"
 #include "QuestEngine/API/OpenGL/ShaderLoaderAPI.h"
 #include "QuestEngine/API/OpenGL/ModelLoaderAPI.h"
+#include "QuestEngine/API/Neutral/Constants.h"
+#include "QuestEngine/API/Neutral/Constants.h"
 
 namespace QuestSandbox::Tests {
-
-    const std::string ShapeTests::m_base_shader_path{"../Resources/Shaders/Shape/"};
+	
+    const std::string ShapeTests::m_base_shader_path{"../Resources/Shaders/"};
+	const std::string ShapeTests::m_base_texture_path{ "../Resources/Textures/" };
 
     ShapeTests::ShapeTests(QuestEngine::API::EngineAPI& engine_api)
         :m_engine_api{ engine_api } {
     }
 
-    // ====================== Triangle ======================
-	void ShapeTests::load_standard_triangle() const {
+	void ShapeTests::pointlight_lightvolume_test() {
 
-		// *** TODO: this test isn't being loaded into the registry!! 
-		const QuestEngine::API::OpenGL::ShaderLoaderAPI shader_loader = m_engine_api.get_shader_loader_api();
-		const std::string shader_id{ "Triangle Shader" };
-        shader_loader.load_shader(shader_id, m_base_shader_path + "TriangleVertex.glsl", m_base_shader_path + "TriangleFragment.glsl", true, true);
+		// ========== Load test textured cube into world ==========
+		// Load Textured Cube ECS Entity into world::
+		constexpr int BOX_QTY = 12;
+		for (unsigned int i = 0; i < BOX_QTY; i++) {
 
-        // Standard model (Single Array Buffer)
-        const std::vector<float> vertices = {
-            -0.5f, -0.5f, 0.0f, // left  
-             0.5f, -0.5f, 0.0f, // right 
-             0.0f,  0.5f, 0.0f  // top   
-        };
+			const auto xPos = static_cast<float>(((rand() % 100) / 100.0) * 6.0 - 3.0);
+			const auto yPos = static_cast<float>(((rand() % 100) / 100.0) * 6.0 - 4.0);
+			const auto zPos = static_cast<float>(((rand() % 100) / 100.0) * 6.0 - 3.0);
 
-        const QuestEngine::API::OpenGL::ModelLoaderAPI model_loader = m_engine_api.get_model_loader_api();
-        model_loader.load_model("Test Model", shader_id, { vertices }, { 3 });
+			const std::string entity_id = "Textured_Cube" + std::to_string(i);
+			load_dual_textured_cube_into_world(entity_id, { xPos , yPos, zPos }, m_base_shader_path + "/GBuffer/GBufferShapeVertexGeometryPassDualTextured.glsl", m_base_shader_path + "/GBuffer/GBufferShapeFragmentGeometryPassDualTextured.glsl", QuestEngine::ECS::RenderPass::Deferred);
+		}
 
-	}
-    void ShapeTests::load_indexed_triangle() const {
-
-		// *** TODO: this test isn't being loaded into the registry!! 
-		const QuestEngine::API::OpenGL::ShaderLoaderAPI shader_loader = m_engine_api.get_shader_loader_api();
-		const std::string shader_id{ "Triangle Shader" };
-        shader_loader.load_shader(shader_id, m_base_shader_path + "TriangleVertex.glsl", m_base_shader_path + "TriangleFragment.glsl", true, true);
-
-        const std::vector<float> vertices = {
-			 0.5f,  0.5f, 0.0f,  // top right
-			 0.5f, -0.5f, 0.0f,  // bottom right
-			-0.5f, -0.5f, 0.0f,  // bottom left
-			-0.5f,  0.5f, 0.0f   // top left 
-        };
-        const std::vector<unsigned int> indices = {
-            0, 2, 1,   // first triangle
-            3, 2, 0    // second triangle
-        };
-
-		const QuestEngine::API::OpenGL::ModelLoaderAPI model_loader = m_engine_api.get_model_loader_api();
-        model_loader.load_model("Test Model", shader_id, { vertices }, { indices }, { 3 });
-    }
-
-    // ======================== Shape ========================
-    void ShapeTests::load_standard_shape() const {
-		
-		const QuestEngine::API::OpenGL::ShaderLoaderAPI shader_loader = m_engine_api.get_shader_loader_api();
-		const std::string shader_id{ "Shape Shader" };
-        shader_loader.load_shader(shader_id, m_base_shader_path + "ShapeVertexUBO.glsl", m_base_shader_path + "ShapeFragmentUBO.glsl", true, true);
-
-		const std::vector<float> vertices = {
-			// back face
-			-1.0f, -1.0f, -1.0f, // bottom right
-			 1.0f, -1.0f, -1.0f, // bottom left   
-			-1.0f,  1.0f, -1.0f, // top right
-			-1.0f,  1.0f, -1.0f, // top right
-			 1.0f, -1.0f, -1.0f, // bottom left
-			 1.0f,  1.0f, -1.0f, // top left			 
-
-			// left face
-			-1.0f, -1.0f,  1.0f, // bottom right
-			-1.0f, -1.0f, -1.0f, // bottom left	   
-			-1.0f,  1.0f,  1.0f, // top right
-			-1.0f,  1.0f,  1.0f, // top right
-			-1.0f, -1.0f, -1.0f, // bottom left	
-			-1.0f,  1.0f, -1.0f, // top left			   
-
-			 // right face 	 	
-			 1.0f, -1.0f, -1.0f, // bottom right
-			 1.0f, -1.0f,  1.0f, // bottom left
-			 1.0f,  1.0f, -1.0f, // top right
-			 1.0f,  1.0f, -1.0f, // top right
-			 1.0f, -1.0f,  1.0f, // bottom left
-			 1.0f,  1.0f,  1.0f, // top left	
-
-			// front face   
-			 1.0f, -1.0f,  1.0f, // bottom right
-			-1.0f, -1.0f,  1.0f, // bottom left
-			 1.0f,  1.0f,  1.0f, // top right
-			 1.0f,  1.0f,  1.0f, // top right
-			-1.0f, -1.0f,  1.0f, // bottom left
-			-1.0f,  1.0f,  1.0f, // top left	    
-
-			 // top face   
-			 1.0f,  1.0f,  1.0f, // bottom right
-			-1.0f,  1.0f,  1.0f, // bottom left
-			 1.0f,  1.0f, -1.0f, // top right
-			 1.0f,  1.0f, -1.0f, // top right
-			-1.0f,  1.0f,  1.0f, // bottom left
-			-1.0f,  1.0f, -1.0f, // top left   
-
-			 // bottom face   
-			 1.0f, -1.0f, -1.0f, // bottom right
-			-1.0f, -1.0f, -1.0f, // bottom left
-			 1.0f, -1.0f,  1.0f, // top right
-			 1.0f, -1.0f,  1.0f, // top right
-			-1.0f, -1.0f, -1.0f, // bottom left 		 
-			-1.0f, -1.0f,  1.0f, // top left
-		};
-
-		// Load created model into resource
-		const std::string model_entity_id{ "Test Model" };
-		const QuestEngine::API::OpenGL::ModelLoaderAPI model_loader = m_engine_api.get_model_loader_api();
-		model_loader.load_model(model_entity_id, shader_id, { vertices }, { 3 });
-
-		// Take loaded model and create ECS entity
+		// ================= Set lighting pass uniforms ==================
 		const QuestEngine::API::ResourceAPI& resource_api = m_engine_api.get_resource_api();
-		QuestEngine::Model::StandardModel* model_pointer = resource_api.get_model_pointer(model_entity_id);
+		auto& pointlight_shader = resource_api.get_shader(QuestEngine::Constants::pointlight_shader);
 
-		const QuestEngine::API::RegistryAPI registry_api = m_engine_api.get_registry_api();
-		registry_api.load_model_into_world(model_entity_id, model_pointer, { 0.0f, 3.0f, 0.0f });
- 
-    }
-    void ShapeTests::load_indexed_shape() const {
-		
-		const QuestEngine::API::OpenGL::ShaderLoaderAPI shader_loader = m_engine_api.get_shader_loader_api();
-		const std::string shader_id{ "Indexed Shape Shader" };
-		shader_loader.load_shader(shader_id, m_base_shader_path + "ShapeVertexUBO.glsl", m_base_shader_path + "ShapeFragmentUBO.glsl", true, true);
+		pointlight_shader.bind();
 
-		const std::vector<float> vertices = {
+			constexpr float CONSTANT = 1.0f; // 1.0
+			constexpr float pointlight_linear = 0.7f; // 0.7
+			constexpr float pointlight_quadratic = 1.8f; // 1.8
+			constexpr auto light_color = glm::vec3{ 0.1f, 0.1f, 0.1f };
 
-			// back face
-			 1.0f, -1.0f, -1.0f, // bottom left   
-			-1.0f, -1.0f, -1.0f, // bottom right
-			-1.0f,  1.0f, -1.0f, // top right
-			 1.0f,  1.0f, -1.0f, // top left			 
+			pointlight_shader.set_uniform("linear", pointlight_linear);
+			pointlight_shader.set_uniform("quadratic", pointlight_quadratic);
+			pointlight_shader.set_uniform("light_color", light_color);
 
-			// front face   
-			-1.0f, -1.0f,  1.0f, // bottom left
-			 1.0f, -1.0f,  1.0f, // bottom right
-			 1.0f,  1.0f,  1.0f, // top right
-			-1.0f,  1.0f,  1.0f, // top left
+			// Radius calculation below: Currently its not being used as it doesn't seem to quite capture all the light (it cuts it off)
+			// Light Volume Calculation (for radius; normally should impact mesh size but currently not using it)
+			// *** Calculate light volume (max distance to display light). ***
+			const float max_brightness = std::fmaxf(std::fmaxf(light_color.x, light_color.y), light_color.z);
+			const float radius = (-pointlight_linear + std::sqrt(pointlight_linear * pointlight_linear - 4 * pointlight_quadratic * (CONSTANT - (256.0f / 5.0f) * max_brightness))) / (2.0f * pointlight_quadratic);
 
-			// left face
-			-1.0f, -1.0f, -1.0f, // bottom left
-			-1.0f, -1.0f,  1.0f, // bottom right
-			-1.0f,  1.0f,  1.0f, // top right
-			-1.0f,  1.0f, -1.0f, // top left			   
+			QUEST_INFO("CALCULATED RADIUS TEST: {} ; (Not being used currently due to issues with formula)", radius)
+			constexpr float pointlight_radius = 5.09f;
+			pointlight_shader.set_uniform("pointlight_max_radius", pointlight_radius);
 
-			 // right face 	 	
-			 1.0f, -1.0f,  1.0f, // bottom left
-			 1.0f, -1.0f, -1.0f, // bottom right
-			 1.0f,  1.0f, -1.0f, // top right
-			 1.0f,  1.0f,  1.0f, // top left	
+			// ================= Load pointlights into world ==================
+			// Both pointlight volumes and visualize pointlights are being loaded
+			// Light qty (hardcoded in shader)
+			constexpr int LIGHT_QTY = 5;
 
-			 // bottom face   
-			-1.0f, -1.0f, -1.0f, // bottom left
-			 1.0f, -1.0f, -1.0f, // bottom right
-			 1.0f, -1.0f,  1.0f, // top right
-			-1.0f, -1.0f,  1.0f, // top left
+			// Model pointers necessary to load objects into world
+			const auto pointlight_model_ptr = resource_api.get_indexed_model_pointer(QuestEngine::Constants::pointlight_model);
+			const auto pointlight_visualization_model_ptr = resource_api.get_indexed_model_pointer(QuestEngine::Constants::visualize_pointlight_model);
 
-			 // top face   
-			-1.0f,  1.0f,  1.0f, // bottom left
-			 1.0f,  1.0f,  1.0f, // bottom right
-			 1.0f,  1.0f, -1.0f, // top right
-			-1.0f,  1.0f, -1.0f, // top left
-		};
+    		const QuestEngine::API::RegistryAPI registry_api = m_engine_api.get_registry_api();
+			for (unsigned int i = 0; i < LIGHT_QTY; i++) {
 
-		const std::vector<unsigned int> indices = {
-			// back face
-			0, 1, 2,
-			2, 3, 0,
+				// Calculate slightly random offsets
+				const auto xPos = static_cast<float>((rand() % 100) / 100.0 * 6.0 - 3.0);
+				const auto yPos = static_cast<float>((rand() % 100) / 100.0 * 6.0 - 4.0);
+				const auto zPos = static_cast<float>((rand() % 100 / 100.0) * 6.0 - 3.0);
+				// QUEST_TRACE("{}, {}, {}", xPos, yPos, zPos);
+				pointlight_shader.set_uniform("all_lights[" + std::to_string(i) + "].light_position", glm::vec3(xPos, yPos, zPos));
 
-			// front face
-			4, 5, 6,
-			6, 7, 4,
+				// Load mesh pointlight to wherever a light source originates
+				// pointlight rendering; scaling to be the same as 'radius'
+				// Not currently doing the above due to calculation of 'radius' not quite being correct
+				registry_api.load_model_into_world("pointlight_" + std::to_string(i), pointlight_model_ptr, { xPos , yPos, zPos }, QuestEngine::ECS::RenderPass::Pointlight, pointlight_radius);
 
-			// left face
-			8, 9, 10,
-			10, 11, 8,
+				// To visualize pointlights
+				// Load as deferred (in addition to the above)
+				// Could be deferred or forward to make them show up; Deferred will have scene lighting
+				// Scaling to be tiny as we just need to visualize it
+				registry_api.load_model_into_world("visual_pointlight_" + std::to_string(i), pointlight_visualization_model_ptr, { xPos , yPos, zPos }, QuestEngine::ECS::RenderPass::Forward,  0.2f); 
+			}
 
-			// right face
-			12, 13, 14,
-			14, 15, 12,
+		pointlight_shader.unbind();
+	}
 
-			// bottom face
-			16, 17, 18,
-			18, 19, 16,
+	void ShapeTests::load_dual_textured_cube_into_world(const std::string& entity_id, const glm::vec3& world_position, const std::string& vertex_shader, const std::string& fragment_shader, const QuestEngine::ECS::RenderPass render_pass) {
 
-			// top face
-			20, 21, 22,
-			22, 23, 20
-		};
+		const std::string model_entity_id{ "Textured Indexed Shape Model Entity" };
+		if (!textured_cube_in_resource) {
+			const QuestEngine::API::OpenGL::ShaderLoaderAPI shader_loader = m_engine_api.get_shader_loader_api();
+			const std::string shader_id{ "dual_textured_testing_cube_shader"};
+			shader_loader.load_shader(shader_id, vertex_shader, fragment_shader, true, true); // from file: true; load_ubo_matrices: true
 
-		// Load created model into resource
-		const std::string model_entity_id{ "Test Indexed Model" };
-		const QuestEngine::API::OpenGL::ModelLoaderAPI model_loader = m_engine_api.get_model_loader_api();
-		model_loader.load_model(model_entity_id, shader_id, { vertices }, { indices }, { 3 });
+			const std::vector<float> vertices = {
+				// Vertices               // Normals		     // Textures
+				// back face
+				 0.5f, -0.5f, -0.5f,        0.0f,  0.0f, -1.0f,     0.0f, 0.0f, // bottom left	
+				-0.5f, -0.5f, -0.5f,        0.0f,  0.0f, -1.0f,     1.0f, 0.0f, // bottom right
+				-0.5f,  0.5f, -0.5f,        0.0f,  0.0f, -1.0f,     1.0f, 1.0f, // top right
+				 0.5f,  0.5f, -0.5f,        0.0f,  0.0f, -1.0f,     0.0f, 1.0f, // top left
 
-		// Take loaded model and create ECS entity
+				// front face
+				-0.5f, -0.5f,  0.5f,		0.0f,  0.0f, 1.0f,     0.0f, 0.0f, // bottom left
+				 0.5f, -0.5f,  0.5f,		0.0f,  0.0f, 1.0f,     1.0f, 0.0f, // bottom right
+				 0.5f,  0.5f,  0.5f,		0.0f,  0.0f, 1.0f,     1.0f, 1.0f, // top right
+				-0.5f,  0.5f,  0.5f,		0.0f,  0.0f, 1.0f,     0.0f, 1.0f, // top left
+
+				// left face
+				-0.5f, -0.5f, -0.5f,		-1.0f,  0.0f,  0.0f,     0.0f, 0.0f, // bottom left
+				-0.5f, -0.5f,  0.5f,		-1.0f,  0.0f,  0.0f,     1.0f, 0.0f, // bottom right
+				-0.5f,  0.5f,  0.5f,		-1.0f,  0.0f,  0.0f,     1.0f, 1.0f, // top right
+				-0.5f,  0.5f, -0.5f,		-1.0f,  0.0f,  0.0f,     0.0f, 1.0f, // top left	   
+
+				// right face
+				 0.5f, -0.5f,  0.5f,		1.0f,  0.0f,  0.0f,     0.0f, 0.0f, // bottom left
+				 0.5f, -0.5f, -0.5f,		1.0f,  0.0f,  0.0f,     1.0f, 0.0f, // bottom right
+				 0.5f,  0.5f, -0.5f,		1.0f,  0.0f,  0.0f,     1.0f, 1.0f, // top right	
+				 0.5f,  0.5f,  0.5f,		1.0f,  0.0f,  0.0f,     0.0f, 1.0f, // top left
+
+				// bottom face
+				-0.5f, -0.5f, -0.5f,		0.0f, -1.0f,  0.0f,     0.0f, 0.0f, // bottom left
+				 0.5f, -0.5f, -0.5f,		0.0f, -1.0f,  0.0f,     1.0f, 0.0f, // bottom right
+				 0.5f, -0.5f,  0.5f,		0.0f, -1.0f,  0.0f,     1.0f, 1.0f, // top right
+				-0.5f, -0.5f,  0.5f,		0.0f, -1.0f,  0.0f,     0.0f, 1.0f, // top left
+
+				// top face
+				-0.5f,  0.5f,  0.5f,		0.0f,  1.0f,  0.0f,     0.0f, 0.0f, // bottom left
+				 0.5f,  0.5f,  0.5f,		0.0f,  1.0f,  0.0f,     1.0f, 0.0f, // bottom right
+				 0.5f,  0.5f, -0.5f,		0.0f,  1.0f,  0.0f,     1.0f, 1.0f, // top right
+				-0.5f,  0.5f, -0.5f,		0.0f,  1.0f,  0.0f,     0.0f, 1.0f, // top left
+			};
+
+			const std::vector<unsigned int> indices = {
+				// back face
+				0, 1, 2,
+				2, 3, 0,
+
+				// front face
+				4, 5, 6,
+				6, 7, 4,
+
+				// left face
+				8, 9, 10,
+				10, 11, 8,
+
+				// right face
+				12, 13, 14,
+				14, 15, 12,
+
+				// bottom face
+				16, 17, 18,
+				18, 19, 16,
+
+				// top face
+				20, 21, 22,
+				22, 23, 20
+			};
+
+			// Load created model into resource
+			const QuestEngine::API::OpenGL::ModelLoaderAPI model_loader = m_engine_api.get_model_loader_api();
+			model_loader.load_model(model_entity_id, shader_id, { vertices }, { indices }, { 3, 3, 2 }, QuestGLCore::Model::ModelDrawMode::Triangles);
+
+			// Get pointer to loaded model
+			const QuestEngine::API::ResourceAPI& resource_api = m_engine_api.get_resource_api();
+			QuestEngine::Model::IndexedModel* model_pointer = resource_api.get_indexed_model_pointer(model_entity_id);
+
+			// Texture Model
+
+			// Load texture into resource
+			const std::string texture_id_in_resource{ "wood_texture" };
+			const std::string texture_name_in_shader{ "all_textures.diffuse" };
+
+			const auto texture_api = m_engine_api.get_texture_loader_api();
+			texture_api.load_texture2D(texture_id_in_resource, m_base_texture_path + "wood.png", QuestEngine::Texture::TextureType::Standard, false, true);
+			const auto texture_ptr = resource_api.get_texture_pointer(texture_id_in_resource);
+
+			auto& mesh_vector = model_pointer->get_mesh_vector();
+			QuestGLCore::Shader::ShaderProgram* model_shader_program = model_pointer->get_shader_program();
+
+			// For each mesh, register the texture
+			for (auto& model_mesh : mesh_vector) {
+				model_mesh.register_texture(texture_name_in_shader, model_shader_program, texture_ptr);
+			}
+
+			// Load specular texture
+			const std::string specular_texture_id_in_resource{ "specular_texture" };
+			const std::string specular_texture_name_in_shader{ "all_textures.specular" };
+
+			texture_api.load_texture2D(specular_texture_id_in_resource, m_base_texture_path + "container_specular_map.png", QuestEngine::Texture::TextureType::Standard, false, false);
+			const auto specular_texture_ptr = resource_api.get_texture_pointer(specular_texture_id_in_resource);
+			// For each mesh, register the texture
+			for (auto& model_mesh : mesh_vector) {
+				model_mesh.register_texture(specular_texture_name_in_shader, model_shader_program, specular_texture_ptr);
+			}
+
+			textured_cube_in_resource = true;
+
+		}
+
+		// Load textured cube into registry:
 		const QuestEngine::API::ResourceAPI& resource_api = m_engine_api.get_resource_api();
 		QuestEngine::Model::IndexedModel* model_pointer = resource_api.get_indexed_model_pointer(model_entity_id);
 
-		const QuestEngine::API::RegistryAPI registry_api = m_engine_api.get_registry_api();
-		registry_api.load_model_into_world(model_entity_id, model_pointer, { 0.0f, 1.0f, 0.0f });
-    }
-
-	void ShapeTests::load_textured_indexed_shape() const {
-		const QuestEngine::API::OpenGL::ShaderLoaderAPI shader_loader = m_engine_api.get_shader_loader_api();
-		const std::string shader_id{ "Textured Indexed Shape Shader" };
-		shader_loader.load_shader(shader_id, m_base_shader_path + "ShapeVertexUBOTextured.glsl", m_base_shader_path + "ShapeFragmentUBOTextured.glsl", true, true);
-
-		const std::vector<float> vertices = {
-
-			// Vertices                 // Texture Coordinates
-			// back face
-			 0.5f, -0.5f, -0.5f,		0.0f, 0.0f, // bottom left	
-			-0.5f, -0.5f, -0.5f,		1.0f, 0.0f, // bottom right
-			-0.5f,  0.5f, -0.5f,		1.0f, 1.0f, // top right	 
-			 0.5f,  0.5f, -0.5f,		0.0f, 1.0f, // top left			
-
-			 // front face
-			-0.5f, -0.5f,  0.5f,		0.0f, 0.0f, // bottom left
-			 0.5f, -0.5f,  0.5f,		1.0f, 0.0f, // bottom right
-			 0.5f,  0.5f,  0.5f,		1.0f, 1.0f, // top right
-			-0.5f,  0.5f,  0.5f,		0.0f, 1.0f, // top left
-
-			 // left face
-			-0.5f, -0.5f, -0.5f,		0.0f, 0.0f, // bottom left
-			-0.5f, -0.5f,  0.5f,		1.0f, 0.0f, // bottom right
-			-0.5f,  0.5f,  0.5f,		1.0f, 1.0f, // top right
-			-0.5f,  0.5f, -0.5f,		0.0f, 1.0f, // top left		
-
-			 // right face		 		 		 	     
-			 0.5f, -0.5f,  0.5f,		0.0f, 0.0f, // bottom left
-			 0.5f, -0.5f, -0.5f,		1.0f, 0.0f, // bottom right
-			 0.5f,  0.5f, -0.5f,		1.0f, 1.0f, // top right
-			 0.5f,  0.5f,  0.5f,		0.0f, 1.0f, // top left
-
-			 // bottom face
-			-0.5f, -0.5f, -0.5f,		0.0f, 0.0f, // bottom left
-			 0.5f, -0.5f, -0.5f,		1.0f, 0.0f, // bottom right
-			 0.5f, -0.5f,  0.5f,		1.0f, 1.0f, // top right
-			-0.5f, -0.5f,  0.5f,		0.0f, 1.0f, // top left
-
-			// top face
-			-0.5f,  0.5f,  0.5f,		0.0f, 0.0f, // bottom left
-			 0.5f,  0.5f,  0.5f,		1.0f, 0.0f, // bottom right
-			 0.5f,  0.5f, -0.5f,		1.0f, 1.0f, // top right
-			-0.5f,  0.5f, -0.5f,		0.0f, 1.0f, // top left
-		};
-
-		const std::vector<unsigned int> indices = {
-			// back face
-			0, 1, 2,
-			2, 3, 0,
-
-			// front face
-			4, 5, 6,
-			6, 7, 4,
-
-			// left face
-			8, 9, 10,
-			10, 11, 8,
-
-			// right face
-			12, 13, 14,
-			14, 15, 12,
-
-			// bottom face
-			16, 17, 18,
-			18, 19, 16,
-
-			// top face
-			20, 21, 22,
-			22, 23, 20
-		};
-
-		// Load created model into resource
-		const std::string model_entity_id{ "Test Indexed Model" };
-		const QuestEngine::API::OpenGL::ModelLoaderAPI model_loader = m_engine_api.get_model_loader_api();
-		model_loader.load_model(model_entity_id, shader_id, { vertices }, { indices }, { 3, 2 });
-
-		// Get pointer to loaded model
-		const QuestEngine::API::ResourceAPI& resource_api = m_engine_api.get_resource_api();
-		QuestEngine::Model::IndexedModel* model_pointer = resource_api.get_indexed_model_pointer(model_entity_id);
-
-		// Texture Model (
-		// In this example, we only have one mesh.  However, the following would simply texture each
-		// mesh within the model to having the same texture (or collection of textures). Normally each
-		// mesh will be loaded and the textures loaded with it (via assimp).  In this example, we are
-		// taking the already created model and setting each mesh within it to use the same textures
-		// in order to test the textures are working
-
-		// Load texture into resource
-		const std::string base_texture_path{ "../Resources/Textures/" };
-		const std::string texture_id_in_resource{ "blue_texture" };
-		const std::string texture_name_in_shader{ "shape_texture_test" };
-
-		const auto texture_api = m_engine_api.get_texture_loader_api();
-		texture_api.load_texture2D(texture_id_in_resource, base_texture_path + "abstract_texture.jpg", QuestEngine::Texture::TextureType::Standard, false, true);
-		const auto texture_ptr = resource_api.get_texture_pointer(texture_id_in_resource);
-
-		auto& mesh_vector = model_pointer->get_mesh_vector();
-		QuestGLCore::Shader::ShaderProgram* model_shader_program = model_pointer->get_shader_program();
-
-		// For each mesh, register the texture
-		for(auto& model_mesh : mesh_vector) {
-			model_mesh.register_texture(texture_name_in_shader, model_shader_program, texture_ptr);
-		}
-
 		// Take loaded model and create ECS entity
 		const QuestEngine::API::RegistryAPI registry_api = m_engine_api.get_registry_api();
-		registry_api.load_model_into_world(model_entity_id, model_pointer, { 0.0f, 1.0f, 0.0f });
+		registry_api.load_model_into_world(entity_id, model_pointer, world_position, render_pass, 1.0f);
 	}
-
-	void ShapeTests::load_normals_texture_indexed_shape_blinn_phong() const {
-
-		const QuestEngine::API::OpenGL::ShaderLoaderAPI shader_loader = m_engine_api.get_shader_loader_api();
-		const std::string shader_id{ "Textured Indexed Shape Shader" };
-		shader_loader.load_shader(shader_id, m_base_shader_path + "ShapeVertexUBOTexturedNormalsBlinnPhong.glsl", m_base_shader_path + "ShapeFragmentUBOTexturedNormalsBlinnPhong.glsl", true, true);
-
-		const std::vector<float> vertices = {
-			// Vertices               // Normals		     // Textures
-			// back face
-			 0.5f, -0.5f, -0.5f,        0.0f,  0.0f, -1.0f,     0.0f, 0.0f, // bottom left	
-			-0.5f, -0.5f, -0.5f,        0.0f,  0.0f, -1.0f,     1.0f, 0.0f, // bottom right
-			-0.5f,  0.5f, -0.5f,        0.0f,  0.0f, -1.0f,     1.0f, 1.0f, // top right
-			 0.5f,  0.5f, -0.5f,        0.0f,  0.0f, -1.0f,     0.0f, 1.0f, // top left
-
-			// front face
-			-0.5f, -0.5f,  0.5f,		0.0f,  0.0f, 1.0f,     0.0f, 0.0f, // bottom left
-			 0.5f, -0.5f,  0.5f,		0.0f,  0.0f, 1.0f,     1.0f, 0.0f, // bottom right
-			 0.5f,  0.5f,  0.5f,		0.0f,  0.0f, 1.0f,     1.0f, 1.0f, // top right
-			-0.5f,  0.5f,  0.5f,		0.0f,  0.0f, 1.0f,     0.0f, 1.0f, // top left
-
-			// left face
-			-0.5f, -0.5f, -0.5f,		-1.0f,  0.0f,  0.0f,     0.0f, 0.0f, // bottom left
-			-0.5f, -0.5f,  0.5f,		-1.0f,  0.0f,  0.0f,     1.0f, 0.0f, // bottom right
-			-0.5f,  0.5f,  0.5f,		-1.0f,  0.0f,  0.0f,     1.0f, 1.0f, // top right
-			-0.5f,  0.5f, -0.5f,		-1.0f,  0.0f,  0.0f,     0.0f, 1.0f, // top left	   
-
-			// right face
-			 0.5f, -0.5f,  0.5f,		1.0f,  0.0f,  0.0f,     0.0f, 0.0f, // bottom left
-			 0.5f, -0.5f, -0.5f,		1.0f,  0.0f,  0.0f,     1.0f, 0.0f, // bottom right
-			 0.5f,  0.5f, -0.5f,		1.0f,  0.0f,  0.0f,     1.0f, 1.0f, // top right	
-			 0.5f,  0.5f,  0.5f,		1.0f,  0.0f,  0.0f,     0.0f, 1.0f, // top left
-
-			// bottom face
-			-0.5f, -0.5f, -0.5f,		0.0f, -1.0f,  0.0f,     0.0f, 0.0f, // bottom left
-			 0.5f, -0.5f, -0.5f,		0.0f, -1.0f,  0.0f,     1.0f, 0.0f, // bottom right
-			 0.5f, -0.5f,  0.5f,		0.0f, -1.0f,  0.0f,     1.0f, 1.0f, // top right
-			-0.5f, -0.5f,  0.5f,		0.0f, -1.0f,  0.0f,     0.0f, 1.0f, // top left
-
-			// top face
-			-0.5f,  0.5f,  0.5f,		0.0f,  1.0f,  0.0f,     0.0f, 0.0f, // bottom left
-			 0.5f,  0.5f,  0.5f,		0.0f,  1.0f,  0.0f,     1.0f, 0.0f, // bottom right
-			 0.5f,  0.5f, -0.5f,		0.0f,  1.0f,  0.0f,     1.0f, 1.0f, // top right
-			-0.5f,  0.5f, -0.5f,		0.0f,  1.0f,  0.0f,     0.0f, 1.0f, // top left
-		};
-
-		const std::vector<unsigned int> indices = {
-			// back face
-			0, 1, 2,
-			2, 3, 0,
-
-			// front face
-			4, 5, 6,
-			6, 7, 4,
-
-			// left face
-			8, 9, 10,
-			10, 11, 8,
-
-			// right face
-			12, 13, 14,
-			14, 15, 12,
-
-			// bottom face
-			16, 17, 18,
-			18, 19, 16,
-
-			// top face
-			20, 21, 22,
-			22, 23, 20
-		};
-
-		// Load created model into resource
-		const std::string model_entity_id{ "Test Indexed Model" };
-		const QuestEngine::API::OpenGL::ModelLoaderAPI model_loader = m_engine_api.get_model_loader_api();
-		model_loader.load_model(model_entity_id, shader_id, { vertices }, { indices }, { 3, 3, 2 });
-
-		// Get pointer to loaded model
-		const QuestEngine::API::ResourceAPI& resource_api = m_engine_api.get_resource_api();
-		QuestEngine::Model::IndexedModel* model_pointer = resource_api.get_indexed_model_pointer(model_entity_id);
-
-		// Texture Model (
-		// In this example, we only have one mesh.  However, the following would simply texture each
-		// mesh within the model to having the same texture (or collection of textures). Normally each
-		// mesh will be loaded and the textures loaded with it (via assimp).  In this example, we are
-		// taking the already created model and setting each mesh within it to use the same textures
-		// in order to test the textures are working
-
-		// Load texture into resource
-		const std::string base_texture_path{ "../Resources/Textures/" };
-		const std::string texture_id_in_resource{ "blue_texture" };
-		const std::string texture_name_in_shader{ "all_textures.diffuse" };
-
-		const auto texture_api = m_engine_api.get_texture_loader_api();
-		texture_api.load_texture2D(texture_id_in_resource, base_texture_path + "wood.png", QuestEngine::Texture::TextureType::Standard, false, true);
-		const auto texture_ptr = resource_api.get_texture_pointer(texture_id_in_resource);
-
-		auto& mesh_vector = model_pointer->get_mesh_vector();
-		QuestGLCore::Shader::ShaderProgram* model_shader_program = model_pointer->get_shader_program();
-
-		// For each mesh, register the texture
-		for (auto& model_mesh : mesh_vector) {
-			model_mesh.register_texture(texture_name_in_shader, model_shader_program, texture_ptr);
-		}
-
-		// Load specular texture
-		texture_api.load_texture2D("specular_texture", base_texture_path + "container_specular_map.png", QuestEngine::Texture::TextureType::Standard, false, false);
-		const auto specular_texture_ptr = resource_api.get_texture_pointer("specular_texture");
-		// For each mesh, register the texture
-		for (auto& model_mesh : mesh_vector) {
-			model_mesh.register_texture("all_textures.specular", model_shader_program, specular_texture_ptr);
-		}
-
-		// Take loaded model and create ECS entity
-		const QuestEngine::API::RegistryAPI registry_api = m_engine_api.get_registry_api();
-		registry_api.load_model_into_world(model_entity_id, model_pointer, { 0.0f, 0.0f, 0.0f });
-
-		// Set shader uniforms for lighting test
-		// Light is directional or positional (0.0f in 4th position indicates directional light)
-		model_shader_program->bind();
-		model_shader_program->set_uniform("light_info.light_in_world", glm::vec4(0.0f, 0.0f, -3.0f, 0.0f));
-		model_shader_program->set_uniform("light_info.ambient_intensity", glm::vec4(0.1f, 0.1f, 0.1f, 1.0f));
-		model_shader_program->set_uniform("light_info.diffuse_intensity", glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
-		model_shader_program->set_uniform("light_info.specular_intensity", glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
-		model_shader_program->set_uniform("light_info.shininess", 32.0f);
-		model_shader_program->unbind();
-
-	}
-
-
 
 } // namespace QuestSandbox::Tests

@@ -3,7 +3,7 @@ layout (location = 0) in vec3 aPos;
 layout (location = 1) in vec3 normals;
 layout (location = 2) in vec2 tex_coords;
 
-layout (std140) uniform uniform_matrices {
+layout (std140) uniform ubo_matrices {
     mat4 projection_matrix;
     mat4 view_matrix;
 };

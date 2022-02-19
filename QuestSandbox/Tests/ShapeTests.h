@@ -1,31 +1,24 @@
 #pragma once
 #include "QuestEngine/API/Neutral/EngineAPI.h"
 #include <string>
+#include <glm/glm.hpp>
 
 namespace QuestSandbox::Tests {
 
 	class ShapeTests {
 
 	public:
-		ShapeTests(QuestEngine::API::EngineAPI& engine_api);
-
-		// Triangle
-		void load_standard_triangle() const;
-		void load_indexed_triangle() const;
-
-		// Shape
-		void load_standard_shape() const;
-		void load_indexed_shape() const;
-
-		// Textured Shape
-		void load_textured_indexed_shape() const;
-
-		// Shape: Position, normals, texture_coords
-		void load_normals_texture_indexed_shape_blinn_phong() const;
+		explicit ShapeTests(QuestEngine::API::EngineAPI& engine_api);
+		void pointlight_lightvolume_test();
 
 	private:
+		void load_dual_textured_cube_into_world(const std::string& entity_id, const glm::vec3& world_position, const std::string& vertex_shader, const std::string& fragment_shader, const QuestEngine::ECS::RenderPass render_pass);
+
 		QuestEngine::API::EngineAPI& m_engine_api;
 		static const std::string m_base_shader_path;
+		static const std::string m_base_texture_path;
+
+		bool textured_cube_in_resource = false;
 	};
 
 } // QuestSandbox::Tests

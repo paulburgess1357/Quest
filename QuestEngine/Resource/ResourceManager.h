@@ -7,8 +7,6 @@ namespace QuestEngine::Resource {
 	class ResourceManager {
 
 	public:
-		ResourceManager();
-
 		// ======================== Shader ========================
 		[[nodiscard]] Shader::ShaderProgram& get_shader(const std::string& shader_id);
 		[[nodiscard]] Shader::ShaderProgram* get_shader_pointer(const std::string& shader_id);
@@ -46,10 +44,6 @@ namespace QuestEngine::Resource {
 		void load_texture2D(const std::string& texture_id, Texture::Texture& texture);
 
 	private:
-		void load_main_camera();
-		void load_ubo_matrices();
-		void load_post_process_shader();
-
 		ShaderResource m_shader_resource;
 		StandardModelResource m_standard_model_resource;
 		IndexedModelResource m_indexed_model_resource;
