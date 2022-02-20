@@ -110,9 +110,9 @@ namespace QuestGLCore::Framebuffer {
 			QUEST_TRACE("Rescaling Framebuffer Attachments")
 			m_width = width;
 			m_height = height;
+			glViewport(0, 0, m_width, m_height);
 			rescale_color_attachments();
 			rescale_renderbuffer_attachment();
-			glViewport(0, 0, m_width, m_height);
 		}
 
 		void set_single_color_attachment_to_write_to(const unsigned int color_attachment_num) const {

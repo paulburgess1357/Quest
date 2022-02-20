@@ -11,7 +11,7 @@ namespace QuestEngine::Engine {
 	Engine::Engine(const int width, const int height)
 		:m_window{ width, height },
 		m_active_camera{ nullptr },
-		m_projection_matrix { width, height },
+		m_projection_matrix { m_window.get_aspect_ratio() },
 		m_systems_manager{ m_registry_manager.get_active_registry() },
 		m_render_pass_manager{ m_window, m_registry_manager.get_active_registry() },
 		m_window_width{ width },
@@ -47,21 +47,9 @@ namespace QuestEngine::Engine {
 		while (!shutdown()){
 			m_ubo_manager.set_ubos(*m_active_camera, m_projection_matrix);
 			m_systems_manager.update(*m_active_camera);
-
-			handle_window_resize();
 			m_render_pass_manager.render();
-
 			Window::Window::poll_events();
 			m_window.swap_buffer();
-		}
-	}
-
-	void Engine::handle_window_resize() {
-		if (Window::Window::get_width() != m_window_width || Window::Window::get_height() != m_window_height) {
-			m_window_width = Window::Window::get_width();
-			m_window_height = Window::Window::get_height();
-			//m_render_pass_manager.resize_attachments(m_window_width, m_window_height);
-			m_projection_matrix.update_projection_matrix(m_window_width, m_window_height);
 		}
 	}
 

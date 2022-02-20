@@ -26,7 +26,6 @@ namespace QuestEngine::Engine {
 
 		void qc_checks() const;
 		void gameloop();
-		void handle_window_resize();
 
 		[[nodiscard]] bool shutdown() const;
 

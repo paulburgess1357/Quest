@@ -6,11 +6,11 @@ namespace QuestEngine::Camera {
 	class ProjectionMatrix {
 
 	public:
-		ProjectionMatrix(const int width, const int height);
+		ProjectionMatrix(const float aspect_ratio);
 		[[nodiscard]] glm::mat4 get_projection_matrix() const;
-		void update_projection_matrix(const int width, const int height);
 
 	private:
+		void set_projection_matrix(const float aspect_ratio);
 		glm::mat4 m_projection_matrix;
 
 		static float DEFAULT_FOV;

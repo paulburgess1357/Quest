@@ -15,8 +15,10 @@ namespace QuestEngine::Render {
 
 	RenderPassManager::RenderPassManager(const Window::Window& window, entt::registry& active_registry)
 		:m_window{ window },	
-		m_window_width{ window.get_width() },
-		m_window_height{ window.get_height() },	
+		m_window_width{ Window::Window::get_width() },
+		m_window_height{ Window::Window::get_height() },
+		m_framebuffer_width{ m_window_width },
+		m_framebuffer_height{ m_window_height },
 		m_g_buffer{ m_window_width, m_window_height, { Texture::BlankTextureEnum::RGBA16F_NEAREST, Texture::BlankTextureEnum::RGBA16F_NEAREST, Texture::BlankTextureEnum::RGBA_NEAREST } },
 		m_post_process_framebuffer{ m_window_width, m_window_height, { Texture::BlankTextureEnum::RGBA16F_LINEAR } },
 		m_ui_framebuffer{ m_window_width, m_window_height, { Texture::BlankTextureEnum::RGBA16F_LINEAR } },
@@ -31,6 +33,7 @@ namespace QuestEngine::Render {
 		handle_window_resize(); // TODO maybet his should be handle_viewport_resize() since its based on imgui???
 		handle_ui_toggle();
 
+		glViewport(0, 0, m_framebuffer_width, m_framebuffer_height);
 		deferred_pass();
 		light_pass();
 		forward_pass();
@@ -38,6 +41,7 @@ namespace QuestEngine::Render {
 		if(show_ui) {
 			imgui_viewport_pass(ui_viewport_width, ui_viewport_height);
 		} else {
+			glViewport(0, 0, Window::Window::get_width(), Window::Window::get_height());
 			default_framebuffer_pass();
 		}
 	}
@@ -58,9 +62,27 @@ namespace QuestEngine::Render {
 		if (Window::Window::get_width() != m_window_width || Window::Window::get_height() != m_window_height) {
 			m_window_width = Window::Window::get_width();
 			m_window_height = Window::Window::get_height();
-			resize_attachments(m_window_width, m_window_height);
+
+			const float aspect_ratio = Window::Window::get_aspect_ratio();
+			m_framebuffer_width = static_cast<int>(static_cast<float>(m_window_height) * aspect_ratio);
+			m_framebuffer_height = static_cast<int>(static_cast<float>(m_window_width) * 1.0f / aspect_ratio);
+
+			if(m_window_height > m_framebuffer_height) {
+				m_framebuffer_width = m_window_width;
+			} else {
+				m_framebuffer_height = m_window_height;
+			}
+
+			glm::vec2 scale = glm::vec2{ m_framebuffer_width, m_framebuffer_height } / glm::vec2{ m_window_width, m_window_height };
+			m_quad_model_matrix = glm::scale(glm::mat4(1.0f), { scale.x, scale.y, 1.0f });
+
+			m_postprocess_shader->bind();
+			m_postprocess_shader->set_uniform(Constants::model_matrix, m_quad_model_matrix);
+			m_postprocess_shader->unbind();
+
+			resize_attachments(m_framebuffer_width, m_framebuffer_height);
 		}
-		// m_projection_matrix.update_projection_matrix(m_window_width, m_window_height);
+		
 	}
 
 
@@ -131,7 +153,7 @@ namespace QuestEngine::Render {
 
 	void RenderPassManager::draw_post_process() const {
 		m_postprocess_shader->bind();
-		m_postprocess_shader->set_uniform(Constants::model_matrix, m_quad_model_matrix);
+		// m_postprocess_shader->set_uniform(Constants::model_matrix, m_quad_model_matrix);
 		m_post_process_framebuffer.bind_all_color_attachments();
 		m_quad.draw();
 	}
@@ -148,6 +170,11 @@ namespace QuestEngine::Render {
 
 	void RenderPassManager::set_postprocess_shader(Shader::ShaderProgram& shader_program) {
 		m_postprocess_shader = &shader_program;
+
+		m_postprocess_shader->bind();
+		m_postprocess_shader->set_uniform(Constants::model_matrix, m_quad_model_matrix);
+		m_postprocess_shader->unbind();
+
 	}
 
 	void RenderPassManager::set_active_registry(entt::registry& registry) {

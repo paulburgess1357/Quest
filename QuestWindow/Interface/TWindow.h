@@ -59,6 +59,10 @@ namespace QuestWindow {
 				return T::get_height();
 			}
 
+			static float get_aspect_ratio() {
+				return T::get_aspect_ratio();
+			}
+
 		private:
 			T m_window;
 		};

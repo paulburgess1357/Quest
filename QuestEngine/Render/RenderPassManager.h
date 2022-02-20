@@ -38,6 +38,9 @@ namespace QuestEngine::Render {
 		int m_window_width;
 		int m_window_height;
 
+		int m_framebuffer_width;
+		int m_framebuffer_height;
+
 		// RGBA16F_NEAREST, RGBA16F_NEAREST, RGBA_NEAREST
 		// Position,        Normals,         Color + Specular
 		Framebuffer::Framebuffer2D m_g_buffer;
@@ -61,6 +64,8 @@ namespace QuestEngine::Render {
 
 		const int ui_viewport_width = 1066;
 		const int ui_viewport_height = 600;
+
+
 
 	};
 
