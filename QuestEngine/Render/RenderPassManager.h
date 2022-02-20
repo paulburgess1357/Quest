@@ -25,12 +25,13 @@ namespace QuestEngine::Render {
 		void forward_pass() const;
 
 		void default_framebuffer_pass() const;
-		void imgui_viewport_pass() const;
+		void imgui_viewport_pass(const int width, const int height) const;
 
 		void draw_post_process() const;
-		void draw_user_interface(void* handle) const;
+		void draw_user_interface(void* handle, const int width, const int height) const;
 
 		void handle_window_resize();
+		void handle_ui_toggle();
 
 		// Tracking window resizes:
 		const Window::Window& m_window;
@@ -42,16 +43,24 @@ namespace QuestEngine::Render {
 		Framebuffer::Framebuffer2D m_g_buffer;
 
 		// RGBA16F_NEAREST
-		// Scene colors
+		// Scene colors, UItexture
 		Framebuffer::Framebuffer2D m_post_process_framebuffer;
+		Framebuffer::Framebuffer2D m_ui_framebuffer;
 
 		Shader::ShaderProgram* m_pointlight_shader;
 		Shader::ShaderProgram* m_postprocess_shader;
 
 		Model::IndexedMeshQuad m_quad;
+		glm::mat4 m_quad_model_matrix;
+
 		entt::registry* m_active_registry;
 
 		UserInterface::UserInterface m_user_interface;
+
+		bool show_ui = false;
+
+		const int ui_viewport_width = 1066;
+		const int ui_viewport_height = 600;
 
 	};
 

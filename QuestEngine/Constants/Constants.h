@@ -4,6 +4,7 @@
 namespace QuestEngine::Constants {
 	const std::string main_camera{ "main_camera " };
 	const std::string ubo_matrices{ "ubo_matrices" };
+	const std::string model_matrix{ "model_matrix" };
 
 	const std::string post_process_shader{ "post_process_shader" };
 	const std::string pointlight_shader{"pointlight_lightpass_shader"};

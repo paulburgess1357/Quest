@@ -20,7 +20,7 @@ namespace QuestUI::OpenGL {
 		
 		static void begin_render();
 		static void show_demo();
-		static void show_viewport(void* handle);
+		static void show_viewport(void* handle, const int width, const int height);
 		void end_render() const;
 
 		//static bool ui_using_inputs();

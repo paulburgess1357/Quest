@@ -75,9 +75,9 @@ namespace QuestUI::OpenGL {
 		ImGui::ShowDemoWindow();
 	}
 
-	void ImguiWindow::show_viewport(void* handle) {
+	void ImguiWindow::show_viewport(void* handle, const int width, const int height) {
 		if(ImGui::Begin("GameView")) {
-			ImGui::Image(handle, { 500, 500 });
+			ImGui::Image(handle, { static_cast<float>(width), static_cast<float>(height) }, { 0, 1}, { 1, 0 } ); //todo check these
 		}
 
 		ImGui::End();

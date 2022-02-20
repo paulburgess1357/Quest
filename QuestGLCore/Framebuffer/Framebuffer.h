@@ -74,13 +74,13 @@ namespace QuestGLCore::Framebuffer {
 			trait.unbind_read();
 		}
 
-		void bind_draw() const {
+		void bind_write() const {
 			const auto handle = m_framebuffer_handle.get_handle();
 			const auto trait = m_framebuffer_handle.get_trait();
 			trait.bind_draw(handle);
 		}
 
-		void unbind_draw() const {
+		void unbind_write() const {
 			const auto trait = m_framebuffer_handle.get_trait();
 			trait.unbind_draw();
 		}
@@ -90,7 +90,7 @@ namespace QuestGLCore::Framebuffer {
 			bind_read();
 
 			// Write to existing framebuffer
-			dest_framebuffer.bind_draw();
+			dest_framebuffer.bind_write();
 
 			const auto buffer_type = OGLResolution::FramebufferBlitResolution::get_bitfield(blit_enum);
 			glBlitFramebuffer(0, 0, m_width, m_height, 0, 0, dest_framebuffer.m_width, dest_framebuffer.m_height, buffer_type, GL_NEAREST);
@@ -101,7 +101,7 @@ namespace QuestGLCore::Framebuffer {
 			bind_read();
 
 			// Write depth values to window framebuffer
-			unbind_draw();
+			unbind_write();
 			const auto buffer_type = OGLResolution::FramebufferBlitResolution::get_bitfield(blit_enum);
 			glBlitFramebuffer(0, 0, m_width, m_height, 0, 0, dest_width, dest_height, buffer_type, GL_NEAREST);
 		}
