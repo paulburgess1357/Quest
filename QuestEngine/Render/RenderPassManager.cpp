@@ -18,7 +18,7 @@ namespace QuestEngine::Render {
 		m_postprocess_shader{ nullptr },
 		m_quad_model_matrix{ 1.0f },
 		m_active_registry{ &active_registry },
-		m_user_interface{ window.get_window()}{
+		m_user_interface{ window.get_window() }{
 	}
 
 	void RenderPassManager::render() {
@@ -77,8 +77,6 @@ namespace QuestEngine::Render {
 	void RenderPassManager::final_pass() const {
 		// UI for full window display based on user input:
 		if (m_show_ui) {
-			// TODO possibly set here to fit in imgui... although attachments hsould be the same size here...
-			//Graphics::State::set_viewport(0, 0, ui_viewport_width, ui_viewport_height);
 			imgui_viewport_pass();
 		} else {
 			default_framebuffer_pass();
@@ -86,7 +84,6 @@ namespace QuestEngine::Render {
 	}
 
 	void RenderPassManager::default_framebuffer_pass() const {
-
 		// Draw Target: Default Framebuffer (Window)
 		m_post_process_framebuffer.unbind();
 		Framebuffer::Framebuffer2D::clear_all_buffers();
@@ -97,7 +94,6 @@ namespace QuestEngine::Render {
 	}
 
 	void RenderPassManager::imgui_viewport_pass() const {
-
 		// Draw Target: Ui Framebuffer
 		m_ui_framebuffer.bind_write();
 		Framebuffer::Framebuffer2D::clear_all_buffers();
@@ -109,7 +105,7 @@ namespace QuestEngine::Render {
 
 		// Take post process color attachment texture handle and pass to Imgui
 		// Graphics::State::set_viewport(0, 0, ui_viewport_width, ui_viewport_height);
-		draw_user_interface(reinterpret_cast<void*>(static_cast<intptr_t>(m_ui_framebuffer.get_color_attachment_raw_handle(0))));
+		draw_user_interface(reinterpret_cast<void*>(static_cast<intptr_t>(m_ui_framebuffer.get_color_attachment_raw_handle(0))));  // NOLINT(performance-no-int-to-ptr)
 	}
 
 	void RenderPassManager::draw_post_process() const {
