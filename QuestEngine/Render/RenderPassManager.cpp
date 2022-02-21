@@ -5,17 +5,6 @@
 
 namespace QuestEngine::Render {
 
-	//TODO make LightState class simply GraphicsState() and there i can do ogl calls that are necessary (e.g glViewport, light stuff, etc.)
-
-
-	//TODO 1) attachment resize should match imgui texture size
-	// TODO2) the initlaization below should match (e.g. 500x500)
-	//3) The handle_window_resize() should possibly be handle imgui viewport resize; not sure what happens if i expand the window itself but am still in an imgui viewport
-	//4) when not showing us, i need to render to default framebuffer
-	//5) i dont like that i have two 'handle window resize' functions (engine and here)
-
-	//TODO the sizes for initlaization should be based on the viewport, NOT the window size i thinK!!!
-
 	RenderPassManager::RenderPassManager(const Window::Window& window, entt::registry& active_registry)
 		:m_window{ window },	
 		m_window_width{ Window::Window::get_width() },
@@ -33,14 +22,15 @@ namespace QuestEngine::Render {
 	}
 
 	void RenderPassManager::render() {
-		handle_window_resize();
 
+		if(!m_show_ui) {
+			handle_window_resize();
+		}
 		// Set fb viewport size:
 		Graphics::State::set_viewport(0, 0, m_framebuffer_width, m_framebuffer_height);
-			deferred_pass();
-			light_pass();
-			forward_pass();
-
+		deferred_pass();
+		light_pass();
+		forward_pass();
 
 		handle_ui_toggle();
 		final_pass();
@@ -84,9 +74,9 @@ namespace QuestEngine::Render {
 		ECS::Systems::RenderSystem::render_forward(*m_active_registry);
 	}
 
-	void RenderPassManager::final_pass() {
+	void RenderPassManager::final_pass() const {
 		// UI for full window display based on user input:
-		if (show_ui) {
+		if (m_show_ui) {
 			// TODO possibly set here to fit in imgui... although attachments hsould be the same size here...
 			//Graphics::State::set_viewport(0, 0, ui_viewport_width, ui_viewport_height);
 			imgui_viewport_pass();
@@ -118,7 +108,7 @@ namespace QuestEngine::Render {
 		Framebuffer::Framebuffer2D::clear_all_buffers();
 
 		// Take post process color attachment texture handle and pass to Imgui
-		Graphics::State::set_viewport(0, 0, ui_viewport_width, ui_viewport_height);
+		// Graphics::State::set_viewport(0, 0, ui_viewport_width, ui_viewport_height);
 		draw_user_interface(reinterpret_cast<void*>(static_cast<intptr_t>(m_ui_framebuffer.get_color_attachment_raw_handle(0))));
 	}
 
@@ -131,18 +121,13 @@ namespace QuestEngine::Render {
 
 	void RenderPassManager::draw_user_interface(void* handle) const {
 		UserInterface::UserInterface::begin_render();
-		UserInterface::UserInterface::show_viewport(handle, ui_viewport_width, ui_viewport_height);
+		m_user_interface.show_viewport(handle);
 		m_user_interface.end_render();
 	}
 
 	void RenderPassManager::handle_ui_toggle() {
 		if (Window::KeyboardInput::is_initial_press(Window::Keyboard::F1)) {
-			show_ui = !show_ui;
-			//if (show_ui) {
-			//	resize_attachments(ui_viewport_width, ui_viewport_height);
-			//} else {
-			//	resize_attachments(m_window_width, m_window_height);
-			//}
+			m_show_ui = !m_show_ui;
 		}
 	}
 

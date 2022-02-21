@@ -23,7 +23,7 @@ namespace QuestEngine::Render {
 		void deferred_pass() const;
 		void light_pass() const;
 		void forward_pass() const;
-		void final_pass();
+		void final_pass() const;
 
 		void default_framebuffer_pass() const;
 		void imgui_viewport_pass() const;
@@ -63,12 +63,9 @@ namespace QuestEngine::Render {
 		glm::mat4 m_quad_model_matrix;
 
 		entt::registry* m_active_registry;
-
 		UserInterface::UserInterface m_user_interface;
 
-		bool show_ui = false;
-		const int ui_viewport_width = 1066;
-		const int ui_viewport_height = 600;
+		bool m_show_ui = false;
 
 	};
 

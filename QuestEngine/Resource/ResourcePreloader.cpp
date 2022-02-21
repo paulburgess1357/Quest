@@ -86,7 +86,11 @@ namespace QuestEngine::Resource {
 	// ======================== Model ========================
 
 	void ResourcePreloader::load_pointlight_model(ResourceManager& resource_manager){
-		const Sphere sphere_creator{ 1.0f, 30, 30, false }; // Radius = 1.0
+		const Sphere sphere_creator{ 3.0f, 30, 30, false }; // Radius = 1.0
+
+		// Note that currently the spheres are not being scaled by the distance
+		// the light can travel! That can cause the circular lines as its an area
+		// where the sphere stops!
 
 		// ======== Standard Pointlight Model ========
 		// Sphere with position information only (used for pointlights)
