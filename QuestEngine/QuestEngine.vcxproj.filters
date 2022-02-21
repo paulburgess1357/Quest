@@ -120,7 +120,7 @@
     <ClInclude Include="ECS\Manage\RegistryManagerExecptions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Using\LightState.h">
+    <ClInclude Include="Using\GraphicsState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Render\RenderPassManager.h">

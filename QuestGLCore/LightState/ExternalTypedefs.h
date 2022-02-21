@@ -1,6 +1,6 @@
 #pragma once
-#include "QuestGLCore/LightState/LightState.h"
+#include "QuestGLCore/LightState/GraphicsState.h"
 
-namespace QuestGLCore::LightState {
-	using LightState = LightState;
+namespace QuestGLCore::Graphics {
+	using State = State;
 } // namespace QuestGLCore::LightState

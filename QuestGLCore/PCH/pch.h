@@ -41,7 +41,7 @@
 
 // Misc
 #include "QuestGLCore/Constants/Constants.h"
-#include "QuestGLCore/LightState/LightState.h"
+#include "QuestGLCore/LightState/GraphicsState.h"
 
 // Texture
 #include "QuestGLCore/Texture/TextureCreator.h"

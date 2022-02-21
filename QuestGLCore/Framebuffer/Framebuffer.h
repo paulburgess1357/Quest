@@ -106,13 +106,13 @@ namespace QuestGLCore::Framebuffer {
 			glBlitFramebuffer(0, 0, m_width, m_height, 0, 0, dest_width, dest_height, buffer_type, GL_NEAREST);
 		}
 
-		void rescale_attachments(const int width, const int height) {
+		void resize_attachments(const int width, const int height) {
 			QUEST_TRACE("Rescaling Framebuffer Attachments")
 			m_width = width;
 			m_height = height;
 			glViewport(0, 0, m_width, m_height);
-			rescale_color_attachments();
-			rescale_renderbuffer_attachment();
+			resize_color_attachments();
+			resize_renderbuffer_attachment();
 		}
 
 		void set_single_color_attachment_to_write_to(const unsigned int color_attachment_num) const {
@@ -198,7 +198,7 @@ namespace QuestGLCore::Framebuffer {
 			++m_color_attachment_num;
 		}
 
-		void rescale_color_attachments() const {
+		void resize_color_attachments() const {
 			// Color attachments are created starting from 0 (see create color attachment).  This takes each texture handle and updates
 			// each color attachment to be resized.  We don't need to store 'm_color_attachment_num' because we store the handles
 			// in a vector, so the order starting from 0 is maintained.  E.g. <texture handle for attachment 0, texture handle for attachment 1, etc.>
@@ -232,7 +232,7 @@ namespace QuestGLCore::Framebuffer {
 			unbind();
 		}
 
-		void rescale_renderbuffer_attachment() const {
+		void resize_renderbuffer_attachment() const {
 			m_renderbuffer_handle.bind();
 				glRenderbufferStorage(m_renderbuffer_handle.get_trait().get_target(), GL_DEPTH24_STENCIL8, m_width, m_height);
 			m_renderbuffer_handle.unbind();

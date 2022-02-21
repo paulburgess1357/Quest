@@ -150,6 +150,9 @@
     <ClInclude Include="Model\ModelEnums.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="LightState\GraphicsState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="QuestGLCore.cpp">
@@ -170,7 +173,7 @@
     <ClCompile Include="Texture\TexUnitTracker.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="LightState\LightState.cpp">
+    <ClCompile Include="LightState\GraphicsState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Model\ModelCreator.cpp">

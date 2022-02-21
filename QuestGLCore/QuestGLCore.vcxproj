@@ -170,6 +170,7 @@
     <ClInclude Include="Framebuffer\Framebuffer.h" />
     <ClInclude Include="Framebuffer\FramebufferEnum.h" />
     <ClInclude Include="LightState\ExternalTypedefs.h" />
+    <ClInclude Include="LightState\GraphicsState.h" />
     <ClInclude Include="Model\MeshQuad.h" />
     <ClInclude Include="Model\ModelCreator.h" />
     <ClInclude Include="Model\ModelEnums.h" />
@@ -212,7 +213,7 @@
     <ClInclude Include="VertexData\VertexDataElement.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="LightState\LightState.cpp" />
+    <ClCompile Include="LightState\GraphicsState.cpp" />
     <ClCompile Include="Model\ModelCreator.cpp" />
     <ClCompile Include="PCH\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

@@ -23,21 +23,27 @@ namespace QuestEngine::Render {
 		void deferred_pass() const;
 		void light_pass() const;
 		void forward_pass() const;
+		void final_pass();
 
 		void default_framebuffer_pass() const;
-		void imgui_viewport_pass(const int width, const int height) const;
+		void imgui_viewport_pass() const;
 
 		void draw_post_process() const;
-		void draw_user_interface(void* handle, const int width, const int height) const;
+		void draw_user_interface(void* handle) const;
 
 		void handle_window_resize();
 		void handle_ui_toggle();
+
+		void set_window_dimensions();
+		void set_framebuffer_dimensions();
+		void scale_quad();
 
 		// Tracking window resizes:
 		const Window::Window& m_window;
 		int m_window_width;
 		int m_window_height;
 
+		// Settings for all framebuffer sizes (changed by window resize and aspect ratio)
 		int m_framebuffer_width;
 		int m_framebuffer_height;
 
@@ -61,14 +67,10 @@ namespace QuestEngine::Render {
 		UserInterface::UserInterface m_user_interface;
 
 		bool show_ui = false;
-
 		const int ui_viewport_width = 1066;
 		const int ui_viewport_height = 600;
 
-
-
 	};
-
 
 } // namespace QuestEngine::Render
 
