@@ -24,7 +24,6 @@ namespace QuestUI::OpenGL {
 			IMGUI_CHECKVERSION();
 			ImGui::CreateContext();
 
-			
 			// Configuration
 			m_imgui_io = &ImGui::GetIO();
 			m_imgui_io->ConfigWindowsMoveFromTitleBarOnly = true;
@@ -34,7 +33,7 @@ namespace QuestUI::OpenGL {
 
 			ImGui_ImplGlfw_InitForOpenGL(m_window, true);
 			ImGui_ImplOpenGL3_Init("#version 330");
-			Candy::Theme_Blender();
+			Candy::Theme_Nord();
 			m_created = true;
 		}
 	}
