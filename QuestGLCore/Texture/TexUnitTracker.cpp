@@ -21,7 +21,6 @@ namespace QuestGLCore::Texture {
 		shader_program->unbind();
 
 		m_texture_tracker.emplace_back(GL_TEXTURE0 + tex_unit, texture_handle);
-		++m_current_tex_unit;
 	}
 
 	void TexUnitTracker::bind() const {

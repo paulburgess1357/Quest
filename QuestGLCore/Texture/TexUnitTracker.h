@@ -21,7 +21,6 @@ namespace QuestGLCore::Texture {
 	private:
 		// <texture_name_in_shader, <tex unit, texture handle>
 		std::vector<TexUnitTexHandle> m_texture_tracker;
-		GLuint m_current_tex_unit{ 0 };
 
 		// Constant map:
 		// <texture_name_in_shader, tex_unit>
