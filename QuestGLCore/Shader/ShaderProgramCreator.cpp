@@ -18,10 +18,20 @@ namespace QuestGLCore::Shader {
 
 		// Load GLSL shaders and attach
 		std::vector<Typedefs::GLHandle> shader_handles;
+		std::string duplicate_load_check;
 		for(const auto& [shader_type, shader_string] : m_shader_string_map) {
+			// Check each shader stage string is unique (e.g. accidentally loading
+			// two vertex shaders)
+			if (shader_string == duplicate_load_check) {
+				QUEST_ERROR("You are loading two identical shader strings! E.g. Vertex and Fragment shader are the same identical string values!")
+				throw ShaderStringIsIdentical();
+			}
+
 			const Typedefs::GLHandle shader_handle = load_glsl_shader(shader_type, shader_string);
 			glAttachShader(shader_program_handle, shader_handle);
 			shader_handles.push_back(shader_handle);
+
+			duplicate_load_check = shader_string;
 		}
 
 		// Link shaders and check for errors:

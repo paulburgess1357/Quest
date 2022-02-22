@@ -153,6 +153,9 @@
     <ClInclude Include="LightState\GraphicsState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Texture\TextureEnum.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="QuestGLCore.cpp">
