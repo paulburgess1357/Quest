@@ -1,6 +1,5 @@
 #pragma once
 #include "QuestGLCore/Texture/Typedefs.h"
-#include "QuestGLCore/Shader/ShaderProgram.h"
 #include "QuestGLCore/Texture/TextureEnum.h"
 
 namespace QuestGLCore::Texture {
@@ -17,6 +16,7 @@ namespace QuestGLCore::Texture {
 		void register_texture(const TextureEnum texture_type, Shader::ShaderProgram* shader_program, TextureHandle* texture_handle);
 		void bind() const;
 		void unbind() const;
+		[[nodiscard]] static std::unordered_map<TextureEnum, std::pair<std::string, GLuint>> get_tex_unit_mapping();
 
 	private:
 		// <texture_name_in_shader, <tex unit, texture handle>

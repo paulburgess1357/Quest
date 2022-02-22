@@ -3,7 +3,6 @@
 #include "QuestGLCore/VertexData/VertexDataElement.h"
 #include "QuestGLCore/Texture/TexUnitTracker.h"
 #include "QuestGLCore/Texture/Typedefs.h"
-#include "QuestGLCore/Texture/BlankTextureEnum.h"
 
 namespace QuestGLCore::Model {
 

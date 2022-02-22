@@ -15,11 +15,15 @@ namespace QuestGLCore::Texture {
 	}
 
 	void TexUnitTracker::register_texture(const TextureEnum texture_type, Shader::ShaderProgram* shader_program, TextureHandle* texture_handle) {
+		// The shader program isn't necessary here.  It is possible to simply
+		// initialize the shader tex unit handles (e.g. diffuse, 0) elsewhere.
+		// However, keeping this here has the advantage of ensuring that the
+		// texture I am registering with the mesh exists in the shader program.
+		// This is only done on load, so its impact is extremely small.
 		shader_program->bind();
 		const auto& [shader_uniform_name, tex_unit] = m_tex_unit_mapping.at(texture_type);
 		shader_program->set_uniform(shader_uniform_name, tex_unit);
 		shader_program->unbind();
-
 		m_texture_tracker.emplace_back(GL_TEXTURE0 + tex_unit, texture_handle);
 	}
 
@@ -34,6 +38,10 @@ namespace QuestGLCore::Texture {
 		for (const auto& tex_unit_tex_handle : m_texture_tracker) {
 			tex_unit_tex_handle.m_handle->unbind();
 		}
+	}
+
+	std::unordered_map<TextureEnum, std::pair<std::string, GLuint>> TexUnitTracker::get_tex_unit_mapping() {
+		return m_tex_unit_mapping;
 	}
 
 } // QuestGLCore::Texture
