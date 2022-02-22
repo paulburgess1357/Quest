@@ -119,8 +119,7 @@ namespace QuestEngine::Resource {
 
 		// ======== Standard Pointlight Model ========
 		// Sphere with position information only (used for pointlights)
-		Shader::ShaderProgram& shader = resource_manager.get_shader(Constants::pointlight_shader);
-		auto pointlight_model = Model::ModelCreator::create_model(shader, { sphere_creator.getVerticesVector() }, { sphere_creator.getIndiciesVector() }, { 3 }, Model::ModelDrawMode::Triangles);
+		auto pointlight_model = Model::ModelCreator::create_model( { sphere_creator.getVerticesVector() }, { sphere_creator.getIndiciesVector() }, { 3 }, Model::ModelDrawMode::Triangles);
 		resource_manager.load_model(Constants::pointlight_model, pointlight_model);
 	}
 
@@ -129,8 +128,7 @@ namespace QuestEngine::Resource {
 
 		// ======== Textured Pointlight Model ========
 		// Sphere with position, normals, and texture coords (used to help visualize where pointlights are located)
-		Shader::ShaderProgram& model_texture_shader = resource_manager.get_shader(Constants::visualize_pointlight_shader);
-		auto visualize_pointlight_model = Model::ModelCreator::create_model(model_texture_shader, { sphere_creator.getInterleavedVerticesVector() }, { sphere_creator.getIndiciesVector() }, { 3, 3, 2 }, Model::ModelDrawMode::Triangles);
+		auto visualize_pointlight_model = Model::ModelCreator::create_model( { sphere_creator.getInterleavedVerticesVector() }, { sphere_creator.getIndiciesVector() }, { 3, 3, 2 }, Model::ModelDrawMode::Triangles);
 		resource_manager.load_model(Constants::visualize_pointlight_model, visualize_pointlight_model);
 
 		// Get pointer to loaded model
@@ -140,6 +138,7 @@ namespace QuestEngine::Resource {
 		const auto texture_ptr = resource_manager.get_texture_ptr(Constants::default_texture);
 
 		// For each mesh, register the texture
+		Shader::ShaderProgram& model_texture_shader = resource_manager.get_shader(Constants::visualize_pointlight_shader);
 		auto& mesh_vector = model_pointer->get_mesh_vector();
 		for (auto& model_mesh : mesh_vector) {
 			model_mesh.register_texture(Texture::TextureEnum::Diffuse, &model_texture_shader, texture_ptr);

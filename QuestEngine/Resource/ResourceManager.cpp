@@ -53,8 +53,8 @@ namespace QuestEngine::Resource {
 		return m_standard_model_resource.get_pointer(model_id);
 	}
 
-	void ResourceManager::load_model(const std::string& model_id, Shader::ShaderProgram& shader_program, std::vector<Model::StandardMesh>& meshes) {
-		m_standard_model_resource.load(model_id, shader_program, std::move(meshes));
+	void ResourceManager::load_model(const std::string& model_id, std::vector<Model::StandardMesh>& meshes) {
+		m_standard_model_resource.load(model_id, std::move(meshes));
 	}
 
 	void ResourceManager::load_model(const std::string& model_id, Model::StandardModel& model) {
@@ -71,8 +71,8 @@ namespace QuestEngine::Resource {
 		return m_indexed_model_resource.get_pointer(model_id);
 	}
 
-	void ResourceManager::load_model(const std::string& model_id, Shader::ShaderProgram& shader_program, std::vector<Model::IndexedMesh>& meshes) {
-		m_indexed_model_resource.load(model_id, shader_program, std::move(meshes));
+	void ResourceManager::load_model(const std::string& model_id, std::vector<Model::IndexedMesh>& meshes) {
+		m_indexed_model_resource.load(model_id, std::move(meshes));
 	}
 
 	void ResourceManager::load_model(const std::string& model_id, Model::IndexedModel& model) {

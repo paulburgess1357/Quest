@@ -164,7 +164,7 @@ namespace QuestSandbox::Tests {
 
 			// Load created model into resource
 			const QuestEngine::API::OpenGL::ModelLoaderAPI model_loader = m_engine_api.get_model_loader_api();
-			model_loader.load_model(model_entity_id, QuestEngine::Constants::standard_deferred_object_shader, { vertices }, { indices }, { 3, 3, 2 }, QuestGLCore::Model::ModelDrawMode::Triangles);
+			model_loader.load_model(model_entity_id, { vertices }, { indices }, { 3, 3, 2 }, QuestGLCore::Model::ModelDrawMode::Triangles);
 
 			// Get pointer to loaded model
 			const QuestEngine::API::ResourceAPI& resource_api = m_engine_api.get_resource_api();
@@ -180,8 +180,7 @@ namespace QuestSandbox::Tests {
 			const auto texture_ptr = resource_api.get_texture_pointer(texture_id_in_resource);
 
 			auto& mesh_vector = model_pointer->get_mesh_vector();
-			QuestGLCore::Shader::ShaderProgram* model_shader_program = model_pointer->get_shader_program();
-
+			QuestGLCore::Shader::ShaderProgram* model_shader_program = resource_api.get_shader_pointer(QuestEngine::Constants::standard_deferred_object_shader);
 			// For each mesh, register the texture
 			for (auto& model_mesh : mesh_vector) {
 				model_mesh.register_texture(QuestGLCore::Texture::TextureEnum::Diffuse, model_shader_program, texture_ptr);
