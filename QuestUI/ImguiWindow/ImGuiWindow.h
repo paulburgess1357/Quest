@@ -19,7 +19,9 @@ namespace QuestUI::OpenGL {
 		static void destroy();
 		
 		static void begin_render();
+		static void show_metrics();
 		static void show_demo();
+		static void show_user_guide();
 
 		void show_viewport(void* handle) const;
 		[[nodiscard]] ImVec2 get_viewport_dimensions(const float window_section_width, const float window_section_height) const;

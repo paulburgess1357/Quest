@@ -118,6 +118,7 @@ namespace QuestEngine::Render {
 	void RenderPassManager::draw_user_interface(void* handle) const {
 		UserInterface::UserInterface::begin_render();
 		m_user_interface.show_viewport(handle);
+		UserInterface::UserInterface::show_metrics();
 		m_user_interface.end_render();
 	}
 

@@ -163,6 +163,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Candy\Candy.h" />
+    <ClInclude Include="Candy\Gradient.h" />
     <ClInclude Include="ImguiWindow\ExternalTypedefs.h" />
     <ClInclude Include="ImGUIWindow\ImGuiWindow.h" />
     <ClInclude Include="PCH\framework.h" />

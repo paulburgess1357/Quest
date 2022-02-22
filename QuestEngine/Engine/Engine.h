@@ -38,11 +38,6 @@ namespace QuestEngine::Engine {
 		ECS::SystemManager m_systems_manager;
 		UniformBufferObjects::UniformBufferManager m_ubo_manager;
 		Render::RenderPassManager m_render_pass_manager;
-
-		// Tracking window resizes:
-		int m_window_width;
-		int m_window_height;
-
 	};
 
 } // namespace QuestEngine::Engine

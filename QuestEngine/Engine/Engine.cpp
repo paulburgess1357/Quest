@@ -13,9 +13,7 @@ namespace QuestEngine::Engine {
 		m_active_camera{ nullptr },
 		m_projection_matrix { m_window.get_aspect_ratio() },
 		m_systems_manager{ m_registry_manager.get_active_registry() },
-		m_render_pass_manager{ m_window, m_registry_manager.get_active_registry() },
-		m_window_width{ width },
-		m_window_height{ height }{
+		m_render_pass_manager{ m_window, m_registry_manager.get_active_registry() }{
 		initialization();
 		QUEST_INFO("Quest Engine v{}.{} Initialized\n", 0, 1)
 	}

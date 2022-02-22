@@ -3,6 +3,7 @@
 #include <imgui.h>
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
+#include "QuestUI/Candy/Candy.h"
 
 namespace QuestUI::OpenGL {
 
@@ -23,14 +24,17 @@ namespace QuestUI::OpenGL {
 			IMGUI_CHECKVERSION();
 			ImGui::CreateContext();
 
+			
 			// Configuration
 			m_imgui_io = &ImGui::GetIO();
 			m_imgui_io->ConfigWindowsMoveFromTitleBarOnly = true;
 			m_imgui_io->ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 			m_imgui_io->ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
+			m_imgui_io->FontGlobalScale = 1.8f; //TODO this probably isn't the best way to scale fone.
 
 			ImGui_ImplGlfw_InitForOpenGL(m_window, true);
 			ImGui_ImplOpenGL3_Init("#version 330");
+			Candy::Theme_Blender();
 			m_created = true;
 		}
 	}
@@ -72,6 +76,14 @@ namespace QuestUI::OpenGL {
 
 	void ImguiWindow::show_demo() {
 		ImGui::ShowDemoWindow();
+	}
+
+	void ImguiWindow::show_user_guide() {
+		ImGui::ShowUserGuide();
+	}
+
+	void ImguiWindow::show_metrics() {
+		ImGui::ShowMetricsWindow();
 	}
 
 	void ImguiWindow::show_viewport(void* handle) const {
