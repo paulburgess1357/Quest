@@ -6,7 +6,7 @@
 
 namespace QuestGLCore::Model {
 
-	Model<VertexData::VertexData> ModelCreator::create_model(Shader::ShaderProgram& shader_program, const std::vector<std::vector<float>>& all_mesh_vertices, const std::vector<int>& vertex_description, const ModelDrawMode draw_mode) {
+	Model<VertexData::VertexData> ModelCreator::create_model(const std::vector<std::vector<float>>& all_mesh_vertices, const std::vector<int>& vertex_description, const ModelDrawMode draw_mode) {
 		// Load vertex data
 		std::vector<Mesh<VertexData::VertexData>> all_meshes;
 		const GLenum ogl_draw_mode = OGLResolution::ModelDrawTypeResolution::get_draw_mode(draw_mode);
@@ -21,11 +21,11 @@ namespace QuestGLCore::Model {
 			all_meshes.push_back(std::move(standard_mesh));
 		}
 
-		Model<VertexData::VertexData> model{ shader_program, std::move(all_meshes) };
+		Model<VertexData::VertexData> model{ std::move(all_meshes) };
 		return model;
 	}
 
-	Model<VertexData::IndexedVertexData> ModelCreator::create_model(Shader::ShaderProgram& shader_program, const std::vector<std::vector<float>>& all_mesh_vertices, const std::vector<std::vector<unsigned>>& all_mesh_indices, const std::vector<int>& vertex_description, const ModelDrawMode draw_mode) {
+	Model<VertexData::IndexedVertexData> ModelCreator::create_model(const std::vector<std::vector<float>>& all_mesh_vertices, const std::vector<std::vector<unsigned>>& all_mesh_indices, const std::vector<int>& vertex_description, const ModelDrawMode draw_mode) {
 		// Load multiple indexed mesh's.  The length of all_mesh_vertices must
 		// be the same length as all_mesh_indices, as each mesh would have its
 		// own corresponding vector of indices.
@@ -43,7 +43,7 @@ namespace QuestGLCore::Model {
 			all_indexed_meshes.push_back(std::move(indexed_mesh));
 		}
 
-		Model<VertexData::IndexedVertexData> model{ shader_program, std::move(all_indexed_meshes) };
+		Model<VertexData::IndexedVertexData> model{ std::move(all_indexed_meshes) };
 		return model;
 	}
 
@@ -54,4 +54,4 @@ namespace QuestGLCore::Model {
 		}
 	}
 
-} // uestGLCore::Model
+} // QuestGLCore::Model

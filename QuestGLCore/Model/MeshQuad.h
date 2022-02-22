@@ -20,12 +20,12 @@ namespace QuestGLCore::Model {
 				1, 2, 3
 			};
 
-			const std::vector<float> vertices = {
+			const std::vector<short> vertices = {
 				// positions   // tex_coords
-				-1.0f,  1.0f,  0.0f, 1.0f,
-				-1.0f, -1.0f,  0.0f, 0.0f,
-				 1.0f, -1.0f,  1.0f, 0.0f,
-				 1.0f,  1.0f,  1.0f, 1.0f
+				-1,  1,        0, 1,
+				-1, -1,        0, 0,
+				 1, -1,        1, 0,
+				 1,  1,        1, 1
 			};
 
 			VertexData::IndexedVertexData vertex_data_element{ GL_ARRAY_BUFFER, GL_ELEMENT_ARRAY_BUFFER, GL_TRIANGLES };

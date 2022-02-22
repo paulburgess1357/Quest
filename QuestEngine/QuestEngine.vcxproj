@@ -195,7 +195,7 @@
     <ClInclude Include="UniformBufferObjects\UniformBufferManager.h" />
     <ClInclude Include="Using\API.h" />
     <ClInclude Include="Using\Framebuffer.h" />
-    <ClInclude Include="Using\LightState.h" />
+    <ClInclude Include="Using\GraphicsState.h" />
     <ClInclude Include="Using\Model.h" />
     <ClInclude Include="Using\Resource.h" />
     <ClInclude Include="Resource\TResource.h" />

@@ -22,8 +22,8 @@ namespace QuestGLCore::Model {
 			// m_tex_unit_tracker.unbind();
 		}
 
-		void register_texture(const std::string& texture_name_in_shader, Shader::ShaderProgram* shader_program, Texture::TextureHandle* texture_handle) {
-			m_tex_unit_tracker.register_texture(texture_name_in_shader, shader_program, texture_handle);
+		void register_texture(const Texture::TextureEnum texture_type, Shader::ShaderProgram* shader_program, Texture::TextureHandle* texture_handle) {
+			m_tex_unit_tracker.register_texture(texture_type, shader_program, texture_handle);
 		}
 
 	private:

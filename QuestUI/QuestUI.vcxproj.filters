@@ -27,6 +27,12 @@
     <ClInclude Include="ImguiWindow\ExternalTypedefs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Candy\Candy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Candy\Gradient.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="QuestUI.cpp">

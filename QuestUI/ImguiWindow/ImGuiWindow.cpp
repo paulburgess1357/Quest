@@ -3,6 +3,7 @@
 #include <imgui.h>
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
+#include "QuestUI/Candy/Candy.h"
 
 namespace QuestUI::OpenGL {
 
@@ -28,9 +29,11 @@ namespace QuestUI::OpenGL {
 			m_imgui_io->ConfigWindowsMoveFromTitleBarOnly = true;
 			m_imgui_io->ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 			m_imgui_io->ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
+			m_imgui_io->FontGlobalScale = 1.8f; //TODO this probably isn't the best way to scale fone.
 
 			ImGui_ImplGlfw_InitForOpenGL(m_window, true);
-			ImGui_ImplOpenGL3_Init("#version 330"); //TODO query this
+			ImGui_ImplOpenGL3_Init("#version 330");
+			Candy::Theme_Nord();
 			m_created = true;
 		}
 	}
@@ -68,12 +71,52 @@ namespace QuestUI::OpenGL {
 			// Switch back to the main OpenGL context
 			glfwMakeContextCurrent(m_window);
 		}
-
 	}
 
 	void ImguiWindow::show_demo() {
 		ImGui::ShowDemoWindow();
 	}
+
+	void ImguiWindow::show_user_guide() {
+		ImGui::ShowUserGuide();
+	}
+
+	void ImguiWindow::show_metrics() {
+		ImGui::ShowMetricsWindow();
+	}
+
+	void ImguiWindow::show_viewport(void* handle) const {
+		if(ImGui::Begin("GameView")) {
+			const ImVec2 window_section_size = ImGui::GetWindowSize();
+			// Window size includes scrollbar (hence the -35 estimate)
+			const ImVec2 viewport_size = get_viewport_dimensions(window_section_size.x - 15, window_section_size.y - 35);
+
+			// Center texture
+			const ImVec2 viewport_position = {
+				(window_section_size.x - viewport_size.x) * 0.5f,
+				((window_section_size.y - viewport_size.y) * 0.5f) + 8,
+			};
+			ImGui::SetCursorPos(viewport_position);
+
+			ImGui::Image(handle, viewport_size, { 0, 1}, { 1, 0 } ); //todo check these
+		}
+
+		ImGui::End();
+	}
+
+	ImVec2 ImguiWindow::get_viewport_dimensions(const float window_section_width, const float window_section_height) const{
+		float viewport_width = window_section_height * aspect_ratio;
+		float viewport_height = window_section_width * 1.0f / aspect_ratio;
+
+		if (window_section_height > viewport_height) {
+			viewport_width = window_section_width;
+		} else {
+			viewport_height = window_section_height;
+		}
+		return { viewport_width, viewport_height };
+	}
+
+
 
 	//bool ImguiWindow::ui_using_inputs() {
 	//	return ui_using_mouse() || ui_using_keyboard();

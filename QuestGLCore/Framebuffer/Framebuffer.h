@@ -6,6 +6,7 @@
 #include "QuestGLCore/Texture/BlankTextureEnum.h"
 #include "QuestUtility/Include/Logger.h"
 #include "QuestGLCore/OpenGLTypes/OpenGLEnumResolution.h"
+#include "QuestGLCore/Handle/Typedefs.h"
 #include <initializer_list>
 
 // Framebuffer must be bound
@@ -73,13 +74,13 @@ namespace QuestGLCore::Framebuffer {
 			trait.unbind_read();
 		}
 
-		void bind_draw() const {
+		void bind_write() const {
 			const auto handle = m_framebuffer_handle.get_handle();
 			const auto trait = m_framebuffer_handle.get_trait();
 			trait.bind_draw(handle);
 		}
 
-		void unbind_draw() const {
+		void unbind_write() const {
 			const auto trait = m_framebuffer_handle.get_trait();
 			trait.unbind_draw();
 		}
@@ -89,7 +90,7 @@ namespace QuestGLCore::Framebuffer {
 			bind_read();
 
 			// Write to existing framebuffer
-			dest_framebuffer.bind_draw();
+			dest_framebuffer.bind_write();
 
 			const auto buffer_type = OGLResolution::FramebufferBlitResolution::get_bitfield(blit_enum);
 			glBlitFramebuffer(0, 0, m_width, m_height, 0, 0, dest_framebuffer.m_width, dest_framebuffer.m_height, buffer_type, GL_NEAREST);
@@ -100,18 +101,18 @@ namespace QuestGLCore::Framebuffer {
 			bind_read();
 
 			// Write depth values to window framebuffer
-			unbind_draw();
+			unbind_write();
 			const auto buffer_type = OGLResolution::FramebufferBlitResolution::get_bitfield(blit_enum);
 			glBlitFramebuffer(0, 0, m_width, m_height, 0, 0, dest_width, dest_height, buffer_type, GL_NEAREST);
 		}
 
-		void rescale_attachments(const int width, const int height) {
+		void resize_attachments(const int width, const int height) {
 			QUEST_TRACE("Rescaling Framebuffer Attachments")
 			m_width = width;
 			m_height = height;
-			rescale_color_attachments();
-			rescale_renderbuffer_attachment();
-			glViewport(0, 0, width, height);
+			glViewport(0, 0, m_width, m_height);
+			resize_color_attachments();
+			resize_renderbuffer_attachment();
 		}
 
 		void set_single_color_attachment_to_write_to(const unsigned int color_attachment_num) const {
@@ -160,6 +161,11 @@ namespace QuestGLCore::Framebuffer {
 			m_color_attachment_handles.at(attachment_num).bind();
 		}
 
+		[[nodiscard]] Typedefs::GLHandle get_color_attachment_raw_handle(const size_t attachment_num) const {
+			// Raw handle used for pulling texture into other libraries such as ImGui
+			return m_color_attachment_handles.at(attachment_num).get_handle();
+		}
+
 		[[nodiscard]] size_t get_color_attachment_num() const {
 			return m_color_attachment_handles.size();
 		}
@@ -192,7 +198,7 @@ namespace QuestGLCore::Framebuffer {
 			++m_color_attachment_num;
 		}
 
-		void rescale_color_attachments() const {
+		void resize_color_attachments() const {
 			// Color attachments are created starting from 0 (see create color attachment).  This takes each texture handle and updates
 			// each color attachment to be resized.  We don't need to store 'm_color_attachment_num' because we store the handles
 			// in a vector, so the order starting from 0 is maintained.  E.g. <texture handle for attachment 0, texture handle for attachment 1, etc.>
@@ -226,7 +232,7 @@ namespace QuestGLCore::Framebuffer {
 			unbind();
 		}
 
-		void rescale_renderbuffer_attachment() const {
+		void resize_renderbuffer_attachment() const {
 			m_renderbuffer_handle.bind();
 				glRenderbufferStorage(m_renderbuffer_handle.get_trait().get_target(), GL_DEPTH24_STENCIL8, m_width, m_height);
 			m_renderbuffer_handle.unbind();

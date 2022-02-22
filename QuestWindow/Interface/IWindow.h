@@ -25,6 +25,7 @@ namespace QuestWindow {
 
 			[[nodiscard]] static int get_width();
 			[[nodiscard]] static int get_height();
+			[[nodiscard]] static float get_aspect_ratio();
 
 		protected:
 			static void initialize();
@@ -38,6 +39,7 @@ namespace QuestWindow {
 			// Forced single window
 			static bool m_window_exists;
 			static void check_window_exists();
+			static float m_aspect_ratio;
 		};
 
 	} // namespace Interface

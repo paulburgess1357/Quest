@@ -2,6 +2,7 @@
 #include "QuestGLCore/Texture/Typedefs.h"
 #include "QuestGLCore/Texture/TextureCreator.h"
 #include "QuestGLCore/Texture/BlankTextureEnum.h"
+#include "QuestGLCore/Texture/TextureEnum.h"
 #include <glad/glad.h>
 
 namespace QuestGLCore::Texture {
@@ -10,4 +11,5 @@ namespace QuestGLCore::Texture {
 	using HDRTextureCreator2D = HDRTextureCreator<GL_TEXTURE_2D>;
 
 	using BlankTextureEnum = BlankTextureEnum;
+	using TextureEnum = TextureEnum;
 } // namespace QuestEngine::Texture

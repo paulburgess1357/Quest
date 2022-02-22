@@ -13,6 +13,7 @@ namespace QuestWindow::Interface {
 	bool IWindow::m_window_exists{ false };
 	int IWindow::m_width { 0 };
 	int IWindow::m_height { 0 };
+	float IWindow::m_aspect_ratio{ 16.0f / 9.0f };
 
 	IWindow::IWindow(const int width, const int height)
 		:m_window{ nullptr }{
@@ -102,6 +103,10 @@ namespace QuestWindow::Interface {
 
 	int IWindow::get_height() {
 		return m_height;
+	}
+
+	float IWindow::get_aspect_ratio() {
+		return m_aspect_ratio;
 	}
 
 } // namespace QuestWindow::Interface

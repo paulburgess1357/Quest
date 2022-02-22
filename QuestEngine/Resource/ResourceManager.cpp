@@ -34,7 +34,12 @@ namespace QuestEngine::Resource {
 	void ResourceManager::shader_qc() const {
 		QUEST_TRACE("Checking Shader Uniforms Initialized")
 		for(const auto& [shader_id, shader] : m_shader_resource) {
-			shader.check_uniforms_initialized();
+			if(shader_id == Constants::standard_forward_object_shader) {
+				QUEST_WARN("Warning: Standard object forward shader QC checks are disabled!  If using forward shading for an object, be sure to re-activate for this shader type");
+			} else {
+				shader.check_uniforms_initialized();
+			}
+			
 		}
 		QUEST_TRACE("Passed")
 	}
@@ -48,8 +53,8 @@ namespace QuestEngine::Resource {
 		return m_standard_model_resource.get_pointer(model_id);
 	}
 
-	void ResourceManager::load_model(const std::string& model_id, Shader::ShaderProgram& shader_program, std::vector<Model::StandardMesh>& meshes) {
-		m_standard_model_resource.load(model_id, shader_program, std::move(meshes));
+	void ResourceManager::load_model(const std::string& model_id, std::vector<Model::StandardMesh>& meshes) {
+		m_standard_model_resource.load(model_id, std::move(meshes));
 	}
 
 	void ResourceManager::load_model(const std::string& model_id, Model::StandardModel& model) {
@@ -66,8 +71,8 @@ namespace QuestEngine::Resource {
 		return m_indexed_model_resource.get_pointer(model_id);
 	}
 
-	void ResourceManager::load_model(const std::string& model_id, Shader::ShaderProgram& shader_program, std::vector<Model::IndexedMesh>& meshes) {
-		m_indexed_model_resource.load(model_id, shader_program, std::move(meshes));
+	void ResourceManager::load_model(const std::string& model_id, std::vector<Model::IndexedMesh>& meshes) {
+		m_indexed_model_resource.load(model_id, std::move(meshes));
 	}
 
 	void ResourceManager::load_model(const std::string& model_id, Model::IndexedModel& model) {
