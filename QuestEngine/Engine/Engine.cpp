@@ -28,6 +28,8 @@ namespace QuestEngine::Engine {
 		m_ubo_manager.set_matrices_ubo(m_resource_manager.get_ubo(Constants::ubo_matrices));
 		m_render_pass_manager.set_pointlight_shader(m_resource_manager.get_shader(Constants::pointlight_shader));
 		m_render_pass_manager.set_postprocess_shader(m_resource_manager.get_shader(Constants::post_process_shader));
+		m_render_pass_manager.set_deferred_shader(m_resource_manager.get_shader(Constants::standard_deferred_object_shader));
+		m_render_pass_manager.set_forward_shader(m_resource_manager.get_shader(Constants::standard_forward_object_shader));
 		set_active_camera(Constants::main_camera);
 	}
 

@@ -164,7 +164,7 @@ namespace QuestSandbox::Tests {
 
 			// Load created model into resource
 			const QuestEngine::API::OpenGL::ModelLoaderAPI model_loader = m_engine_api.get_model_loader_api();
-			model_loader.load_model(model_entity_id, QuestEngine::Constants::standard_object_shader, { vertices }, { indices }, { 3, 3, 2 }, QuestGLCore::Model::ModelDrawMode::Triangles);
+			model_loader.load_model(model_entity_id, QuestEngine::Constants::standard_deferred_object_shader, { vertices }, { indices }, { 3, 3, 2 }, QuestGLCore::Model::ModelDrawMode::Triangles);
 
 			// Get pointer to loaded model
 			const QuestEngine::API::ResourceAPI& resource_api = m_engine_api.get_resource_api();

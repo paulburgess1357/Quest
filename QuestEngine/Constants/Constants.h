@@ -12,7 +12,8 @@ namespace QuestEngine::Constants {
 	const std::string post_process_shader{ "post_process_shader" };
 	const std::string pointlight_shader{"pointlight_lightpass_shader"};
 	const std::string visualize_pointlight_shader{ "visualize_pointlight_model_shader" };
-	const std::string standard_object_shader{ "standard_object_shader" };
+	const std::string standard_deferred_object_shader{ "standard_object_deferred_shader" };
+	const std::string standard_forward_object_shader{ "standard_object_forward_shader" };
 
 	// Models
 	const std::string pointlight_model{"indexed_pointlight_model"};

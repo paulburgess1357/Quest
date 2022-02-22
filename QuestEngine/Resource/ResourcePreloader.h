@@ -13,8 +13,8 @@ namespace QuestEngine::Resource {
 		static void load_default_texture(ResourceManager& resource_manager);
 
 		// TODO this likely won't be a default loaded shader
-		static void load_standard_object_shader(ResourceManager& resource_manager);
-
+		static void load_standard_object_gbuffer_shader(ResourceManager& resource_manager);
+		static void load_standard_object_forward_shader(ResourceManager& resource_manager);
 		static void load_pointlight_shaders(ResourceManager& resource_manager);
 		static void load_visualize_pointlight_shader(ResourceManager& resource_manager);
 		static void load_postprocess_shader(ResourceManager& resource_manager);

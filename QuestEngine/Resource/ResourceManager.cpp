@@ -34,7 +34,12 @@ namespace QuestEngine::Resource {
 	void ResourceManager::shader_qc() const {
 		QUEST_TRACE("Checking Shader Uniforms Initialized")
 		for(const auto& [shader_id, shader] : m_shader_resource) {
-			shader.check_uniforms_initialized();
+			if(shader_id == Constants::standard_forward_object_shader) {
+				QUEST_WARN("Warning: Standard object forward shader QC checks are disabled!  If using forward shading for an object, be sure to re-activate for this shader type");
+			} else {
+				shader.check_uniforms_initialized();
+			}
+			
 		}
 		QUEST_TRACE("Passed")
 	}

@@ -12,7 +12,8 @@ namespace QuestEngine::Resource {
 		load_ubo_matrices(resource_manager);
 		load_default_texture(resource_manager);
 
-		load_standard_object_shader(resource_manager);
+		load_standard_object_gbuffer_shader(resource_manager);
+		load_standard_object_forward_shader(resource_manager);
 		load_pointlight_shaders(resource_manager);
 		load_visualize_pointlight_shader(resource_manager);
 		load_postprocess_shader(resource_manager);
@@ -24,11 +25,10 @@ namespace QuestEngine::Resource {
 
 	// ======================== Shader ========================
 
-	void ResourcePreloader::load_standard_object_shader(ResourceManager& resource_manager) {
-
+	void ResourcePreloader::load_standard_object_gbuffer_shader(ResourceManager& resource_manager) {
+		// Standard object deferred shader
 
 		// TODO this likely won't be a default loaded shader
-
 
 		const std::string vertex = QuestUtility::String::FileToString::load(m_resource_base + "Shaders/GBuffer/GBufferShapeVertexGeometryPassDualTextured.glsl");
 		const std::string fragment = QuestUtility::String::FileToString::load(m_resource_base + "Shaders/GBuffer/GBufferShapeFragmentGeometryPassDualTextured.glsl");
@@ -36,7 +36,22 @@ namespace QuestEngine::Resource {
 			{ Shader::ShaderEnum::VERTEX, vertex },
 			{ Shader::ShaderEnum::FRAGMENT, fragment }
 		};
-		resource_manager.load_shader(Constants::standard_object_shader, shader_map, true);
+		resource_manager.load_shader(Constants::standard_deferred_object_shader, shader_map, true);
+	}
+
+	void ResourcePreloader::load_standard_object_forward_shader(ResourceManager& resource_manager) {
+		// Standard object forward shader
+
+		// TODO this likely won't be a default loaded shader
+
+		const std::string vertex = QuestUtility::String::FileToString::load(m_resource_base + "Shaders/ForwardPass/ForwardPassVertexTextured.glsl");
+		const std::string fragment = QuestUtility::String::FileToString::load(m_resource_base + "Shaders/ForwardPass/ForwardPassFragmentTextured.glsl");
+
+		const std::unordered_map<Shader::ShaderEnum, std::string> shader_map{
+			{ Shader::ShaderEnum::VERTEX, vertex },
+			{ Shader::ShaderEnum::FRAGMENT, fragment }
+		};
+		resource_manager.load_shader(Constants::standard_forward_object_shader, shader_map, true);
 	}
 
 	void ResourcePreloader::load_pointlight_shaders(ResourceManager& resource_manager){
@@ -57,13 +72,10 @@ namespace QuestEngine::Resource {
 	}
 
 	void ResourcePreloader::load_visualize_pointlight_shader(ResourceManager& resource_manager){
-		// Forward Pass Shaders
-		const std::string vertex = QuestUtility::String::FileToString::load(m_resource_base + "Shaders/ForwardPass/ForwardPassVertexTextured.glsl");
-		const std::string fragment = QuestUtility::String::FileToString::load(m_resource_base + "Shaders/ForwardPass/ForwardPassFragmentTextured.glsl");
-
-		// Deferred Pass Shaders
-		// const std::string vertex = QuestUtility::String::FileToString::load(m_resource_base + "Shaders/GBuffer/GBufferShapeVertexGeometryPassSingleTextured.glsl");
-		// const std::string fragment = QuestUtility::String::FileToString::load(m_resource_base + "Shaders/GBuffer/GBufferShapeFragmentGeometryPassSingleTextured.glsl");
+		// Visual pointlight (single textured) shader:
+		// Load forward pass
+		const std::string vertex = QuestUtility::String::FileToString::load(m_resource_base + "Shaders/Pointlight/VisualPointlightTexturedVertex.glsl");
+		const std::string fragment = QuestUtility::String::FileToString::load(m_resource_base + "Shaders/Pointlight/VisualPointlightTexturedFragment.glsl");
 
 		const std::unordered_map<Shader::ShaderEnum, std::string> shader_map{
 			{ Shader::ShaderEnum::VERTEX, vertex },

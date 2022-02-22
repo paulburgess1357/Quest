@@ -14,8 +14,10 @@ namespace QuestEngine::Render {
 		m_g_buffer{ m_window_width, m_window_height, { Texture::BlankTextureEnum::RGBA16F_NEAREST, Texture::BlankTextureEnum::RGBA16F_NEAREST, Texture::BlankTextureEnum::RGBA_NEAREST } },
 		m_post_process_framebuffer{ m_window_width, m_window_height, { Texture::BlankTextureEnum::RGBA16F_LINEAR } },
 		m_ui_framebuffer{ m_window_width, m_window_height, { Texture::BlankTextureEnum::RGBA16F_LINEAR } },
+		m_deferred_shader{ nullptr },
 		m_pointlight_shader{ nullptr },
 		m_postprocess_shader{ nullptr },
+		m_forward_shader{ nullptr },
 		m_quad_model_matrix{ 1.0f },
 		m_active_registry{ &active_registry },
 		m_user_interface{ window.get_window() }{
@@ -43,7 +45,7 @@ namespace QuestEngine::Render {
 		m_g_buffer.bind_write();
 		Framebuffer::Framebuffer2D::clear_all_buffers();
 
-		ECS::Systems::RenderSystem::render_deferred(*m_active_registry);
+		ECS::Systems::RenderSystem::render_deferred(*m_active_registry, m_deferred_shader);
 	}
 
 	void RenderPassManager::light_pass() const {
@@ -71,7 +73,7 @@ namespace QuestEngine::Render {
 		m_g_buffer.copy_to_framebuffer(m_post_process_framebuffer, Framebuffer::FramebufferBlitEnum::Depth);
 
 		// Draw Target: (Still Post-Process Framebuffer)
-		ECS::Systems::RenderSystem::render_forward(*m_active_registry);
+		ECS::Systems::RenderSystem::render_forward(*m_active_registry, m_forward_shader);
 	}
 
 	void RenderPassManager::final_pass() const {
@@ -170,6 +172,14 @@ namespace QuestEngine::Render {
 
 	void RenderPassManager::set_pointlight_shader(Shader::ShaderProgram& shader_program) {
 		m_pointlight_shader = &shader_program;
+	}
+
+	void RenderPassManager::set_deferred_shader(Shader::ShaderProgram& shader_program) {
+		m_deferred_shader = &shader_program;
+	}
+
+	void RenderPassManager::set_forward_shader(Shader::ShaderProgram& shader_program) {
+		m_forward_shader = &shader_program;
 	}
 
 	void RenderPassManager::set_postprocess_shader(Shader::ShaderProgram& shader_program) {

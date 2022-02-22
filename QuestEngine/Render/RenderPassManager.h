@@ -18,6 +18,8 @@ namespace QuestEngine::Render {
 
 		void set_pointlight_shader(Shader::ShaderProgram& shader_program);
 		void set_postprocess_shader(Shader::ShaderProgram& shader_program);
+		void set_deferred_shader(Shader::ShaderProgram& shader_program);
+		void set_forward_shader(Shader::ShaderProgram& shader_program);
 
 	private:
 		void deferred_pass() const;
@@ -56,8 +58,10 @@ namespace QuestEngine::Render {
 		Framebuffer::Framebuffer2D m_post_process_framebuffer;
 		Framebuffer::Framebuffer2D m_ui_framebuffer;
 
+		Shader::ShaderProgram* m_deferred_shader;
 		Shader::ShaderProgram* m_pointlight_shader;
 		Shader::ShaderProgram* m_postprocess_shader;
+		Shader::ShaderProgram* m_forward_shader;
 
 		Model::IndexedMeshQuad m_quad;
 		glm::mat4 m_quad_model_matrix;
