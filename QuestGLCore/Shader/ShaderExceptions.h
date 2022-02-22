@@ -27,4 +27,10 @@ namespace QuestGLCore::Shader {
 		}
 	};
 
+	class ShaderStringIsIdentical final : public std::exception {
+		[[nodiscard]] const char* what() const override {
+			return "ShaderCreator is loading two identical strings for different shaders!";
+		}
+	};
+
 } // namespace QuestGLCore::ShaderProgram

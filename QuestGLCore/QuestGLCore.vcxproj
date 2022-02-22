@@ -202,6 +202,7 @@
     <ClInclude Include="Handle\Typedefs.h" />
     <ClInclude Include="Texture\BlankTextureCreator.h" />
     <ClInclude Include="Texture\ExternalTypedefs.h" />
+    <ClInclude Include="Texture\TextureEnum.h" />
     <ClInclude Include="Texture\TextureFormat.h" />
     <ClInclude Include="Texture\TextureCreator.h" />
     <ClInclude Include="Texture\TexUnitTracker.h" />

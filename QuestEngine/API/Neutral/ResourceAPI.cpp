@@ -20,10 +20,14 @@ namespace QuestEngine::API {
 		m_engine_resource_manager.load_shader(shader_id, shader_string_map, link_ubo_matrices);
 	}
 
+	Shader::ShaderProgram* ResourceAPI::get_shader_pointer(const std::string& shader_id) const {
+		return m_engine_resource_manager.get_shader_pointer(shader_id);
+	}
+
 	// ======================== Model ========================
 	// Standard
-	void ResourceAPI::load_model(const std::string& model_id, Shader::ShaderProgram& shader_program, std::vector<Model::StandardMesh>& meshes) const {
-		m_engine_resource_manager.load_model(model_id, shader_program, meshes);
+	void ResourceAPI::load_model(const std::string& model_id, std::vector<Model::StandardMesh>& meshes) const {
+		m_engine_resource_manager.load_model(model_id, meshes);
 	}
 
 	void ResourceAPI::load_model(const std::string& model_id, Model::StandardModel& model) const {
@@ -31,8 +35,8 @@ namespace QuestEngine::API {
 	}
 
 	// Indexed
-	void ResourceAPI::load_model(const std::string& model_id, Shader::ShaderProgram& shader_program, std::vector<Model::IndexedMesh>& meshes) const {
-		m_engine_resource_manager.load_model(model_id, shader_program, meshes);
+	void ResourceAPI::load_model(const std::string& model_id, std::vector<Model::IndexedMesh>& meshes) const {
+		m_engine_resource_manager.load_model(model_id, meshes);
 	}
 
 	void ResourceAPI::load_model(const std::string& model_id, Model::IndexedModel& model) const {

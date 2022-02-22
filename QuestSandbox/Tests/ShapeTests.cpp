@@ -30,7 +30,7 @@ namespace QuestSandbox::Tests {
 			const auto zPos = static_cast<float>(((rand() % 100) / 100.0) * 6.0 - 3.0);
 
 			const std::string entity_id = "Textured_Cube" + std::to_string(i);
-			load_dual_textured_cube_into_world(entity_id, { xPos , yPos, zPos }, m_base_shader_path + "/GBuffer/GBufferShapeVertexGeometryPassDualTextured.glsl", m_base_shader_path + "/GBuffer/GBufferShapeFragmentGeometryPassDualTextured.glsl", QuestEngine::ECS::RenderPass::Deferred);
+			load_dual_textured_cube_into_world(entity_id, { xPos , yPos, zPos }, QuestEngine::ECS::RenderPass::Deferred);
 		}
 
 		// ================= Set lighting pass uniforms ==================
@@ -92,13 +92,10 @@ namespace QuestSandbox::Tests {
 		pointlight_shader.unbind();
 	}
 
-	void ShapeTests::load_dual_textured_cube_into_world(const std::string& entity_id, const glm::vec3& world_position, const std::string& vertex_shader, const std::string& fragment_shader, const QuestEngine::ECS::RenderPass render_pass) {
+	void ShapeTests::load_dual_textured_cube_into_world(const std::string& entity_id, const glm::vec3& world_position, const QuestEngine::ECS::RenderPass render_pass) {
 
 		const std::string model_entity_id{ "Textured Indexed Shape Model Entity" };
 		if (!textured_cube_in_resource) {
-			const QuestEngine::API::OpenGL::ShaderLoaderAPI shader_loader = m_engine_api.get_shader_loader_api();
-			const std::string shader_id{ "dual_textured_testing_cube_shader"};
-			shader_loader.load_shader(shader_id, vertex_shader, fragment_shader, true, true); // from file: true; load_ubo_matrices: true
 
 			const std::vector<float> vertices = {
 				// Vertices               // Normals		     // Textures
@@ -167,7 +164,7 @@ namespace QuestSandbox::Tests {
 
 			// Load created model into resource
 			const QuestEngine::API::OpenGL::ModelLoaderAPI model_loader = m_engine_api.get_model_loader_api();
-			model_loader.load_model(model_entity_id, shader_id, { vertices }, { indices }, { 3, 3, 2 }, QuestGLCore::Model::ModelDrawMode::Triangles);
+			model_loader.load_model(model_entity_id, { vertices }, { indices }, { 3, 3, 2 }, QuestGLCore::Model::ModelDrawMode::Triangles);
 
 			// Get pointer to loaded model
 			const QuestEngine::API::ResourceAPI& resource_api = m_engine_api.get_resource_api();
@@ -177,29 +174,26 @@ namespace QuestSandbox::Tests {
 
 			// Load texture into resource
 			const std::string texture_id_in_resource{ "wood_texture" };
-			const std::string texture_name_in_shader{ "all_textures.diffuse" };
 
 			const auto texture_api = m_engine_api.get_texture_loader_api();
 			texture_api.load_texture2D(texture_id_in_resource, m_base_texture_path + "wood.png", QuestEngine::Texture::TextureType::Standard, false, true);
 			const auto texture_ptr = resource_api.get_texture_pointer(texture_id_in_resource);
 
 			auto& mesh_vector = model_pointer->get_mesh_vector();
-			QuestGLCore::Shader::ShaderProgram* model_shader_program = model_pointer->get_shader_program();
-
+			QuestGLCore::Shader::ShaderProgram* model_shader_program = resource_api.get_shader_pointer(QuestEngine::Constants::standard_deferred_object_shader);
 			// For each mesh, register the texture
 			for (auto& model_mesh : mesh_vector) {
-				model_mesh.register_texture(texture_name_in_shader, model_shader_program, texture_ptr);
+				model_mesh.register_texture(QuestGLCore::Texture::TextureEnum::Diffuse, model_shader_program, texture_ptr);
 			}
 
 			// Load specular texture
 			const std::string specular_texture_id_in_resource{ "specular_texture" };
-			const std::string specular_texture_name_in_shader{ "all_textures.specular" };
 
 			texture_api.load_texture2D(specular_texture_id_in_resource, m_base_texture_path + "container_specular_map.png", QuestEngine::Texture::TextureType::Standard, false, false);
 			const auto specular_texture_ptr = resource_api.get_texture_pointer(specular_texture_id_in_resource);
 			// For each mesh, register the texture
 			for (auto& model_mesh : mesh_vector) {
-				model_mesh.register_texture(specular_texture_name_in_shader, model_shader_program, specular_texture_ptr);
+				model_mesh.register_texture(QuestGLCore::Texture::TextureEnum::Specular, model_shader_program, specular_texture_ptr);
 			}
 
 			textured_cube_in_resource = true;
