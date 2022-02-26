@@ -37,6 +37,7 @@ SOFTWARE.
 #include <functional>
 #include <cassert>
 #include <cmath>
+#include <corecrt_math_defines.h>
 
 #define GRADIENT_KEY_DEFAULT_PRECISION double
 #define GRADIENT_COLOR_PRECISION_TYPE double

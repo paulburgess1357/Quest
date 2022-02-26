@@ -116,6 +116,7 @@ namespace QuestGLCore::Framebuffer {
 		}
 
 		void set_single_color_attachment_to_write_to(const unsigned int color_attachment_num) const {
+
 			// Output information from fragment shader into a single specified color attachment.
 			// When this is set, any previous color attachments that are being written to will no
 			// longer be written to.  Only the single specified color attachment will be used.
