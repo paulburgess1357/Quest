@@ -96,7 +96,7 @@ namespace QuestUI::OpenGL {
 				((window_section_size.y - viewport_size.y) * 0.5f) + 8,
 			};
 			ImGui::SetCursorPos(viewport_position);
-			ImGui::Image(handle, viewport_size, { 0, 1}, { 1, 0 } ); //todo check these
+			ImGui::Image(handle, viewport_size, { 0, 1}, { 1, 0 } ); //todo check these; viewport size or texture size/??
 		}
 
 		ImGui::End();
