@@ -89,22 +89,23 @@ namespace QuestUI::OpenGL {
 		if(ImGui::Begin("GameView")) {
 			const ImVec2 window_section_size = ImGui::GetWindowSize();
 			// Window size includes scrollbar (hence the -35 estimate)
-			const ImVec2 viewport_size = get_viewport_dimensions(window_section_size.x - 15, window_section_size.y - 35);
-
+			const ImVec2 viewport_size = get_desired_viewport_dimensions(window_section_size.x - 15, window_section_size.y - 35);
 			// Center texture
 			const ImVec2 viewport_position = {
 				(window_section_size.x - viewport_size.x) * 0.5f,
 				((window_section_size.y - viewport_size.y) * 0.5f) + 8,
 			};
 			ImGui::SetCursorPos(viewport_position);
-
 			ImGui::Image(handle, viewport_size, { 0, 1}, { 1, 0 } ); //todo check these
 		}
 
 		ImGui::End();
 	}
 
-	ImVec2 ImguiWindow::get_viewport_dimensions(const float window_section_width, const float window_section_height) const{
+	ImVec2 ImguiWindow::get_desired_viewport_dimensions(const float window_section_width, const float window_section_height) const{
+
+		// Returns the necessary viewport dimensions to maintain the aspect ratio
+
 		float viewport_width = window_section_height * aspect_ratio;
 		float viewport_height = window_section_width * 1.0f / aspect_ratio;
 
@@ -115,8 +116,6 @@ namespace QuestUI::OpenGL {
 		}
 		return { viewport_width, viewport_height };
 	}
-
-
 
 	//bool ImguiWindow::ui_using_inputs() {
 	//	return ui_using_mouse() || ui_using_keyboard();

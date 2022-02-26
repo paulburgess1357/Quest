@@ -28,8 +28,9 @@ namespace QuestEngine::Render {
 		if(!m_show_ui) {
 			handle_window_resize();
 		}
+
 		// Set fb viewport size:
-		Graphics::State::set_viewport(0, 0, m_framebuffer_width, m_framebuffer_height);
+ 		Graphics::State::set_viewport(0, 0, m_framebuffer_width, m_framebuffer_height);
 		deferred_pass();
 		light_pass();
 		forward_pass();
@@ -105,8 +106,6 @@ namespace QuestEngine::Render {
 		m_ui_framebuffer.unbind();
 		Framebuffer::Framebuffer2D::clear_all_buffers();
 
-		// Take post process color attachment texture handle and pass to Imgui
-		// Graphics::State::set_viewport(0, 0, ui_viewport_width, ui_viewport_height);
 		draw_user_interface(reinterpret_cast<void*>(static_cast<intptr_t>(m_ui_framebuffer.get_color_attachment_raw_handle(0))));  // NOLINT(performance-no-int-to-ptr)
 	}
 
@@ -127,6 +126,9 @@ namespace QuestEngine::Render {
 	void RenderPassManager::handle_ui_toggle() {
 		if (Window::KeyboardInput::is_initial_press(Window::Keyboard::F1)) {
 			m_show_ui = !m_show_ui;
+			if(m_show_ui) {
+				reset_attachments();
+			}
 		}
 	}
 
@@ -143,6 +145,19 @@ namespace QuestEngine::Render {
 			resize_attachments(m_framebuffer_width, m_framebuffer_height);
 			scale_quad();
 		}
+	}
+
+	void RenderPassManager::reset_attachments() {
+		//TODO this solved it but i don't understand why...............
+		resize_attachments(1920, 1080);
+		m_window_width = 1920;
+		m_window_height = 1080;
+		set_framebuffer_dimensions();
+		glm::vec2 scale = glm::vec2{ m_framebuffer_width, m_framebuffer_height } / glm::vec2{ m_window_width, m_window_height };
+		m_quad_model_matrix = glm::scale(glm::mat4(1.0f), { scale.x, scale.y, 1.0f });
+		m_postprocess_shader->bind();
+		m_postprocess_shader->set_uniform(Constants::model_matrix, m_quad_model_matrix);
+		m_postprocess_shader->unbind();
 	}
 
 	void RenderPassManager::set_window_dimensions() {

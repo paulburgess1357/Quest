@@ -40,6 +40,8 @@ namespace QuestEngine::Render {
 		void set_framebuffer_dimensions();
 		void scale_quad();
 
+		void reset_attachments();
+
 		// Tracking window resizes:
 		const Window::Window& m_window;
 		int m_window_width;

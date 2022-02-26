@@ -1,6 +1,7 @@
 #pragma once
 #include <imgui.h>
 #include <GLFW/glfw3.h>
+#include <utility>
 
 namespace QuestUI::OpenGL {
 
@@ -24,8 +25,7 @@ namespace QuestUI::OpenGL {
 		static void show_user_guide();
 
 		void show_viewport(void* handle) const;
-		[[nodiscard]] ImVec2 get_viewport_dimensions(const float window_section_width, const float window_section_height) const;
-
+		[[nodiscard]] ImVec2 get_desired_viewport_dimensions(const float window_section_width, const float window_section_height) const;
 
 		void end_render() const;
 
